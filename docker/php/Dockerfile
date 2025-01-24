@@ -22,7 +22,7 @@ RUN ["/bin/bash", "-c", "apt-get update && apt-get install -y git openssh-client
  && set -o pipefail && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer"]
 
 # npm
-ENV NODE_VERSION=14.21.3
+ENV NODE_VERSION=22.13.1
 RUN curl -L -o /tmp/nodejs.tar.gz https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz \
  && tar xfvz /tmp/nodejs.tar.gz -C /usr/local --strip-components=1 \
  && rm -f /tmp/nodejs.tar.gz
