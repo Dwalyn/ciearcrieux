@@ -1,0 +1,28 @@
+version: "2.1"
+
+services:
+    php:
+        volumes:
+            - ~/.composer:/home/target-user/.composer
+            - ~/.ssh:/home/target-user/.ssh
+            - ~/.yarn:/home/target-user/.yarn
+            - ~/.yarnrc:/home/target-user/.yarnrc
+            - ~/.cache/yarn:/home/target-user/.cache/yarn
+        links:
+            - mailcatcher
+
+    mailcatcher:
+        image: schickling/mailcatcher
+        network_mode: bridge
+        environment:
+            - VIRTUAL_HOST=mailcatcher.ciearcrieux.local
+            - VIRTUAL_PORT=1080
+
+    phpmyadmin:
+        image: nazarpc/phpmyadmin
+        network_mode: bridge
+        environment:
+            - DOMAIN_NAME=phpmyadmin.ciearcrieux.local
+            - VIRTUAL_HOST=phpmyadmin.ciearcrieux.local
+        links:
+            - mysql

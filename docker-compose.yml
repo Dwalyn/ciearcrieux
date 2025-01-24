@@ -1,0 +1,40 @@
+version: "2.1"
+
+services:
+    nginx:
+        image: nginx:1.21
+        network_mode: bridge
+        volumes:
+            - .:/app:ro
+            - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+        environment:
+            - DOMAIN_NAME=ciearcrieux.local
+            - VIRTUAL_HOST=ciearcrieux.local
+        links:
+            - php
+
+    php: # serveur php
+        image: ciearcrieux_php:latest
+        build: docker/php
+        network_mode: bridge
+        volumes:
+            - .:/app
+        environment:
+            - APP_ENV=dev
+            - APP_DEBUG=1
+        links:
+            - mysql
+
+    mysql: # serveur mysql
+        image: mysql:8.0.36 # image docker
+        network_mode: bridge
+        environment:
+            - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+            - MYSQL_DATABASE=journal_pedagogique # base par défaut
+        volumes:
+            - /var/lib/mysql
+        healthcheck:
+            test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+            interval: 3s
+            timeout: 2s
+            retries: 10
