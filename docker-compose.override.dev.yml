@@ -10,6 +10,9 @@ services:
             - ~/.cache/yarn:/home/target-user/.cache/yarn
         links:
             - mailcatcher
+    mysql:
+        ports:
+            - "3306:3333"
 
     mailcatcher:
         image: schickling/mailcatcher

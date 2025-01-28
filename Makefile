@@ -49,7 +49,7 @@ endif
 
 PHP_SECURITY_CHECKER=/usr/local/bin/php-security-checker
 
-all: vendor assets cacheclear ## Initialize application for devellopement
+all: vendor resetdb assets cacheclear ## Initialize application for devellopement
 
 help:
 	## Show this help.
