@@ -30,7 +30,7 @@ services:
         network_mode: bridge
         environment:
             - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-            - MYSQL_DATABASE=journal_pedagogique # base par défaut
+            - MYSQL_DATABASE=ciearcrieux # base par défaut
         volumes:
             - /var/lib/mysql
         healthcheck:
