@@ -11,7 +11,7 @@ return (new PhpCsFixer\Config())
         '@Symfony' => true,
         '@DoctrineAnnotation' => true,
         '@PHP81Migration' => true,
-        'escape_implicit_backslashes' => false,
+        'string_implicit_backslashes' => false,
         'explicit_indirect_variable' => false,
         'string_implicit_backslashes' => false,
         'heredoc_to_nowdoc' => false,

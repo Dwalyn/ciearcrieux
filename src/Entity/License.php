@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Enum\LicenseTypeEnum;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,6 +25,12 @@ class License
     #[ORM\ManyToOne(targetEntity: LicensePeriod::class, inversedBy: 'licenses')]
     protected LicensePeriod $licensePeriod;
 
+    #[ORM\JoinTable(name: 'l_license_detail')]
+    #[ORM\JoinColumn(name: 'licence_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'licence_detail_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: LicenseDetail::class)]
+    protected Collection $licenseDetails;
+
     public function __construct(
         LicenseTypeEnum $type,
         int $price,
@@ -31,6 +39,7 @@ class License
         $this->type = $type;
         $this->price = $price;
         $this->licensePeriod = $licensePeriod;
+        $this->licenseDetails = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -51,5 +60,15 @@ class License
     public function getLicensePeriod(): LicensePeriod
     {
         return $this->licensePeriod;
+    }
+
+    public function getLicenceDetails(): Collection
+    {
+        return $this->licenseDetails;
+    }
+
+    public function addLicenceDetail(LicenseDetail $licenseDetail): void
+    {
+        $this->licenseDetails->add($licenseDetail);
     }
 }

@@ -12,7 +12,12 @@ class LicenseFixtures extends AbstractFixture implements DependentFixtureInterfa
 
     protected function buildEntity(array $data): License
     {
-        return new License($data['type'], $data['price'], $this->getReferenceLicensePeriod($data));
+        $license = new License($data['type'], $data['price'], $this->getReferenceLicensePeriod($data));
+        foreach ($data['licenseDetails'] as $licenseDetail) {
+            $license->addLicenceDetail($this->getReferenceLicenseDetail($licenseDetail));
+        }
+
+        return $license;
     }
 
     public static function getReferenceName(): string
@@ -24,6 +29,7 @@ class LicenseFixtures extends AbstractFixture implements DependentFixtureInterfa
     {
         return [
             LicensePeriodFixtures::class,
+            LicenseDetailFixtures::class,
         ];
     }
 }
