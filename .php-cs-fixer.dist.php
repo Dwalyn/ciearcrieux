@@ -13,7 +13,7 @@ return (new PhpCsFixer\Config())
         '@PHP81Migration' => true,
         'escape_implicit_backslashes' => false,
         'explicit_indirect_variable' => false,
-        'explicit_string_variable' => false,
+        'string_implicit_backslashes' => false,
         'heredoc_to_nowdoc' => false,
         'multiline_whitespace_before_semicolons' => ['strategy' => 'new_line_for_chained_calls'],
         'no_null_property_initialization' => false,
