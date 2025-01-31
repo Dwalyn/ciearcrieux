@@ -1,0 +1,12 @@
+license_1:
+  type: !php/enum App\Enum\LicenseTypeEnum::ADULT
+  price: 120
+  licensePeriod: licensePeriod_1
+license_2:
+  type: !php/enum App\Enum\LicenseTypeEnum::MINOR
+  price: 120
+  licensePeriod: licensePeriod_1
+license_3:
+  type: !php/enum App\Enum\LicenseTypeEnum::DISCOVER
+  price: 50
+  licensePeriod: licensePeriod_1
