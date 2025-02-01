@@ -21,14 +21,16 @@ class LicensePeriodRepository extends ServiceEntityRepository
         parent::__construct($registry, LicensePeriod::class);
     }
 
-    public function getActiveLicensePeriodByDate(\DateTime $date): ?array
+    public function getLicensePeriodActiveByDate(\DateTime $date): ?array
     {
         $queryBuilder = $this->createQueryBuilder('licensePeriod');
         $queryBuilder
             ->select('licensePeriod.startDate', 'licensePeriod.endDate')
             ->addSelect('license.type')
             ->addSelect('license.price')
+            ->addSelect('licenseDetail.label')
             ->innerJoin('licensePeriod.licenses', 'license')
+            ->innerJoin('license.licenseDetails', 'licenseDetail')
             ->andWhere($queryBuilder->expr()->lte('licensePeriod.startDate', ':date'))
             ->andWhere($queryBuilder->expr()->gte('licensePeriod.endDate', ':date'))
             ->setParameter(':date', $date)

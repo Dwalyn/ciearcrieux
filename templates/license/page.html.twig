@@ -5,58 +5,10 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row g-4">
-        <h2>{{ 'menu.license'|trans }} <small class="text-muted">(2024 - 2025)</small> </h2>
-        <div class="col-sm-12 col-lg-4 col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title d-flex bd-highlight">
 
-                        <div class="flex-grow-1 bd-highlight"><h4>Adulte</h4></div>
-                        <div class="bd-highlight"><h4>120€ <small class="text-muted"> / an</small></h4></div>
-                    </div>
-                    <ul>
-                        <li>Pratique en club</li>
-                        <li>Pratique en compétition</li>
-                        <li>Sans pratique</li>
-                    </ul>
+    <twig:LicensesActiveComponent />
 
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12 col-lg-4 col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title d-flex bd-highlight">
-                        <div class="flex-grow-1 bd-highlight"><h4>- de 18 ans</h4></div>
-                        <div class="bd-highlight"><h4>120€ <small class="text-muted"> / an</small></h4></div>
-                    </div>
-                    <ul>
-                        <li>Pratique en club</li>
-                        <li>Pratique en compétition (Certificat médical à fournir)</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12 col-lg-4 col-sm-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title d-flex bd-highlight">
-                        <div class="flex-grow-1 bd-highlight"><h4>Découverte</h4></div>
-                        <div class="bd-highlight"><h4>50€ <small class="text-muted"> / an</small></h4></div>
-                    </div>
-                    <ul>
-                        <li>Pratique en club</li>
-                        <li>Compétition non autorisées</li>
-                        <li>Délivrable uniquement aprés le 1er mars de la saison en cours</li>
-                        <li>Ne jamais avoir eu de licence FFTA</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row g-4 mt-5">
+    <div class="row g-4 mt-3">
         <h2>Location de matériel</h2>
         <div class="col-sm-12 col-lg-6 col-md-6">
             <div class="card">
