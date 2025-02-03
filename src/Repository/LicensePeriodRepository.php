@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\LicensePeriod;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,7 +22,7 @@ class LicensePeriodRepository extends ServiceEntityRepository
         parent::__construct($registry, LicensePeriod::class);
     }
 
-    public function getLicensePeriodActiveByDate(\DateTime $date): ?array
+    public function getLicenceInLicensePeriodActiveByDate(\DateTime $date): ?array
     {
         $queryBuilder = $this->createQueryBuilder('licensePeriod');
         $queryBuilder
@@ -31,15 +32,43 @@ class LicensePeriodRepository extends ServiceEntityRepository
             ->addSelect('licenseDetail.label')
             ->innerJoin('licensePeriod.licenses', 'license')
             ->innerJoin('license.licenseDetails', 'licenseDetail')
-            ->andWhere($queryBuilder->expr()->lte('licensePeriod.startDate', ':date'))
-            ->andWhere($queryBuilder->expr()->gte('licensePeriod.endDate', ':date'))
-            ->setParameter(':date', $date)
         ;
+        $this->periodCondition($queryBuilder, $date);
+
         $result = $queryBuilder->getQuery()->getResult();
         if (count($result)) {
             return $result;
         }
 
         return null;
+    }
+
+    public function getRentInLicensePeriodActiveByDate(\DateTime $date): ?array
+    {
+        $queryBuilder = $this->createQueryBuilder('licensePeriod');
+        $queryBuilder
+            ->select('rent.type')
+            ->addSelect('rent.price')
+            ->innerJoin('licensePeriod.rents', 'rent')
+        ;
+        $this->periodCondition($queryBuilder, $date);
+
+        $result = $queryBuilder->getQuery()->getResult();
+        if (count($result)) {
+            return $result;
+        }
+
+        return null;
+    }
+
+    private function periodCondition(QueryBuilder $queryBuilder, \DateTime $date): QueryBuilder
+    {
+        $queryBuilder
+            ->andWhere($queryBuilder->expr()->lte('licensePeriod.startDate', ':date'))
+            ->andWhere($queryBuilder->expr()->gte('licensePeriod.endDate', ':date'))
+            ->setParameter(':date', $date)
+        ;
+
+        return $queryBuilder;
     }
 }

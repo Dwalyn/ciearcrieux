@@ -1,3 +1,8 @@
+enum:
+  rent:
+    first: Première année
+    other: Deuxième année et plus
+
 global:
   info:
     title: Compagnie d'arc de Rieux
@@ -9,3 +14,9 @@ menu:
   club: La compagnie
   license: Licence
   login: S'identifier
+
+
+license:
+  rent:
+    title: Location de matériel
+    free: OFFERT

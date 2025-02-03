@@ -2,7 +2,7 @@
 
 namespace App\Query\License;
 
-use App\Dto\LicenceActiveDto;
+use App\Dto\License\LicenceActiveDto;
 use App\Enum\LicenseTypeEnum;
 use App\Query\QueryHandlerInterface;
 use App\Repository\LicensePeriodRepository;
@@ -21,7 +21,7 @@ class ListLicenseActiveDtoQueryHandler implements QueryHandlerInterface
     public function __invoke(ListLicenseActiveDtoQuery $query): ?ArrayCollection
     {
         $this->listLicenseActiveDto = new ArrayCollection();
-        $licensesActive = $this->licensePeriodRepository->getLicensePeriodActiveByDate($query->date);
+        $licensesActive = $this->licensePeriodRepository->getLicenceInLicensePeriodActiveByDate($query->date);
         if (null !== $licensesActive) {
             foreach ($licensesActive as $licenseActive) {
                 $licenceActiveDto = $this->hasLicenseActiveDtoType($licenseActive['type']);

@@ -24,6 +24,9 @@ class LicensePeriod
     #[ORM\OneToMany(targetEntity: License::class, mappedBy: 'licensePeriod')]
     protected Collection $licenses;
 
+    #[ORM\OneToMany(targetEntity: Rent::class, mappedBy: 'licensePeriod')]
+    protected Collection $rents;
+
     public function __construct(
         \DateTime $startDate,
         \DateTime $endDate,
@@ -31,6 +34,7 @@ class LicensePeriod
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->licenses = new ArrayCollection();
+        $this->rents = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -51,5 +55,10 @@ class LicensePeriod
     public function getLicenses(): Collection
     {
         return $this->licenses;
+    }
+
+    public function getRents(): Collection
+    {
+        return $this->rents;
     }
 }
