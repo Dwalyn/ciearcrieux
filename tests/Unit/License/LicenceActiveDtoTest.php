@@ -12,18 +12,18 @@ class LicenceActiveDtoTest extends KernelTestCase
 
     public function testDTO(): void
     {
-        $licenceActiveDto = new LicenceActiveDto([
-            'startDate'=> (new \DateTime()),
-            'endDate'=> (new \DateTime()),
-            'type' => LicenseTypeEnum::ADULT,
-            'price' => 100,
-            'details' => []
-        ]);
+        $licenceActiveDto = new LicenceActiveDto(
+            startDate: (new \DateTime()),
+            endDate: (new \DateTime()),
+            type: LicenseTypeEnum::ADULT,
+            price: 100,
+        );
+        $licenceActiveDto->addDetail('test');
 
         self::assertEquals((new \DateTime())->format('Y'),$licenceActiveDto->startYear);
         self::assertEquals((new \DateTime())->format('Y'), $licenceActiveDto->endYear);
         self::assertEquals(LicenseTypeEnum::ADULT, $licenceActiveDto->type);
         self::assertEquals(100, $licenceActiveDto->price);
-        self::assertEquals([], $licenceActiveDto->getDetails());
+        self::assertEquals(['test'], $licenceActiveDto->getDetails());
     }
 }
