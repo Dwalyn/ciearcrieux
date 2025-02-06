@@ -8,16 +8,20 @@ class LicenceActiveDto
 {
     public readonly string $startYear;
     public readonly string $endYear;
-    public readonly LicenseTypeEnum $type;
-    public readonly int $price;
-    protected array $details;
 
-    public function __construct(array $data)
-    {
-        $this->startYear = $data['startDate']->format('Y');
-        $this->endYear = $data['endDate']->format('Y');
-        $this->type = $data['type'];
-        $this->price = $data['price'];
+    /**
+     * @var array<int, string>
+     */
+    protected array $details; // liste de label de Entity/LicenseDetail
+
+    public function __construct(
+        \DateTime $startDate,
+        \DateTime $endDate,
+        public readonly LicenseTypeEnum $type,
+        public readonly int $price,
+    ) {
+        $this->startYear = $startDate->format('Y');
+        $this->endYear = $endDate->format('Y');
         $this->details = [];
     }
 
@@ -26,6 +30,9 @@ class LicenceActiveDto
         $this->details[] = $detail;
     }
 
+    /**
+     * @return array<int, string> $details
+     */
     public function getDetails(): array
     {
         return $this->details;

@@ -25,6 +25,9 @@ class License
     #[ORM\ManyToOne(targetEntity: LicensePeriod::class, inversedBy: 'licenses')]
     protected LicensePeriod $licensePeriod;
 
+    /**
+     * @var Collection<int, LicenseDetail>
+     */
     #[ORM\JoinTable(name: 'l_license_detail')]
     #[ORM\JoinColumn(name: 'licence_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'licence_detail_id', referencedColumnName: 'id')]
@@ -62,6 +65,9 @@ class License
         return $this->licensePeriod;
     }
 
+    /**
+     * @return Collection<int, LicenseDetail>
+     */
     public function getLicenceDetails(): Collection
     {
         return $this->licenseDetails;

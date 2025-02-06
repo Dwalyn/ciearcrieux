@@ -6,12 +6,9 @@ use App\Enum\RentTypeEnum;
 
 class RentActiveDto
 {
-    public readonly RentTypeEnum $type;
-    public readonly int $price;
-
-    public function __construct(array $data)
-    {
-        $this->type = $data['type'];
-        $this->price = $data['price'];
+    public function __construct(
+        public readonly RentTypeEnum $type,
+        public readonly int $price,
+    ) {
     }
 }

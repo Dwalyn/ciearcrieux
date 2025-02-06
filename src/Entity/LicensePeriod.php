@@ -21,9 +21,15 @@ class LicensePeriod
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     protected \DateTime $endDate;
 
+    /**
+     * @var Collection<int, License>
+     */
     #[ORM\OneToMany(targetEntity: License::class, mappedBy: 'licensePeriod')]
     protected Collection $licenses;
 
+    /**
+     * @var Collection<int, Rent>
+     */
     #[ORM\OneToMany(targetEntity: Rent::class, mappedBy: 'licensePeriod')]
     protected Collection $rents;
 
@@ -52,11 +58,17 @@ class LicensePeriod
         return $this->endDate;
     }
 
+    /**
+     * @return Collection<int, License>
+     */
     public function getLicenses(): Collection
     {
         return $this->licenses;
     }
 
+    /**
+     * @return Collection<int, Rent>
+     */
     public function getRents(): Collection
     {
         return $this->rents;

@@ -11,9 +11,9 @@ use Doctrine\Persistence\ManagerRegistry;
  * @template-extends ServiceEntityRepository<LicensePeriod>
  *
  * @method LicensePeriod|null find($id, $lockMode = null, $lockVersion = null)
- * @method LicensePeriod|null findOneBy(array $criteria, array $orderBy = null)
+ * @method LicensePeriod|null findOneBy(mixed[] $criteria, mixed[] $orderBy = null)
  * @method LicensePeriod[] findAll()
- * @method LicensePeriod[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method LicensePeriod[] findBy(mixed[] $criteria, mixed[] $orderBy = null, $limit = null, $offset = null)
  */
 class LicensePeriodRepository extends ServiceEntityRepository
 {
@@ -22,6 +22,9 @@ class LicensePeriodRepository extends ServiceEntityRepository
         parent::__construct($registry, LicensePeriod::class);
     }
 
+    /**
+     * @return array<int, mixed>|null
+     */
     public function getLicenceInLicensePeriodActiveByDate(\DateTime $date): ?array
     {
         $queryBuilder = $this->createQueryBuilder('licensePeriod');
@@ -43,6 +46,9 @@ class LicensePeriodRepository extends ServiceEntityRepository
         return null;
     }
 
+    /**
+     * @return array<int, mixed>|null
+     */
     public function getRentInLicensePeriodActiveByDate(\DateTime $date): ?array
     {
         $queryBuilder = $this->createQueryBuilder('licensePeriod');

@@ -2,6 +2,7 @@
 
 namespace App\Twig\Components;
 
+use App\Dto\License\LicenceActiveDto;
 use App\Query\License\ListLicenseActiveDtoQuery;
 use App\Query\QueryBusInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -11,6 +12,9 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 class LicensesActiveComponent
 {
     private string $periodDate;
+    /**
+     * @var ArrayCollection<int, LicenceActiveDto>
+     */
     private ArrayCollection $listLicenseActiveDto;
 
     public function __construct(
@@ -25,6 +29,9 @@ class LicensesActiveComponent
         );
     }
 
+    /**
+     * @return ArrayCollection<int, LicenceActiveDto>
+     */
     public function getLicencesInPeriod(): ArrayCollection
     {
         return $this->listLicenseActiveDto;

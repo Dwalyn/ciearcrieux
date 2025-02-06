@@ -11,6 +11,9 @@ use Doctrine\Common\Collections\Criteria;
 
 class ListLicenseActiveDtoQueryHandler implements QueryHandlerInterface
 {
+    /**
+     * @var ArrayCollection<int, LicenceActiveDto>
+     */
     private ArrayCollection $listLicenseActiveDto;
 
     public function __construct(
@@ -18,6 +21,9 @@ class ListLicenseActiveDtoQueryHandler implements QueryHandlerInterface
     ) {
     }
 
+    /**
+     * @return ArrayCollection<int, LicenceActiveDto>|null
+     */
     public function __invoke(ListLicenseActiveDtoQuery $query): ?ArrayCollection
     {
         $this->listLicenseActiveDto = new ArrayCollection();
@@ -26,7 +32,12 @@ class ListLicenseActiveDtoQueryHandler implements QueryHandlerInterface
             foreach ($licensesActive as $licenseActive) {
                 $licenceActiveDto = $this->hasLicenseActiveDtoType($licenseActive['type']);
                 if (null === $licenceActiveDto) {
-                    $licenceActiveDto = new LicenceActiveDto($licenseActive);
+                    $licenceActiveDto = new LicenceActiveDto(
+                        $licenseActive['startDate'],
+                        $licenseActive['endDate'],
+                        $licenseActive['type'],
+                        $licenseActive['price'],
+                    );
                     $this->listLicenseActiveDto->add($licenceActiveDto);
                 }
                 $licenceActiveDto->addDetail($licenseActive['label']);
@@ -45,7 +56,7 @@ class ListLicenseActiveDtoQueryHandler implements QueryHandlerInterface
         ;
         $result = $this->listLicenseActiveDto->matching($criteria);
 
-        if ($result->count()) {
+        if ($result->count() && $result->first() instanceof LicenceActiveDto) {
             return $result->first();
         }
 
