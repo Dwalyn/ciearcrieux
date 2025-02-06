@@ -8,15 +8,18 @@ global:
     title: Compagnie d'arc de Rieux
     description: Site officiel de la compagnie d'arc de Rieux
 
-menu:
-  home: Accueil
-  news: Actualités
-  club: La compagnie
-  license: Licence
-  login: S'identifier
-
+h3:
+  documents: Documents
+  licence: License
+  rent: Location de matériel
 
 license:
   rent:
-    title: Location de matériel
     free: OFFERT
+
+menu:
+  club: La compagnie
+  joinUs: Rejoignez nous
+  login: S'identifier
+  home: Accueil
+  news: Actualités

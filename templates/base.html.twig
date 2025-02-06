@@ -23,19 +23,23 @@
         <div class="container d-flex flex-wrap">
             {% set route = app.request.get('_route') %}
             <ul class="nav me-auto">
-                <li class="nav-item"><a href="{{ path('home') }}" class="nav-link px-2 {% if (route starts with 'home') %}active{% endif %}"><i class="fa-solid fa-house"></i> {{ 'menu.home'|trans }}</a></li>
+                <li class="nav-item"><a href="{{ path('home') }}" class="nav-link px-2"><i class="fa-solid fa-house"></i> {{ 'menu.home'|trans }}</a></li>
                 <li class="nav-item"><a href="#" class="nav-link px-2">{{ 'menu.news'|trans }}</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2" aria-current="page">{{ 'menu.club'|trans }}</a></li>
-                <li class="nav-item"><a href="{{ path('license') }}" class="nav-link px-2 {% if (route starts with 'license') %}active{% endif %}">{{ 'menu.license'|trans }}</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2">{{ 'menu.club'|trans }}</a></li>
+                <li class="nav-item"><a href="{{ path('license') }}" class="nav-link px-2">{{ 'menu.joinUs'|trans }}</a></li>
             </ul>
             <ul class="nav">
                 <li class="nav-item"><a href="#" class="nav-link px-2"><i class="fa-solid fa-user"></i> {{ 'menu.login'|trans }}</a></li>
             </ul>
         </div>
     </nav>
-    <main class="container my-5">
-        {% block content %}
-        {% endblock %}
+    <main class="container">
+        <h1 class="py-3">{% block h1 %}{% endblock %}</h1>
+        <hr/>
+        <div class="my-4">
+            {% block content %}
+            {% endblock %}
+        </div>
     </main>
 
     <footer class="footer mt-auto py-3 bg-light text-muted">
