@@ -1,4 +1,25 @@
+enum:
+  rent:
+    first: Première année
+    other: Deuxième année et plus
+
 global:
   info:
     title: Compagnie d'arc de Rieux
     description: Site officiel de la compagnie d'arc de Rieux
+
+h3:
+  documents: Documents
+  licence: License
+  rent: Location de matériel
+
+license:
+  rent:
+    free: OFFERT
+
+menu:
+  club: La compagnie
+  joinUs: Rejoignez nous
+  login: S'identifier
+  home: Accueil
+  news: Actualités

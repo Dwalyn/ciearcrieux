@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title_page %}
+    {{ parent() }} - {{ 'menu.joinUs'|trans }}
+{% endblock %}
+
+{% block h1 %} {{ 'menu.joinUs'|trans }} {% endblock %}
+
+{% block content %}
+    <div class="mb-5">
+        <h3>{{ 'h3.licence'|trans }}</h3>
+        <twig:LicensesActiveComponent />
+    </div>
+
+    <div class="mb-5">
+        <h3>{{ 'h3.documents'|trans }}</h3>
+        <div class="row">
+            <div class="col-lg-6 col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title d-flex bd-highlight">
+                            <div class="flex-grow-1 bd-highlight"><h4>Demande de license</h4></div>
+                        </div>
+                        <ul>
+                            <li>Imprimer et compléter <a href="https://www.ffta.fr/sites/default/files/2024-09/Formulaire_création_renouvellement_licence- version 2025_0.pdf">la fiche d’inscription.</a></li>
+                            <li>Imprimer et compléter <a href="https://www.ffta.fr/sites/default/files/2023-08/Questionnaire%20de%20sante%CC%81%20MAJEUR%20ET%20MINEUR.pdf">le questionnaire de santé</a>, en cas de réponse positive à l’une des questions, fournir un certificat médical.</li>
+                            <li>Attester avoir pris connaissance de <a href="https://www.ffta.fr/sites/default/files/2023-08/Notice%20Assurance%202022-2026%20%281%29.pdf">la notice assurance</a> pour la période 2022-2026.</li>
+                            <li>Règlement par chèque à l’ordre de <strong>Compagnie d’Arc de Rieux</strong></li>
+                        </ul>
+                        <p>Votre demande de renouvellement de licence sera automatiquement adressée par mail par la FFTA.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title d-flex bd-highlight">
+                            <div class="flex-grow-1 bd-highlight"><h4>Pass’Sports</h4></div>
+                        </div>
+                        <ul>
+                            <li><strong>50 €</strong> de réduction pour les licenciés de moins de 18 ans sur présentation du <a href="https://www.pass.sports.gouv.fr/v2/tout-savoir-sur-le-pass-sport">Pass’Sports</a> du ministère des sports.</li>
+                            <li><strong>15 €</strong> de réduction pour les licenciés de moins de 18 ans sur présentation du <a href="https://oise.fr/les-pass-citoyens-du-conseil-departemental-de-loise/le-passsports-citoyen">Pass’Sports</a> du conseil départemental de l'oise.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h3>{{ 'h3.rent'|trans }}</h3>
+        <twig:RentsActiveComponent />
+    </div>
+
+{% endblock %}
