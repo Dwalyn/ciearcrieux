@@ -85,8 +85,8 @@ abstract class WebTestCase extends BaseWebTestCase
 
     public static function tearDownAfterClass(): void
     {
-        $fileSystem = new Filesystem();
-        $fileSystem->remove(sprintf('%s/%s/', dirname(__DIR__, 1), $_ENV['FILE_REPOSITORY']));
+        //$fileSystem = new Filesystem();
+        //$fileSystem->remove(sprintf('%s/%s/', dirname(__DIR__, 1), $_ENV['FILE_REPOSITORY']));
 
         parent::tearDownAfterClass();
         static::$fixturesLoaded = false;

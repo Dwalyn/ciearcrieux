@@ -3,8 +3,8 @@ services:
     autowire: true
     public: true
     autoconfigure: true
-    bind:
-      $blameableListener: '@stof_doctrine_extensions.listener.blameable'
+#    bind:
+#      $blameableListener: '@stof_doctrine_extensions.listener.blameable'
 
   App\Tests\DataFixtures\:
     resource: '../tests/DataFixtures'
