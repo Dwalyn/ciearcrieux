@@ -77,7 +77,7 @@ fixtures: ## Import Fixtures
 
 phpunit: PHP_OPTIONS+=-dmemory_limit=-1
 phpunit: ## Execute phpunit Tests
-	$(PHPUNIT_BIN) -c ./phpunit.xml --testsuite ${SUITE} --verbose --stop-on-failure
+	$(PHPUNIT_BIN) -c ./phpunit.xml --testsuite ${SUITE} --stop-on-failure
 
 test: APP_ENV:=test
 test: cacheclear dropdb createdb cacheclear phpunit ## Execute the tests of the application
