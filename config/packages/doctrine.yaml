@@ -1,8 +1,6 @@
 doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'
-        types:
-            week: App\Doctrine\Type\WeekType
         use_savepoints: true
 
         # IMPORTANT: You MUST configure your server version,
