@@ -95,7 +95,7 @@ abstract class WebTestCase extends BaseWebTestCase
     /**
      * @param bool $withEvent Optional parameter to avoid memory leak => use if necessary only
      */
-    public function login(string $username, bool $withEvent = false): void
+    /*public function login(string $username, bool $withEvent = false): void
     {
         $graalUserProvider = self::getContainer()->get(GraalUserProvider::class);
         $user = $graalUserProvider->findUser($username);
@@ -114,12 +114,12 @@ abstract class WebTestCase extends BaseWebTestCase
         } else {
             $this->client->enableReboot();
         }
-    }
+    }*/
 
-    protected function logout(): void
+    /*protected function logout(): void
     {
         $this->client->request('GET', '_logout');
-    }
+    }*/
 
     protected function loadFixtures(array $groups, bool $first): void
     {

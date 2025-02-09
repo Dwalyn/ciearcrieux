@@ -1,5 +1,5 @@
 <?php
-namespace App\Test\Controller;
+namespace App\Tests\Controller;
 
 use App\Tests\WebTestCase;
 
