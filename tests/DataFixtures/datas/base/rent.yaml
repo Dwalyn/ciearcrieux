@@ -1,0 +1,9 @@
+rent_1:
+  type: !php/enum App\Enum\RentTypeEnum::FIRST
+  price: 0
+  licensePeriod: licensePeriod_1
+
+rent_2:
+  type: !php/enum App\Enum\RentTypeEnum::OTHER
+  price: 50
+  licensePeriod: licensePeriod_1
