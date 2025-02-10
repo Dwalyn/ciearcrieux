@@ -2,9 +2,7 @@
 
 namespace App\Tests\Unit\License;
 
-use App\Dto\License\LicenceActiveDto;
 use App\Dto\License\RentActiveDto;
-use App\Enum\LicenseTypeEnum;
 use App\Enum\RentTypeEnum;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 

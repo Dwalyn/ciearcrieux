@@ -10,7 +10,7 @@ global:
 
 h3:
   documents: Documents
-  licence: License
+  license: License
   rent: Location de matériel
 
 license:
