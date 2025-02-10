@@ -12,6 +12,7 @@ class LicenseControllerTest extends WebTestCase
 
     public function testPage(): void{
         $crawler = $this->client->request('GET', '/license');
+        $this->savePage();
         $this->assertStatusCode(200);
     }
 }

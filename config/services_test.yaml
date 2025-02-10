@@ -3,8 +3,6 @@ services:
     autowire: true
     public: true
     autoconfigure: true
-#    bind:
-#      $blameableListener: '@stof_doctrine_extensions.listener.blameable'
 
   App\Tests\DataFixtures\:
     resource: '../tests/DataFixtures'
@@ -12,7 +10,7 @@ services:
   App\DataFixtures\:
     resource: '../src/DataFixtures'
     autoconfigure: false
-    tags: [ 'doctrine.fixture.orm.disable' ]
+    tags: [ 'doctrine.fixture.orm' ]
 
   App\Tests\Service\FixturesLoader:
     public: true
