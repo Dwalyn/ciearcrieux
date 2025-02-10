@@ -2,7 +2,6 @@
 
 namespace App\Tests;
 
-use AFTRAL\GraalMockBundle\Service\GraalUserProvider;
 use App\Tests\Service\FixturesLoader;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectRepository;
@@ -10,14 +9,11 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\BrowserKit\Exception\LogicException;
 use Symfony\Component\DomCrawler\Crawler;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\AuthenticationEvents;
-use Symfony\Component\Security\Core\Event\AuthenticationSuccessEvent;
 use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class WebTestCase extends BaseWebTestCase
 {
@@ -30,6 +26,8 @@ abstract class WebTestCase extends BaseWebTestCase
     private FixturesLoader $fixturesLoader;
 
     private ?EntityManagerInterface $entityManager = null;
+
+    private TranslatorInterface $translator;
 
     /**
      * @return string[]
@@ -56,6 +54,7 @@ abstract class WebTestCase extends BaseWebTestCase
 
         $this->entityManager = static::getContainer()->get(EntityManagerInterface::class);
         $this->router = static::getContainer()->get(RouterInterface::class);
+        $this->translator = static::getContainer()->get(TranslatorInterface::class);
 
         if (!static::$fixturesLoaded) {
             $groups = $this->getGroupsForFixturesToLoad();
@@ -85,41 +84,9 @@ abstract class WebTestCase extends BaseWebTestCase
 
     public static function tearDownAfterClass(): void
     {
-        //$fileSystem = new Filesystem();
-        //$fileSystem->remove(sprintf('%s/%s/', dirname(__DIR__, 1), $_ENV['FILE_REPOSITORY']));
-
         parent::tearDownAfterClass();
         static::$fixturesLoaded = false;
     }
-
-    /**
-     * @param bool $withEvent Optional parameter to avoid memory leak => use if necessary only
-     */
-    /*public function login(string $username, bool $withEvent = false): void
-    {
-        $graalUserProvider = self::getContainer()->get(GraalUserProvider::class);
-        $user = $graalUserProvider->findUser($username);
-
-        $this->client->loginUser($user);
-
-        if ($withEvent) {
-            // @TODO : following code should be done in previous methode `$this->client->loginUser($user);` => check symfony/framework-bundle updates!
-            $token = self::getContainer()->get(TokenStorageInterface::class)->getToken();
-            self::getContainer()->get(EventDispatcherInterface::class)->dispatch(
-                new AuthenticationSuccessEvent($token),
-                AuthenticationEvents::AUTHENTICATION_SUCCESS
-            );
-
-            $this->client->disableReboot();
-        } else {
-            $this->client->enableReboot();
-        }
-    }*/
-
-    /*protected function logout(): void
-    {
-        $this->client->request('GET', '_logout');
-    }*/
 
     protected function loadFixtures(array $groups, bool $first): void
     {
@@ -140,6 +107,11 @@ abstract class WebTestCase extends BaseWebTestCase
     public function getEntityManager(): EntityManagerInterface
     {
         return $this->entityManager;
+    }
+
+    public function getTranslation(string $key): string
+    {
+        return $this->translator->trans($key);
     }
 
     public function clearRepositoryCache(): void

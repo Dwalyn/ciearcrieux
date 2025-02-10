@@ -6,11 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class LicenseControlller extends AbstractController
+class JoinUsController extends AbstractController
 {
-    #[Route('/license', name: 'license')]
+    #[Route('/join-us', name: 'joinUs')]
     public function index(): Response
     {
-        return $this->render('/license/page.html.twig');
+        return $this->render('/joinUs/page.html.twig');
     }
 }
