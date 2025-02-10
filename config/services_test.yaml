@@ -1,0 +1,20 @@
+services:
+  _defaults:
+    autowire: true
+    public: true
+    autoconfigure: true
+
+  App\Tests\DataFixtures\:
+    resource: '../tests/DataFixtures'
+
+  App\DataFixtures\:
+    resource: '../src/DataFixtures'
+    autoconfigure: false
+    tags: [ 'doctrine.fixture.orm' ]
+
+  App\Tests\Service\FixturesLoader:
+    public: true
+    arguments:
+      - '@doctrine.fixtures.loader'
+      - '@doctrine.orm.entity_manager'
+

@@ -28,7 +28,7 @@ RUN curl -L -o /tmp/nodejs.tar.gz https://nodejs.org/dist/v${NODE_VERSION}/node-
  && rm -f /tmp/nodejs.tar.gz
 
 # yarn
-ENV YARN_VERSION=1.22.17
+ENV YARN_VERSION=1.22.22
 RUN curl -L -o /tmp/yarn.tar.gz https://github.com/yarnpkg/yarn/releases/download/v${YARN_VERSION}/yarn-v${YARN_VERSION}.tar.gz \
  && tar xfvz /tmp/yarn.tar.gz -C /usr/local --strip-components=1 \
  && rm -f /tmp/yarn.tar.gz

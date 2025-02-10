@@ -1,11 +1,11 @@
 <div class="row">
     {% for rentInPeriod in this.rentsInPeriod %}
-        <div class="col-sm-12 col-lg-6 col-md-6">
+        <div class="col-sm-12 col-lg-6 col-md-6 rent">
             <div class="card">
                 <div class="card-body mt-3">
                     <div class="card-title d-flex bd-highlight">
-                        <div class="flex-grow-1 bd-highlight"><h4>{{ rentInPeriod.type.translationKey|trans }}</h4></div>
-                        <div class="bd-highlight"><h4>
+                        <div class="flex-grow-1 bd-highlight"><h4 class="rentType">{{ rentInPeriod.type.translationKey|trans }}</h4></div>
+                        <div class="bd-highlight"><h4 class="price">
                                 {% if 0 != rentInPeriod.price %}
                                     {{ rentInPeriod.price }}€ <small class="text-muted"> / an</small>
                                 {% else %}
