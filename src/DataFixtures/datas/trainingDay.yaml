@@ -1,0 +1,6 @@
+training1:
+  season: !php/enum App\Enum\TrainingSeasonEnum::SUMMER
+  googleMapLink : https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3428.1156755594457!2d2.5130622127757163!3d49.30341337127673!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e635b712c02227%3A0x320371b5c3c670e1!2sCompagnie%20d&#39;arc%20de%20Rieux!5e1!3m2!1sfr!2sfr!4v1739271020678!5m2!1sfr!2sfr
+training2:
+  season: !php/enum App\Enum\TrainingSeasonEnum::WINTER
+  googleMapLink: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13711.582906963875!2d2.5295577659327524!3d49.3065748708633!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e63500186d1315%3A0xd8bb4fb94b954254!2sGymnase%20Sylvie%20Dupays%20-%20Roger%20Couderc!5e1!3m2!1sfr!2sfr!4v1739278539260!5m2!1sfr!2sfr

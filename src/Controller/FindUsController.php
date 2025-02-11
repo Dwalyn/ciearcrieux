@@ -6,11 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class JoinUsController extends AbstractController
+class FindUsController extends AbstractController
 {
-    #[Route('/join-us', name: 'joinUs')]
-    public function joinUs(): Response
+    #[Route('/find-us', name: 'findUs')]
+    public function findUs(): Response
     {
-        return $this->render('/joinUs/page.html.twig');
+        return $this->render('/findUs/page.html.twig');
     }
 }
