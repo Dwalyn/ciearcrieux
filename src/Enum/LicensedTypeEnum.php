@@ -2,13 +2,13 @@
 
 namespace App\Enum;
 
-enum UserTypeEnum: string
+enum LicensedTypeEnum: string
 {
     case BEGINNER = 'beginner';
-    case CONFIRM = 'confirm';
+    case CONFIRMED = 'confirmed';
 
     public function getTranslationKey(): string
     {
-        return sprintf('enum.userType.%s', strtolower($this->name));
+        return sprintf('enum.licensedType.%s', strtolower($this->name));
     }
 }

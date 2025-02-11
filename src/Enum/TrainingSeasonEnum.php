@@ -2,13 +2,13 @@
 
 namespace App\Enum;
 
-enum TrainingPeriodEnum: string
+enum TrainingSeasonEnum: string
 {
     case SUMMER = 'summer';
     case WINTER = 'winter';
 
     public function getTranslationKey(): string
     {
-        return sprintf('enum.trainingPeriod.%s', strtolower($this->name));
+        return sprintf('enum.trainingSeason.%s', strtolower($this->name));
     }
 }

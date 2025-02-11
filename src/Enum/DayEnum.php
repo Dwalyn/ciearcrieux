@@ -2,13 +2,18 @@
 
 namespace App\Enum;
 
-enum UserTypeEnum: string
+enum DayEnum: int
 {
-    case BEGINNER = 'beginner';
-    case CONFIRM = 'confirm';
+    case DAY_0 = 0;
+    case DAY_1 = 1;
+    case DAY_2 = 2;
+    case DAY_3 = 3;
+    case DAY_4 = 4;
+    case DAY_5 = 5;
+    case DAY_6 = 6;
 
     public function getTranslationKey(): string
     {
-        return sprintf('enum.userType.%s', strtolower($this->name));
+        return sprintf('enum.day.%s', strtolower($this->name));
     }
 }
