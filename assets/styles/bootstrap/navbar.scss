@@ -16,6 +16,18 @@
       font-weight: bold;
     }
   }
+
+  & .dropdown-menu {
+    background-color: $white !important;
+    & a {
+      color: $black !important;
+
+      &:hover {
+        color: $black !important;
+        background-color: $yellow !important;
+      }
+    }
+  }
+
+
 }
-
-
