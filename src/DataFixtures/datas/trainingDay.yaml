@@ -3,18 +3,25 @@ trainingDay1:
   startTime: 19h15
   endTime: 20h45
   licensedType: !php/enum App\Enum\LicensedTypeEnum::BEGINNER
+  trainingPeriod: trainingPeriod1
+
 trainingDay2:
   day: !php/enum App\Enum\DayEnum::DAY_2
   startTime: 19h15
   endTime: 21h15
   licensedType: !php/enum App\Enum\LicensedTypeEnum::CONFIRMED
+  trainingPeriod: trainingPeriod1
+
 trainingDay3:
   day: !php/enum App\Enum\DayEnum::DAY_6
   startTime: 09h30
   endTime: 11h00
   licensedType: !php/enum App\Enum\LicensedTypeEnum::BEGINNER
+  trainingPeriod: trainingPeriod2
+
 trainingDay4:
   day: !php/enum App\Enum\DayEnum::DAY_6
   startTime: 09h30
   endTime: 11h30
   licensedType: !php/enum App\Enum\LicensedTypeEnum::CONFIRMED
+  trainingPeriod: trainingPeriod2

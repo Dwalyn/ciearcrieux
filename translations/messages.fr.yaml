@@ -2,6 +2,9 @@ enum:
   rent:
     first: Première année
     other: Deuxième année et plus
+  trainingPeriod:
+    summer: Période estivale
+    winter: Période hivernale
 
 global:
   info:

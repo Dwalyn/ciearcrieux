@@ -27,11 +27,45 @@ class TrainingDay
     #[ORM\Column(type: Types::STRING, length: 9, enumType: DayEnum::class)]
     protected readonly LicensedTypeEnum $licensedType;
 
-    public function __construct(DayEnum $day, \DateTime $startTime, \DateTime $endTime, LicensedTypeEnum $licensedType)
+    #[ORM\ManyToOne(targetEntity: TrainingPeriod::class, inversedBy: 'trainingDays')]
+    protected TrainingPeriod $trainingPeriod;
+
+    public function __construct(DayEnum $day, \DateTime $startTime, \DateTime $endTime, LicensedTypeEnum $licensedType, TrainingPeriod $trainingPeriod)
     {
         $this->day = $day;
         $this->startTime = $startTime;
         $this->endTime = $endTime;
         $this->licensedType = $licensedType;
+        $this->trainingPeriod = $trainingPeriod;
+    }
+
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+
+    public function getDay(): DayEnum
+    {
+        return $this->day;
+    }
+
+    public function getStartTime(): \DateTime
+    {
+        return $this->startTime;
+    }
+
+    public function getEndTime(): \DateTime
+    {
+        return $this->endTime;
+    }
+
+    public function getLicensedType(): LicensedTypeEnum
+    {
+        return $this->licensedType;
+    }
+
+    public function getTrainingPeriod(): TrainingPeriod
+    {
+        return $this->trainingPeriod;
     }
 }
