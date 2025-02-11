@@ -8,8 +8,15 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('build/images/favicon.ico') }}">
 
     {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
+        {{ encore_entry_link_tags('css/bootstrap') }}
+        {{ encore_entry_link_tags('css/fontawesome') }}
     {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('js/app') }}
+        {{ encore_entry_script_tags('js/bootstrap') }}
+    {% endblock %}
+
 </head>
 <body>
     <header class="border-bottom">
@@ -26,6 +33,16 @@
                 <li class="nav-item"><a href="{{ path('home') }}" class="nav-link px-2"><i class="fa-solid fa-house"></i> {{ 'menu.home'|trans }}</a></li>
                 <li class="nav-item"><a href="#" class="nav-link px-2">{{ 'menu.news'|trans }}</a></li>
                 <li class="nav-item"><a href="#" class="nav-link px-2">{{ 'menu.club'|trans }}</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ 'menu.club'|trans }}
+                    </a>
+                    <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Test</a></li>
+                            <li><a class="dropdown-item" href="#">Test2</a></li>
+                    </ul>
+                </li>
+
                 <li class="nav-item"><a href="{{ path('joinUs') }}" class="nav-link px-2">{{ 'menu.joinUs'|trans }}</a></li>
             </ul>
             <ul class="nav">
