@@ -31,14 +31,19 @@ class TrainingPeriod
     #[ORM\OneToMany(targetEntity: TrainingDay::class, mappedBy: 'trainingPeriod')]
     protected Collection $trainingDays;
 
+    #[ORM\OneToOne(targetEntity: TrainingPlace::class)]
+    protected TrainingPlace $trainingPlace;
+
     public function __construct(
         \DateTime $startDate,
         \DateTime $endDate,
         TrainingSeasonEnum $seasonEnum,
+        TrainingPlace $trainingPlace,
     ) {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->seasonEnum = $seasonEnum;
+        $this->trainingPlace = $trainingPlace;
         $this->trainingDays = new ArrayCollection();
     }
 
@@ -55,6 +60,11 @@ class TrainingPeriod
     public function getEndDate(): \DateTime
     {
         return $this->endDate;
+    }
+
+    public function getTrainingPlace(): TrainingPlace
+    {
+        return $this->trainingPlace;
     }
 
     /**

@@ -24,7 +24,7 @@ class TrainingDay
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     protected \DateTime $endTime;
 
-    #[ORM\Column(type: Types::STRING, length: 9, enumType: DayEnum::class)]
+    #[ORM\Column(type: Types::STRING, length: 9, enumType: LicensedTypeEnum::class)]
     protected readonly LicensedTypeEnum $licensedType;
 
     #[ORM\ManyToOne(targetEntity: TrainingPeriod::class, inversedBy: 'trainingDays')]
