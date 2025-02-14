@@ -3,7 +3,7 @@
 namespace App\Twig\Components;
 
 use App\Dto\License\RentActiveDto;
-use App\Query\License\ListRentActiveDtoQuery;
+use App\Query\JoinUs\ListRentActiveDtoQuery;
 use App\Query\QueryBusInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;

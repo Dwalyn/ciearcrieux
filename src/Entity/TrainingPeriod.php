@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Enum\TrainingSeasonEnum;
+use App\Enum\TypePlaceEnum;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -22,8 +22,8 @@ class TrainingPeriod
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     protected \DateTime $endDate;
 
-    #[ORM\Column(type: Types::STRING, length: 6, enumType: TrainingSeasonEnum::class)]
-    protected readonly TrainingSeasonEnum $seasonEnum;
+    #[ORM\Column(type: Types::STRING, length: 7, enumType: TypePlaceEnum::class)]
+    protected readonly TypePlaceEnum $typePlaceEnum;
 
     /**
      * @var Collection<int, TrainingDay>
@@ -34,16 +34,20 @@ class TrainingPeriod
     #[ORM\OneToOne(targetEntity: TrainingPlace::class)]
     protected TrainingPlace $trainingPlace;
 
+    #[ORM\Column(type: Types::BOOLEAN)]
+    protected bool $active;
+
     public function __construct(
         \DateTime $startDate,
         \DateTime $endDate,
-        TrainingSeasonEnum $seasonEnum,
+        TypePlaceEnum $typePlaceEnum,
         TrainingPlace $trainingPlace,
     ) {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
-        $this->seasonEnum = $seasonEnum;
+        $this->typePlaceEnum = $typePlaceEnum;
         $this->trainingPlace = $trainingPlace;
+        $this->active = true;
         $this->trainingDays = new ArrayCollection();
     }
 
@@ -73,5 +77,15 @@ class TrainingPeriod
     public function getTrainingDays(): Collection
     {
         return $this->trainingDays;
+    }
+
+    public function getActive(): bool
+    {
+        return $this->active;
+    }
+
+    public function getTypePlaceEnum(): TypePlaceEnum
+    {
+        return $this->typePlaceEnum;
     }
 }

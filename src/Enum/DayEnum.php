@@ -14,6 +14,6 @@ enum DayEnum: int
 
     public function getTranslationKey(): string
     {
-        return sprintf('enum.day.%s', strtolower($this->name));
+        return sprintf('enum.day.%s', $this->name);
     }
 }

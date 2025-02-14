@@ -1,13 +1,13 @@
 trainingPlace1:
-  name: Gymnase Sylvie Dupays - Roger Couderc
-  city: Brenouille
-  cityNumber: 60870
-  adress: 96 Rue de la Planchette
-  googleMapUrl: <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2937.9309096300485!2d2.534535003460177!3d49.305254738031635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e635b712c02227%3A0x320371b5c3c670e1!2sCompagnie%20d&#39;arc%20de%20Rieux!5e1!3m2!1sfr!2sfr!4v1739294008201!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-
-trainingPlace2:
   name: Compagnie d'arc
   city: Rieux
   cityNumber: 60870
   adress: 15 Rue de la Vanne
-  googleMapUrl: <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2615.1238157366497!2d2.5130675765057506!3d49.30341337139596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e635b712c02227%3A0x320371b5c3c670e1!2sCompagnie%20d&#39;arc%20de%20Rieux!5e1!3m2!1sfr!2sfr!4v1739293900217!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  googleMapUrl: <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4755.645421437507!2d2.5167690800246354!3d49.303303673658654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e635b712c02227%3A0x320371b5c3c670e1!2sCompagnie%20d&#39;arc%20de%20Rieux!5e1!3m2!1sfr!2sfr!4v1739455410523!5m2!1sfr!2sfr" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+trainingPlace2:
+  name: Gymnase Sylvie Dupays - Roger Couderc
+  city: Brenouille
+  cityNumber: 60870
+  adress: 96 Rue de la Planchette
+  googleMapUrl: <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3340.952940037215!2d2.539658850820263!3d49.30747746428044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e63500186d1315%3A0xd8bb4fb94b954254!2sGymnase%20Sylvie%20Dupays%20-%20Roger%20Couderc!5e1!3m2!1sfr!2sfr!4v1739455446150!5m2!1sfr!2sfr" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
