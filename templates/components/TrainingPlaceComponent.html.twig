@@ -1,0 +1,44 @@
+{% if this.display == enum('App\\Enum\\TrainingPlaceDisplayEnum').INLINE %}
+    {% set colText = 'col-md-7' %}
+    {% set colMap = 'col-md-5' %}
+{% endif %}
+{% if this.display == enum('App\\Enum\\TrainingPlaceDisplayEnum').BLOCK %}
+    {% set colText = 'col-md-12' %}
+    {% set colMap = 'col-md-12' %}
+{% endif %}
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">{{ this.trainingPlaceDto.name }}</h4>
+    </div>
+    <div class="row">
+        <div class="{{ colText }}">
+            <div class="card-body">
+                {{ this.trainingPlaceDto.periodDate }}
+                <hr />
+                <div>
+                    <div>
+                        <i class="fa-solid fa-location-dot"></i> {{ this.trainingPlaceDto.adressDto.adress }}
+                    </div>
+                    <div class="ms-3">
+                        {{ this.trainingPlaceDto.adressDto.cityNumber }} {{ this.trainingPlaceDto.adressDto.city }}
+                    </div>
+                </div>
+                <hr />
+                {% for dayDto in this.trainingPlaceDto.listDayDto %}
+                    <div class="my-3">
+                        <h5>{{ dayDto.day.translationKey|trans }}</h5>
+                    </div>
+                    <ul>
+                        {% for hourPeriodDto in dayDto.listHourPeriodDto %}
+                            <li>{{ hourPeriodDto.timePeriod }} ({{ hourPeriodDto.licensedTypeEnum.translationKey|trans }})</li>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="{{ colMap }} mt-1">
+            {{ this.trainingPlaceDto.adressDto.googleMapUrl|raw }}
+        </div>
+    </div>
+</div>

@@ -38,7 +38,7 @@
                             {{ 'menu.club'|trans }}
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ path('findUs') }}">{{ 'menu.findUs'|trans }}</a></li>
+                            <li><a class="dropdown-item" href="{{ path('findUs', { 'typePlace': typePlaceActive().value }) }}">{{ 'menu.findUs'|trans }}</a></li>
                         </ul>
                     </li>
                     <li class="nav-item"><a href="{{ path('joinUs') }}" class="nav-link px-2">{{ 'menu.joinUs'|trans }}</a></li>

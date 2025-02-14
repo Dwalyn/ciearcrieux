@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-
     <div class="row">
         <div class="col-8">
             <div class="row g-0 border rounded overflow-hidden mb-4 h-md-250 position-relative">
@@ -25,24 +24,10 @@
             </div>
         </div>
         <div class="col-4">
-            <div class="px-4 py-2 bg-light rounded">
-                <h4 class="fst-italic">Entrainement hivernal</h4>
-                <div class="mb-2">
-                    <div class="">Mardi</div>
-                    <div class="ms-3"> 19h15 - 20h45 (débutant)</div>
-                    <div class="ms-3"> 19h15 - 21h15 (confirmé)</div>
-                </div>
-                <div class="mb-4">
-                    <div>Samedi</div>
-                    <div class="ms-3">9h30 - 11h00 (débutant)</div>
-                    <div class="ms-3">9h30 - 11h30 (confirmé)</div>
-                </div>
-                <div>
-                    <div><i class="fa-solid fa-location-dot"></i> Gymnase Sylvie Dupays - Roger Couderc</div>
-                    <div class="ms-3">96 Rue de la Planchette</div>
-                    <div class="ms-3">60870 Brenouille</div>
-                </div>
-            </div>
+            <twig:TrainingPlaceComponent
+                    typePlaceEnum="{{ typePlaceActive() }}"
+                    display="{{ enum('App\\Enum\\TrainingPlaceDisplayEnum').BLOCK }}"
+            />
         </div>
     </div>
 {% endblock %}
