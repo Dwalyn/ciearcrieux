@@ -1,56 +1,71 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="{{ 'global.info.description'|trans }}">
+        <meta name="author" content="Jérôme">
+        <title>{% block title_page %}{{ 'global.info.title'|trans }}{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('build/images/favicon.ico') }}">
 
-<html lang="en"><head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{{ 'global.info.description'|trans }}">
-    <meta name="author" content="Jérôme">
-    <title>{% block title_page %}{{ 'global.info.title'|trans }}{% endblock %}</title>
-    <link rel="icon" type="image/x-icon" href="{{ asset('build/images/favicon.ico') }}">
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('css/bootstrap') }}
+            {{ encore_entry_link_tags('css/fontawesome') }}
+        {% endblock %}
 
-    {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
-    {% endblock %}
-</head>
-<body>
-    <header class="border-bottom">
-        <div class="container my-1">
-            <a href="{{ path('home') }}">
-                <img class="logo" src="{{ asset('build/images/logo-titre.png') }}"/>
-            </a>
-        </div>
-    </header>
-    <nav class="py-2 main-nav border-bottom">
-        <div class="container d-flex flex-wrap">
-            {% set route = app.request.get('_route') %}
-            <ul class="nav me-auto">
-                <li class="nav-item"><a href="{{ path('home') }}" class="nav-link px-2"><i class="fa-solid fa-house"></i> {{ 'menu.home'|trans }}</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2">{{ 'menu.news'|trans }}</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2">{{ 'menu.club'|trans }}</a></li>
-                <li class="nav-item"><a href="{{ path('joinUs') }}" class="nav-link px-2">{{ 'menu.joinUs'|trans }}</a></li>
-            </ul>
-            <ul class="nav">
-                <li class="nav-item"><a href="#" class="nav-link px-2"><i class="fa-solid fa-user"></i> {{ 'menu.login'|trans }}</a></li>
-            </ul>
-        </div>
-    </nav>
-    <main class="container">
-        <h1 class="py-3">{% block h1 %}{% endblock %}</h1>
-        <hr/>
-        <div class="my-4">
-            {% block content %}
-            {% endblock %}
-        </div>
-    </main>
+        {% block javascripts %}
+            {{ encore_entry_script_tags('js/app') }}
+            {{ encore_entry_script_tags('js/bootstrap') }}
+        {% endblock %}
 
-    <footer class="footer mt-auto py-3 bg-light text-muted">
-        <div class="container text-center">
-            <div class="row g-2">
-                <div class="col-4"><i class="fa-solid fa-location-dot"></i> Allée des archers 60870 Rieux</div>
-                <div class="col-4"><i class="fa-solid fa-phone"></i> 06.08.35.78.97</div>
-                <div class="col-4"><i class="fa-solid fa-at"></i> contact@cie-arc-rieux.fr</div>
+    </head>
+    <body>
+        <header class="border-bottom">
+            <div class="container my-1">
+                <a href="{{ path('home') }}">
+                    <img class="logo" src="{{ asset('build/images/logo-titre.png') }}"/>
+                </a>
             </div>
-            <div class="my-2">© {{ 'global.info.title'|trans }} (1851 - {{ 'now'|date('Y') }})</div>
-        </div>
-    </footer>
-</body>
+        </header>
+        <nav class="py-2 main-nav border-bottom">
+            <div class="container d-flex flex-wrap">
+                {% set route = app.request.get('_route') %}
+                <ul class="nav me-auto">
+                    <li class="nav-item"><a href="{{ path('home') }}" class="nav-link px-2"><i class="fa-solid fa-house"></i> {{ 'menu.home'|trans }}</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link px-2">{{ 'menu.news'|trans }}</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ 'menu.club'|trans }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ path('findUs', { 'typePlace': typePlaceActive().value }) }}">{{ 'menu.findUs'|trans }}</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a href="{{ path('joinUs') }}" class="nav-link px-2">{{ 'menu.joinUs'|trans }}</a></li>
+                </ul>
+                <ul class="nav">
+                    <li class="nav-item"><a href="#" class="nav-link px-2"><i class="fa-solid fa-user"></i> {{ 'menu.login'|trans }}</a></li>
+                </ul>
+            </div>
+        </nav>
+        <main class="container">
+            <h1 class="py-3">{% block h1 %}{% endblock %}</h1>
+            <hr/>
+            <div class="my-4">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </main>
+
+        <footer class="footer mt-auto py-3 bg-light text-muted">
+            <div class="container text-center">
+                <div class="row g-2">
+                    <div class="col-4"><i class="fa-solid fa-location-dot"></i> Allée des archers 60870 Rieux</div>
+                    <div class="col-4"><i class="fa-solid fa-phone"></i> 06.08.35.78.97</div>
+                    <div class="col-4"><i class="fa-solid fa-at"></i> contact@cie-arc-rieux.fr</div>
+                </div>
+                <div class="my-2">© {{ 'global.info.title'|trans }} (1851 - {{ 'now'|date('Y') }})</div>
+            </div>
+        </footer>
+    </body>
 </html>

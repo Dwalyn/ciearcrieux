@@ -1,0 +1,11 @@
+trainingPeriod1:
+  startDate: '2025-04-02'
+  endDate: '2025-11-01'
+  trainingSeason: !php/enum App\Enum\TypePlaceEnum::OUTDOOR
+  trainingPlace: trainingPlace1
+
+trainingPeriod2:
+  startDate: '2024-11-01'
+  endDate: '2025-04-01'
+  trainingSeason: !php/enum App\Enum\TypePlaceEnum::INDOOR
+  trainingPlace: trainingPlace2
