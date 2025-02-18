@@ -3,7 +3,7 @@
 namespace App\Twig\Components;
 
 use App\Dto\License\LicenceActiveDto;
-use App\Query\License\ListLicenseActiveDtoQuery;
+use App\Query\JoinUs\ListLicenseActiveDtoQuery;
 use App\Query\QueryBusInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;

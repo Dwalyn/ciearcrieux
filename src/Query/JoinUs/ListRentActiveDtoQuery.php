@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Query\License;
+namespace App\Query\JoinUs;
 
 use App\Query\QueryInterface;
 

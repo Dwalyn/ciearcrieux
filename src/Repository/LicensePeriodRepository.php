@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\LicensePeriod;
+use App\Trait\QueryBuilder\DateConditionTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -17,6 +17,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class LicensePeriodRepository extends ServiceEntityRepository
 {
+    use DateConditionTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, LicensePeriod::class);
@@ -36,7 +38,7 @@ class LicensePeriodRepository extends ServiceEntityRepository
             ->innerJoin('licensePeriod.licenses', 'license')
             ->innerJoin('license.licenseDetails', 'licenseDetail')
         ;
-        $this->periodCondition($queryBuilder, $date);
+        $this->beetweenDate($queryBuilder, $date, 'licensePeriod');
 
         $result = $queryBuilder->getQuery()->getResult();
         if (count($result)) {
@@ -57,7 +59,7 @@ class LicensePeriodRepository extends ServiceEntityRepository
             ->addSelect('rent.price')
             ->innerJoin('licensePeriod.rents', 'rent')
         ;
-        $this->periodCondition($queryBuilder, $date);
+        $this->beetweenDate($queryBuilder, $date, 'licensePeriod');
 
         $result = $queryBuilder->getQuery()->getResult();
         if (count($result)) {
@@ -65,16 +67,5 @@ class LicensePeriodRepository extends ServiceEntityRepository
         }
 
         return null;
-    }
-
-    private function periodCondition(QueryBuilder $queryBuilder, \DateTime $date): QueryBuilder
-    {
-        $queryBuilder
-            ->andWhere($queryBuilder->expr()->lte('licensePeriod.startDate', ':date'))
-            ->andWhere($queryBuilder->expr()->gte('licensePeriod.endDate', ':date'))
-            ->setParameter(':date', $date)
-        ;
-
-        return $queryBuilder;
     }
 }

@@ -1,7 +1,21 @@
 enum:
+  day:
+    DAY_0: Dimanche,
+    DAY_1: Lundi
+    DAY_2: Mardi
+    DAY_3: Mercredi
+    DAY_4: Jeudi
+    DAY_5: Vendredi
+    DAY_6: Samedi
+  licensedType:
+    beginner: débutant
+    confirmed: confirmé
   rent:
     first: Première année
     other: Deuxième année et plus
+  trainingPlace:
+    indoor: Intérieur
+    outdoor: Extérieur
 
 global:
   info:
@@ -19,6 +33,7 @@ license:
 
 menu:
   club: La compagnie
+  findUs: Où nous trouver ?
   joinUs: Rejoignez nous
   login: S'identifier
   home: Accueil

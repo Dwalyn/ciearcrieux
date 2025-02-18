@@ -1,0 +1,33 @@
+.logo{
+  width: 50% !important;
+}
+
+.main-nav {
+  background-color: $blue;
+  & a {
+    color: $white;
+
+    & :hover {
+      color: $link-hover-color !important;
+    }
+
+    &.active {
+      color: $link-hover-color !important;
+      font-weight: bold;
+    }
+  }
+
+  & .dropdown-menu {
+    background-color: $white !important;
+    & a {
+      color: $black !important;
+
+      &:hover {
+        color: $black !important;
+        background-color: $yellow !important;
+      }
+    }
+  }
+
+
+}

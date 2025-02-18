@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class JoinUsController extends AbstractController
 {
     #[Route('/join-us', name: 'joinUs')]
-    public function index(): Response
+    public function joinUs(): Response
     {
         return $this->render('/joinUs/page.html.twig');
     }
