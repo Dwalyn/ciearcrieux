@@ -52,6 +52,9 @@
             <h1 class="py-3">{% block h1 %}{% endblock %}</h1>
             <hr/>
             <div class="my-4">
+                {% if app.user in not null %}
+                    {{ app.user.email }}
+                {% endif %}
                 {% block content %}
                 {% endblock %}
             </div>
