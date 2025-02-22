@@ -2,46 +2,23 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
 {
-    #[Route(path: '/login', name: 'app_login')]
+    #[Route(path: '/login', name: 'login')]
     public function login(
         AuthenticationUtils $authenticationUtils,
-        UserPasswordHasherInterface $passwordHasher,
-        EntityManagerInterface $entityManager,
-    ): Response
-    {
+    ): Response {
+        if (null !== $this->getUser()) {
+            return $this->redirectToRoute('home');
+        }
 
-        /*$user = new User();
-        $plaintextPassword = 'test';
-        $user->setEmail('test@google.com');
-
-        // hash the password (based on the security.yaml config for the $user class)
-        $hashedPassword = $passwordHasher->hashPassword(
-            $user,
-            $plaintextPassword
-        );
-        $user->setPassword($hashedPassword);
-        $entityManager->persist($user);
-        $entityManager->flush();*/
-
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
-
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-
-        return $this->render('login/login.html.twig', [
-            'last_username' => $lastUsername,
-            'error' => $error,
+        return $this->render('login/page.html.twig', [
+            'last_username' => $authenticationUtils->getLastUsername(),
         ]);
     }
 

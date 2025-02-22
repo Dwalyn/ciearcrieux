@@ -1,0 +1,7 @@
+user_1:
+  firstname: user
+  lastname: test
+  email: test@google.com
+  password: test
+  roles:
+    - ROLE_USER
