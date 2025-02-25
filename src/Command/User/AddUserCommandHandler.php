@@ -22,6 +22,7 @@ class AddUserCommandHandler implements CommandHandlerInterface
             $addUserCommand->lastname,
             $addUserCommand->email,
             $addUserCommand->roles,
+            $addUserCommand->enable,
         );
 
         $hashedPassword = $this->passwordHasher->hashPassword(

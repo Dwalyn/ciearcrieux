@@ -17,7 +17,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     #[ORM\Column(type: Types::BIGINT, options: ['unsigned' => true])]
     protected ?string $id = null;
 
-    #[ORM\Column(length: 180)]
+    #[ORM\Column(type: Types::STRING, length: 180, nullable: false)]
     private string $email;
 
     /**
@@ -38,15 +38,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     #[ORM\Column(type: Types::STRING, length: 50)]
     private string $lastname;
 
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $enable;
+
     /**
      * @param list<string> $roles,
      */
-    public function __construct(string $firstname, string $lastname, string $email, array $roles = ['ROLE_USER'])
+    public function __construct(string $firstname, string $lastname, string $email, array $roles = ['ROLE_USER'], bool $enable = true)
     {
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->email = $email;
         $this->roles = $roles;
+        $this->enable = $enable;
     }
 
     public function getId(): ?string
@@ -73,13 +77,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
      */
     public function getUserIdentifier(): string
     {
-        return $this->email;
+        /**
+         * @var non-empty-string $email
+         */
+        $email = $this->email;
+
+        return $email;
     }
 
     /**
      * @see UserInterface
      *
-     * @return list<string>
+     * @return non-empty-array<int<0, max>, string>
      */
     public function getRoles(): array
     {
@@ -122,6 +131,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function disable(): void
+    {
+        $this->enable = false;
+    }
+
+    public function enable(): void
+    {
+        $this->enable = true;
+    }
+
+    public function isEnable(): bool
+    {
+        return $this->enable;
     }
 
     public function __toString(): string

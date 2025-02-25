@@ -21,6 +21,7 @@ class UserFixtures extends AbstractFixture
             $data['email'],
             $data['password'],
             $data['roles'],
+            $data['enable'] ?? true,
         );
         $this->commandBus->dispatch($command);
 

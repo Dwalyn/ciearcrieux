@@ -5,3 +5,12 @@ user_1:
   password: test
   roles:
     - ROLE_USER
+
+user_2:
+  firstname: user2
+  lastname: test
+  email: test2@google.com
+  password: test
+  roles:
+    - ROLE_USER
+  enable: false

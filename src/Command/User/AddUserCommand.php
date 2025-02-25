@@ -18,6 +18,7 @@ class AddUserCommand implements CommandInterface
         public string $email,
         public string $password,
         public array $roles = ['ROLE_USER'],
+        public bool $enable = true,
     ) {
     }
 }
