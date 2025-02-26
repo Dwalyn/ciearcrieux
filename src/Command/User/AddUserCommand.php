@@ -16,6 +16,7 @@ class AddUserCommand implements CommandInterface
         public string $firstname,
         public string $lastname,
         public string $email,
+        public \DateTime $birthday,
         public string $password,
         public array $roles = ['ROLE_USER'],
         public bool $enable = true,
