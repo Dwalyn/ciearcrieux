@@ -38,19 +38,45 @@
                             {{ 'menu.club'|trans }}
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ path('findUs', { 'typePlace': typePlaceActive().value }) }}">{{ 'menu.findUs'|trans }}</a></li>
+                            <li><a class="dropdown-item" href="{{ path('findUs', {typePlace: typePlaceActive().value}) }}">{{ 'menu.findUs'|trans }}</a></li>
                         </ul>
                     </li>
                     <li class="nav-item"><a href="{{ path('joinUs') }}" class="nav-link px-2">{{ 'menu.joinUs'|trans }}</a></li>
                 </ul>
                 <ul class="nav">
-                    <li class="nav-item"><a href="#" class="nav-link px-2"><i class="fa-solid fa-user"></i> {{ 'menu.login'|trans }}</a></li>
+                    {% if app.user %}
+                        <li class="nav-item"><a href="{{ path('app_logout') }}" class="nav-link px-2"><i class="fa-solid fa-user"></i> {{ app.user }}</a></li>
+                        {% else %}
+                            <li class="nav-item"><a href="{{ path('login') }}" class="nav-link px-2"><i class="fa-solid fa-user"></i> {{ 'menu.login'|trans }}</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
+
+        {% if app.user %}
+            <nav class="py-2 main-nav border-bottom member-nav">
+                <div class="container d-flex flex-wrap">
+                    {% set route = app.request.get('_route') %}
+                    <ul class="nav me-auto">
+                        <li class="nav-item"><a href="{{ path('home') }}" class="nav-link px-2"><i class="fa-solid fa-house"></i> {{ 'menu.home'|trans }}</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ 'menu.club'|trans }}
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ path('findUs', {typePlace: typePlaceActive().value}) }}">{{ 'menu.findUs'|trans }}</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        {% endif %}
+
         <main class="container">
-            <h1 class="py-3">{% block h1 %}{% endblock %}</h1>
-            <hr/>
+            {% if not (route starts with 'home') %}
+                <h1 class="py-3">{% block h1 %}{% endblock %}</h1>
+                <hr/>
+            {% endif %}
             <div class="my-4">
                 {% block content %}
                 {% endblock %}

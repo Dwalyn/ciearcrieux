@@ -38,3 +38,8 @@ menu:
   login: S'identifier
   home: Accueil
   news: Actualités
+
+signin:
+  button: Se connecter
+  email: Email
+  password: Mot de passe

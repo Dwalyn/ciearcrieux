@@ -20,9 +20,9 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
     _instanceof:
-#        App\Common\Command\CommandHandlerInterface:
-#            tags:
-#                - { name: messenger.message_handler, bus: command.bus }
+        App\Command\CommandHandlerInterface:
+            tags:
+                - { name: messenger.message_handler, bus: command.bus }
         App\Query\QueryHandlerInterface:
             tags:
                 - { name: messenger.message_handler, bus: query.bus }
