@@ -58,15 +58,7 @@
                 <div class="container d-flex flex-wrap">
                     {% set route = app.request.get('_route') %}
                     <ul class="nav me-auto">
-                        <li class="nav-item"><a href="{{ path('home') }}" class="nav-link px-2"><i class="fa-solid fa-house"></i> {{ 'menu.home'|trans }}</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                                {{ 'menu.club'|trans }}
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ path('findUs', {typePlace: typePlaceActive().value}) }}">{{ 'menu.findUs'|trans }}</a></li>
-                            </ul>
-                        </li>
+                        <li class="nav-item"><a href="{{ path('membersList') }}" class="nav-link px-2">{{ 'menu.members'|trans }}</a></li>
                     </ul>
                 </div>
             </nav>

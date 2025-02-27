@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title_page %}
+    {{ parent() }} - {{ 'menu.members'|trans }}
+{% endblock %}
+
+{% block h1 %} {{ 'menu.members'|trans }} {% endblock %}
+
+{% block content %}
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Nom</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

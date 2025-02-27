@@ -19,6 +19,7 @@ class UserFixtures extends AbstractFixture
             $data['firstname'],
             $data['lastname'],
             $data['email'],
+            $data['birthday'] ?? new \DateTime(),
             $data['password'],
             $data['roles'],
             $data['enable'] ?? true,
