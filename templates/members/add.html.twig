@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title_page %}
+    {{ parent() }} - {{ 'menu.members'|trans }}
+{% endblock %}
+
+{% block h1 %} {{ 'menu.members'|trans }} {% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Ajouter un nouveau membre</h4>
+            {{ form_start(form) }}
+                {{ form_row(form.lastName, {attr: {class: 'mb-2'}}) }}
+                {{ form_row(form.firstName) }}
+                {{ form_row(form.birthday) }}
+                {{ form_row(form.licenseNumber) }}
+                {{ form_row(form.role) }}
+                {{ form_row(form.email) }}
+                <div>
+                    <button type="submit" class="btn btn-success"><i class="fa-solid fa-check"></i> Enregistrer</button>
+                    <a href="{{ path('membersList') }}" class="btn btn-outline-secondary">Annuler</a>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

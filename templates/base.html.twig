@@ -1,3 +1,4 @@
+{% set route = app.request.get('_route') %}
 <!doctype html>
 <html lang="fr">
     <head>
@@ -9,81 +10,70 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('build/images/favicon.ico') }}">
 
         {% block stylesheets %}
-            {{ encore_entry_link_tags('css/bootstrap') }}
-            {{ encore_entry_link_tags('css/fontawesome') }}
+        {{ encore_entry_link_tags('css/bootstrap') }}
+        {{ encore_entry_link_tags('css/fontawesome') }}
         {% endblock %}
 
         {% block javascripts %}
-            {{ encore_entry_script_tags('js/app') }}
-            {{ encore_entry_script_tags('js/bootstrap') }}
+        {{ encore_entry_script_tags('js/app') }}
+        {{ encore_entry_script_tags('js/bootstrap') }}
         {% endblock %}
-
     </head>
-    <body>
-        <header class="border-bottom">
-            <div class="container my-1">
-                <a href="{{ path('home') }}">
-                    <img class="logo" src="{{ asset('build/images/logo-titre.png') }}"/>
-                </a>
-            </div>
-        </header>
-        <nav class="py-2 main-nav border-bottom">
-            <div class="container d-flex flex-wrap">
-                {% set route = app.request.get('_route') %}
-                <ul class="nav me-auto">
-                    <li class="nav-item"><a href="{{ path('home') }}" class="nav-link px-2"><i class="fa-solid fa-house"></i> {{ 'menu.home'|trans }}</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link px-2">{{ 'menu.news'|trans }}</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ 'menu.club'|trans }}
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ path('findUs', {typePlace: typePlaceActive().value}) }}">{{ 'menu.findUs'|trans }}</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a href="{{ path('joinUs') }}" class="nav-link px-2">{{ 'menu.joinUs'|trans }}</a></li>
-                </ul>
-                <ul class="nav">
-                    {% if app.user %}
-                        <li class="nav-item"><a href="{{ path('app_logout') }}" class="nav-link px-2"><i class="fa-solid fa-user"></i> {{ app.user }}</a></li>
-                        {% else %}
-                            <li class="nav-item"><a href="{{ path('login') }}" class="nav-link px-2"><i class="fa-solid fa-user"></i> {{ 'menu.login'|trans }}</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        </nav>
+<body>
+    <header class="navbar flex-md-nowrap mx-5">
+        <a href="{{ path('home') }}">
+            <img class="logo" src="{{ asset('build/images/logo-titre.png') }}"/>
+        </a>
+    </header>
+     <nav class="py-2 main-nav border-bottom">
+         {% block menu %}
+            {{ include('menu/public.html.twig') }}
+         {% endblock %}
+     </nav>
+    <section class="text-center">
+        {% block messages %}
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for key, message in messages %}
+                    <div class="alert alert-{{ type }} flash-{{ type }} mb-0 rounded-0">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endblock %}
+    </section>
+    <div class="container-fluid container-min-size">
+        <div class="row">
+            {% if app.user %}
+                <a href="{{ path('app_logout') }}">Logout</a>
 
-        {% if app.user %}
-            <nav class="py-2 main-nav border-bottom member-nav">
-                <div class="container d-flex flex-wrap">
-                    {% set route = app.request.get('_route') %}
-                    <ul class="nav me-auto">
-                        <li class="nav-item"><a href="{{ path('membersList') }}" class="nav-link px-2">{{ 'menu.members'|trans }}</a></li>
-                    </ul>
-                </div>
-            </nav>
-        {% endif %}
-
-        <main class="container">
-            {% if not (route starts with 'home') %}
-                <h1 class="py-3">{% block h1 %}{% endblock %}</h1>
-                <hr/>
+                {{ include('menu/administrator.html.twig') }}
             {% endif %}
-            <div class="my-4">
-                {% block content %}
-                {% endblock %}
-            </div>
-        </main>
 
-        <footer class="footer mt-auto py-3 bg-light text-muted">
-            <div class="container text-center">
-                <div class="row g-2">
-                    <div class="col-4"><i class="fa-solid fa-location-dot"></i> Allée des archers 60870 Rieux</div>
-                    <div class="col-4"><i class="fa-solid fa-phone"></i> 06.08.35.78.97</div>
-                    <div class="col-4"><i class="fa-solid fa-at"></i> contact@cie-arc-rieux.fr</div>
+            <main class="col-md-9 mx-sm-auto col-lg-10 px-md-4">
+                <div class="justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                    {% if 'home' != route %}
+                    <h1>
+                        {% block h1 %}
+                        {% endblock %}
+                    </h1>
+                    <hr />
+                    {% endif %}
+
+                    {% block content %}
+                    {% endblock %}
                 </div>
-                <div class="my-2">© {{ 'global.info.title'|trans }} (1851 - {{ 'now'|date('Y') }})</div>
-            </div>
-        </footer>
-    </body>
+            </main>
+        </div>
+    </div>
+     <footer class="footer mt-auto py-3 bg-light text-muted">
+         <div class="container text-center">
+             <div class="row g-2">
+                 <div class="col-4"><i class="fa-solid fa-location-dot"></i> Allée des archers 60870 Rieux</div>
+                 <div class="col-4"><i class="fa-solid fa-phone"></i> 06.08.35.78.97</div>
+                 <div class="col-4"><i class="fa-solid fa-at"></i> contact@cie-arc-rieux.fr</div>
+             </div>
+             <div class="my-2">© {{ 'global.info.title'|trans }} (1851 - {{ 'now'|date('Y') }})</div>
+         </div>
+     </footer>
+</body>
 </html>

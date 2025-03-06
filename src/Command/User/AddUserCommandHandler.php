@@ -22,6 +22,7 @@ class AddUserCommandHandler implements CommandHandlerInterface
             $addUserCommand->lastname,
             $addUserCommand->email,
             $addUserCommand->birthday,
+            $addUserCommand->licenseNumber,
             $addUserCommand->roles,
             $addUserCommand->enable,
         );

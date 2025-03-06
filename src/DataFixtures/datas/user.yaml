@@ -2,6 +2,7 @@ user_1:
   firstname: user
   lastname: test
   email: test@google.com
+  licenseNumber: 000000A
   password: test
   roles:
     - ROLE_USER
@@ -10,6 +11,7 @@ user_2:
   firstname: user2
   lastname: test
   email: test2@google.com
+  licenseNumber: 000000B
   password: test
   roles:
     - ROLE_USER
