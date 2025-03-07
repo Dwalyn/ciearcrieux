@@ -22,6 +22,7 @@
         "symfony/translation": "7.2.*",
         "symfony/twig-bundle": "7.2.*",
         "symfony/ux-twig-component": "^2.22.1",
+        "symfony/validator": "7.2.*",
         "symfony/webpack-encore-bundle": "^2.2",
         "symfony/yaml": "7.2.*",
         "twbs/bootstrap": "5.3.3"

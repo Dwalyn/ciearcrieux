@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Public;
 
 use App\Enum\TypePlaceEnum;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

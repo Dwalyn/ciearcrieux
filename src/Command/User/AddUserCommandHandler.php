@@ -5,6 +5,7 @@ namespace App\Command\User;
 use App\Command\CommandHandlerInterface;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AddUserCommandHandler implements CommandHandlerInterface
@@ -17,13 +18,25 @@ class AddUserCommandHandler implements CommandHandlerInterface
 
     public function __invoke(AddUserCommand $addUserCommand): void
     {
+        if (is_null($addUserCommand->firstname)
+            || is_null($addUserCommand->lastname)
+            || is_null($addUserCommand->email)
+            || is_null($addUserCommand->birthday)
+            || is_null($addUserCommand->licenseNumber)
+        ) {
+            throw new LogicException('Value can not be null.');
+        }
+
         $user = new User(
             $addUserCommand->firstname,
             $addUserCommand->lastname,
             $addUserCommand->email,
-            $addUserCommand->roles,
+            $addUserCommand->birthday,
+            $addUserCommand->licenseNumber,
+            $addUserCommand->getRoles(),
             $addUserCommand->enable,
         );
+        $addUserCommand->password ??= 'ciearcrieux';
 
         $hashedPassword = $this->passwordHasher->hashPassword(
             $user,
