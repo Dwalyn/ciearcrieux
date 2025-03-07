@@ -18,7 +18,7 @@
             <form method="post">
                 <div class="form-floating my-2">
                     <input type="email" name="_username" class="form-control" id="floatingInput" placeholder="name@example.com">
-                    <label for="floatingInput">{{ 'signin.email'|trans }}</label>
+                    <label for="floatingInput">{{ 'user.email'|trans }}</label>
                 </div>
                 <div class="form-floating my-2">
                     <input type="password" name="_password" class="form-control" id="floatingPassword" placeholder="{{ 'signin.password'|trans }}">
@@ -35,7 +35,7 @@
                 <input type="hidden" name="_csrf_token"
                        value="{{ csrf_token('authenticate') }}"
                 >
-                <button class="w-100 btn btn-lg btn-primary" type="submit">{{ 'signin.button'|trans }}</button>
+                <button class="w-100 btn btn-lg btn-primary" type="submit">{{ 'button.signin'|trans }}</button>
             </form>
         </div>
         <div class="col-4"></div>

@@ -8,14 +8,14 @@
 
 {% block content %}
     <div class="mb-3">
-        <a class="btn btn-primary" href="{{ path('membersAdd') }}"><i class="fa-solid fa-user-plus"></i> Ajouter</a>
+        <a class="btn btn-primary" href="{{ path('admin_membersAdd') }}"><i class="fa-solid fa-user-plus"></i> Ajouter</a>
     </div>
     <table class="table table-hover table-responsive align-middle">
         <thead class="table-light">
             <tr>
-                <th scope="col">Nom</th>
-                <th scope="col">Email</th>
-                <th scope="col">License</th>
+                <th scope="col">{{ 'user.lastname'|trans }}</th>
+                <th scope="col">{{ 'user.email'|trans }}</th>
+                <th scope="col">{{ 'user.license_number'|trans }}</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
@@ -23,7 +23,13 @@
         <tbody class="table-hover">
             {% for user in users %}
                 <tr>
-                    <td>{{ user }}</td>
+                    <td>{{ user }}
+                        {% if user.roles[0] == enum('App\\Enum\\RoleEnum').ROLE_ADMIN.value %}
+                            <span class="badge bg-secondary">
+                                {{ enum('App\\Enum\\RoleEnum').ROLE_ADMIN.translationKey|trans }}
+                            </span>
+                        {% endif %}
+                    </td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.licenseNumber }}</td>
                     <td>

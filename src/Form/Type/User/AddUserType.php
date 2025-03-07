@@ -18,20 +18,31 @@ class AddUserType extends AbstractType
         $builder
             ->add('lastName', TextType::class, [
                 'required' => false,
+                'label' => 'user.lastname',
             ])
             ->add('firstName', TextType::class, [
                 'required' => false,
+                'label' => 'user.firstname',
             ])
             ->add('email', TextType::class, [
                 'required' => false,
+                'label' => 'user.email',
             ])
             ->add('licenseNumber', TextType::class, [
                 'required' => false,
+                'label' => 'user.license_number',
             ])
             ->add('birthday', DateType::class, [
                 'required' => false,
+                'label' => 'user.birthday',
             ])
-            ->add('role', EnumType::class, ['class' => RoleEnum::class])
+            ->add('role', EnumType::class, [
+                'class' => RoleEnum::class,
+                'label' => 'user.role',
+                'choice_label' => function ($choice): string {
+                    return $choice->getTranslationKey();
+                },
+            ])
         ;
     }
 

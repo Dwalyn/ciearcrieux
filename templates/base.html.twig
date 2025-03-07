@@ -28,6 +28,9 @@
      <nav class="py-2 main-nav border-bottom">
          {% block menu %}
             {{ include('menu/public.html.twig') }}
+             {% if app.user %}
+                 {{ include('menu/member.html.twig') }}
+             {% endif %}
          {% endblock %}
      </nav>
     <section class="text-center">
@@ -43,24 +46,24 @@
     </section>
     <div class="container-fluid container-min-size">
         <div class="row">
-            {% if app.user %}
-                <a href="{{ path('app_logout') }}">Logout</a>
-
+            {% if is_granted(enum('App\\Enum\\RoleEnum').ROLE_ADMIN.value) %}
                 {{ include('menu/administrator.html.twig') }}
             {% endif %}
 
             <main class="col-md-9 mx-sm-auto col-lg-10 px-md-4">
-                <div class="justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                <div class="justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
                     {% if 'home' != route %}
-                    <h1>
-                        {% block h1 %}
-                        {% endblock %}
-                    </h1>
-                    <hr />
+                        <h1 class="mt-2">
+                            {% block h1 %}
+                            {% endblock %}
+                        </h1>
+                        <hr />
                     {% endif %}
 
-                    {% block content %}
-                    {% endblock %}
+                    <div class="mt-4">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
                 </div>
             </main>
         </div>

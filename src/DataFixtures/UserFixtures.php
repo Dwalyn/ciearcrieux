@@ -21,9 +21,9 @@ class UserFixtures extends AbstractFixture
             $data['email'],
             $data['birthday'] ?? new \DateTime(),
             $data['licenseNumber'],
-            $data['password'],
             $data['roles'],
             $data['enable'] ?? true,
+            $data['password'],
         );
         $this->commandBus->dispatch($command);
 
