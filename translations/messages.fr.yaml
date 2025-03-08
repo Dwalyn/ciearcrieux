@@ -1,4 +1,5 @@
 button:
+  add: Ajouter
   cancel: Annuler
   save: Enregistrer
   signin: Se connecter
