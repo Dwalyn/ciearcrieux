@@ -1,3 +1,13 @@
+alert:
+  success:
+    addMember: Le nouveau membre est ajouté.
+
+button:
+  add: Ajouter
+  cancel: Annuler
+  save: Enregistrer
+  signin: Se connecter
+
 enum:
   day:
     DAY_0: Dimanche,
@@ -13,6 +23,9 @@ enum:
   rent:
     first: Première année
     other: Deuxième année et plus
+  role:
+    ROLE_USER: Membre
+    ROLE_ADMIN: Administrateur
   trainingPlace:
     indoor: Intérieur
     outdoor: Extérieur
@@ -26,6 +39,7 @@ h3:
   documents: Documents
   license: License
   rent: Location de matériel
+  new_member: Ajouter un nouveau membre
 
 license:
   rent:
@@ -36,10 +50,19 @@ menu:
   findUs: Où nous trouver ?
   joinUs: Rejoignez nous
   login: S'identifier
+  logout: Se déconnecter
   home: Accueil
+  members: Membres
   news: Actualités
 
 signin:
-  button: Se connecter
-  email: Email
   password: Mot de passe
+
+user:
+  birthday: Date de naissance
+  email: Adresse email
+  firstname: Prénom
+  lastname: Nom
+  license_number: N° de license
+  role: Role
+

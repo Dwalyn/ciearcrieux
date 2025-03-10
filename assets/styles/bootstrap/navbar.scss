@@ -6,7 +6,7 @@
   background-color: $blue !important;
 
   & a{
-    color: $white !important;
+    color: $yellow !important;
   }
 
   & .dropdown-menu{
@@ -21,8 +21,15 @@
 .member-nav {
   background-color: $yellow !important;
 
-  & a {
-    color: $black !important;
+  & a{
+    color: $blue !important;
   }
 
+  & .dropdown-menu{
+    background-color: $white !important;
+
+    & .dropdown-item{
+      color: $black !important;
+    }
+  }
 }

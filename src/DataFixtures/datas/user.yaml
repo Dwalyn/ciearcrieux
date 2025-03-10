@@ -2,15 +2,26 @@ user_1:
   firstname: user
   lastname: test
   email: test@google.com
+  licenseNumber: 000000A
   password: test
   roles:
-    - ROLE_USER
+    - !php/enum App\Enum\RoleEnum::ROLE_USER
 
 user_2:
   firstname: user2
   lastname: test
   email: test2@google.com
+  licenseNumber: 000000B
   password: test
   roles:
-    - ROLE_USER
+    - !php/enum App\Enum\RoleEnum::ROLE_USER
   enable: false
+
+user_3:
+  firstname: user3
+  lastname: admin
+  email: admin@google.com
+  licenseNumber: 000000Z
+  password: test
+  roles:
+    - !php/enum App\Enum\RoleEnum::ROLE_ADMIN

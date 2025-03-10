@@ -38,17 +38,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     #[ORM\Column(type: Types::STRING, length: 50)]
     private string $lastname;
 
+    #[ORM\Column(type: Types::STRING, length: 8)]
+    private string $licenseNumber;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private \DateTime $birthday;
+
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $enable;
 
     /**
      * @param list<string> $roles,
      */
-    public function __construct(string $firstname, string $lastname, string $email, array $roles = ['ROLE_USER'], bool $enable = true)
-    {
+    public function __construct(
+        string $firstname,
+        string $lastname,
+        string $email,
+        \DateTime $birthday,
+        string $licenseNumber,
+        array $roles = ['ROLE_USER'],
+        bool $enable = true
+    ) {
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->email = $email;
+        $this->birthday = $birthday;
+        $this->licenseNumber = $licenseNumber;
         $this->roles = $roles;
         $this->enable = $enable;
     }
@@ -133,6 +148,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
         // $this->plainPassword = null;
     }
 
+    public function getBirthday(): \DateTime
+    {
+        return $this->birthday;
+    }
+
+    public function setLicenseNumber(string $licenseNumber): void
+    {
+        $this->licenseNumber = $licenseNumber;
+    }
+
+    public function getLicenseNumber(): string
+    {
+        return $this->licenseNumber;
+    }
+
     public function disable(): void
     {
         $this->enable = false;
@@ -150,6 +180,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
 
     public function __toString(): string
     {
-        return sprintf('%s %s', $this->lastname, $this->firstname);
+        return sprintf('%s %s', ucfirst($this->lastname), ucfirst($this->firstname));
     }
 }

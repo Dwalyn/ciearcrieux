@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Controller;
+namespace App\Tests\Controller\Public;
 
 use App\Tests\Enum\AuthenticationStatusEnum;
 use App\Tests\WebTestCase;
@@ -38,7 +38,7 @@ class LoginControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', $this->generateUrl('login'));
         $this->assertStatusCode(200);
 
-        $form = $crawler->selectButton($this->getTranslation('signin.button'))->form();
+        $form = $crawler->selectButton($this->getTranslation('button.signin'))->form();
         $form['_username'] = $login;
         $form['_password'] = $password;
         $this->client->submit($form);

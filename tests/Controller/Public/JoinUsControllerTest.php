@@ -1,14 +1,42 @@
 <?php
 
-namespace App\Tests\Controller;
+namespace App\Tests\Controller\Public;
 
+use App\Tests\Enum\HttpStatusEnum;
 use App\Tests\WebTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class JoinUsControllerTest extends WebTestCase
 {
     protected function getDataFolders(): array
     {
         return ['base'];
+    }
+
+    #[DataProvider('loginProvider')]
+    public function testAccessPage(?string $login, int $status)
+    {
+        $this->login($login);
+        $crawler = $this->client->request('GET', $this->generateUrl('joinUs'));
+        $this->assertStatusCode($status);
+    }
+
+    public static function loginProvider(): \Generator
+    {
+        yield 'user' => [
+            'login' => 'test@google.com',
+            'status' => HttpStatusEnum::OK->value,
+        ];
+
+        yield 'admin' => [
+            'login' => 'admin@google.com',
+            'status' => HttpStatusEnum::OK->value,
+        ];
+
+        yield 'anonymous' => [
+            'login' => null,
+            'status' => HttpStatusEnum::OK->value,
+        ];
     }
 
     public function testPage(): void

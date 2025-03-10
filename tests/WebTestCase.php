@@ -2,6 +2,7 @@
 
 namespace App\Tests;
 
+use App\Repository\UserRepository;
 use App\Tests\Service\FixturesLoader;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectRepository;
@@ -137,6 +138,24 @@ abstract class WebTestCase extends BaseWebTestCase
         }
 
         return $this->client->request('GET', $jsonContent['redirectUrl']);
+    }
+
+    protected function login(?string $login)
+    {
+        if (null !== $login) {
+            $userRepository = static::getContainer()->get(UserRepository::class);
+            // retrieve the test user
+            $testUser = $userRepository->findOneByEmail($login);
+
+            // simulate $testUser being logged in
+            $this->client->loginUser($testUser);
+        }
+    }
+
+    protected function alertTest(Crawler $crawler, string $type, string $alert)
+    {
+        $elements = $crawler->filter(sprintf('.alert-%s', $type));
+        $this->assertEquals($alert, $elements->first()->text());
     }
 
     /**
