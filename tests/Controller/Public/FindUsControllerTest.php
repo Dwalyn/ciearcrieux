@@ -1,15 +1,45 @@
 <?php
 
-namespace App\Tests\Controller;
+namespace App\Tests\Controller\Public;
 
 use App\Enum\TypePlaceEnum;
+use App\Tests\Enum\HttpStatusEnum;
 use App\Tests\WebTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class FindUsControllerTest extends WebTestCase
 {
     protected function getDataFolders(): array
     {
         return ['base'];
+    }
+
+    #[DataProvider('loginProvider')]
+    public function testAccessPage(?string $login, int $status)
+    {
+        $this->login($login);
+        $this->client->request('GET', $this->generateUrl('findUs', [
+            'typePlace' => TypePlaceEnum::OUTDOOR->value,
+        ]));
+        $this->assertStatusCode($status);
+    }
+
+    public static function loginProvider(): \Generator
+    {
+        yield 'user' => [
+            'login' => 'test@google.com',
+            'status' => HttpStatusEnum::OK->value,
+        ];
+
+        yield 'admin' => [
+            'login' => 'admin@google.com',
+            'status' => HttpStatusEnum::OK->value,
+        ];
+
+        yield 'anonymous' => [
+            'login' => null,
+            'status' => HttpStatusEnum::OK->value,
+        ];
     }
 
     public function testPage(): void
