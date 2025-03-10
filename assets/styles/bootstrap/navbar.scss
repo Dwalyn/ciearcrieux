@@ -6,7 +6,23 @@
   background-color: $blue !important;
 
   & a{
-    color: $white !important;
+    color: $yellow !important;
+  }
+
+  & .dropdown-menu{
+    background-color: $white !important;
+
+    & .dropdown-item{
+      color: $black !important;
+    }
+  }
+}
+
+.member-nav {
+  background-color: $yellow !important;
+
+  & a{
+    color: $blue !important;
   }
 
   & .dropdown-menu{

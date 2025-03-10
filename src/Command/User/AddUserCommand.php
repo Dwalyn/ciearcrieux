@@ -11,7 +11,7 @@ class AddUserCommand implements CommandInterface
     public User $userReturn;
 
     /**
-     * @var list<string> $roles,
+     * @var list<string>,
      */
     protected array $roles;
 

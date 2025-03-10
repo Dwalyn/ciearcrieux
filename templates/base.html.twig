@@ -28,11 +28,14 @@
      <nav class="py-2 main-nav border-bottom">
          {% block menu %}
             {{ include('menu/public.html.twig') }}
-             {% if app.user %}
-                 {{ include('menu/member.html.twig') }}
-             {% endif %}
          {% endblock %}
      </nav>
+    {% if app.user %}
+        <nav class="py-2 member-nav border-bottom">
+            {{ include('menu/member.html.twig') }}
+        </nav>
+    {% endif %}
+
     <section class="text-center">
         {% block messages %}
             {% for type, messages in app.session.flashbag.all() %}

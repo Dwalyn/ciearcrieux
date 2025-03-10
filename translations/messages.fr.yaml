@@ -1,3 +1,7 @@
+alert:
+  success:
+    addMember: Le nouveau membre est ajouté.
+
 button:
   add: Ajouter
   cancel: Annuler

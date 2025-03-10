@@ -13,12 +13,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/admin', name: 'admin_')]
 class MemberController extends AbstractController
 {
     public function __construct(
         protected readonly CommandBusInterface $commandBus,
+        protected readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -53,9 +55,9 @@ class MemberController extends AbstractController
                 [$dataForm->role],
             );
             $this->commandBus->dispatch($command);
-            $this->addFlash('success', 'Le nouveau membre est ajouté.');
+            $this->addFlash('success', $this->translator->trans('alert.success.addMember'));
 
-            return $this->redirectToRoute('membersList');
+            return $this->redirectToRoute('admin_membersList');
         }
 
         return $this->render('/members/add.html.twig', [

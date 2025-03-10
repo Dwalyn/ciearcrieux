@@ -152,6 +152,12 @@ abstract class WebTestCase extends BaseWebTestCase
         }
     }
 
+    protected function alertTest(Crawler $crawler, string $type, string $alert)
+    {
+        $elements = $crawler->filter(sprintf('.alert-%s', $type));
+        $this->assertEquals($alert, $elements->first()->text());
+    }
+
     /**
      * for debug only.
      */
