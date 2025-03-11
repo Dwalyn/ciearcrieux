@@ -46,12 +46,17 @@ license:
     free: OFFERT
 
 menu:
+  admin:
+    title:
+      license_period: Saison sportive
+      members: Membres
   club: La compagnie
   findUs: Où nous trouver ?
   joinUs: Rejoignez nous
   login: S'identifier
   logout: Se déconnecter
   home: Accueil
+  period: Période
   members: Membres
   news: Actualités
 
