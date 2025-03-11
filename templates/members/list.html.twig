@@ -7,6 +7,9 @@
 {% block h1 %} {{ 'menu.members'|trans }} {% endblock %}
 
 {% block content %}
+
+    {{ component('UserSearch') }}
+
     <div class="mb-3">
         <a class="btn btn-primary" href="{{ path('admin_membersAdd') }}"><i class="fa-solid fa-user-plus"></i> {{ 'button.add'|trans }}</a>
     </div>
