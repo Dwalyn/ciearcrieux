@@ -163,14 +163,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
         return $this->licenseNumber;
     }
 
-    public function disable(): void
+    public function setEnable(bool $enable): void
     {
-        $this->enable = false;
-    }
-
-    public function enable(): void
-    {
-        $this->enable = true;
+        $this->enable = $enable;
     }
 
     public function isEnable(): bool

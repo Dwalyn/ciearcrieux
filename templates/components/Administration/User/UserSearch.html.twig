@@ -1,0 +1,49 @@
+<div {{ attributes }}>
+    <div class="d-flex mb-4">
+        <div class="">
+            <a class="btn btn-primary" href="{{ path('admin_membersAdd') }}"><i class="fa-solid fa-user-plus"></i> {{ 'button.add'|trans }}</a>
+        </div>
+        <div class="flex-grow-1 ps-2">
+            <input class="form-control"
+                   type="search" data-model="searchFilter"
+                   placeholder="{{ 'components.administration.userSearch.placeholder'|trans }}"
+            >
+        </div>
+    </div>
+    {% if this.users|length %}
+        <div data-controller="administrationItem">
+            <table class="table table-hover table-responsive align-middle">
+                <thead class="table-light">
+                <tr>
+                    <th scope="col">{{ 'user.lastname'|trans }}</th>
+                    <th scope="col">{{ 'user.email'|trans }}</th>
+                    <th scope="col">{{ 'user.license_number'|trans }}</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody class="table-hover">
+                {% for user in this.users %}
+                    <tr>
+                        <td>{{ user }}
+                            {% if user.roles[0] == enum('App\\Enum\\RoleEnum').ROLE_ADMIN.value %}
+                                <span class="badge bg-secondary">
+                                        {{ enum('App\\Enum\\RoleEnum').ROLE_ADMIN.translationKey|trans }}
+                                    </span>
+                            {% endif %}
+                        </td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.licenseNumber }}</td>
+                        <td>
+                            {{ component('Administration:Common:EnableItem', {user: user}) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-secondary" role="alert">
+            <i class="fa-solid fa-circle-exclamation"></i> {{ 'alert.secondary.nodata'|trans }}
+        </div>
+    {% endif %}
+</div>
