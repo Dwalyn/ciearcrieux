@@ -7,8 +7,6 @@ use App\Command\User\AddUserCommand;
 use App\Enum\RoleEnum;
 use App\Form\Datas\User\AddUserFormData;
 use App\Form\Type\User\AddUserType;
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\Order;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,14 +23,11 @@ class MemberController extends AbstractController
     }
 
     #[Route('/members', name: 'membersList')]
-    public function list(
-        UserRepository $userRepository,
-    ): Response {
+    public function list(): Response
+    {
         $this->denyAccessUnlessGranted(RoleEnum::ROLE_ADMIN->value);
 
-        return $this->render('/members/list.html.twig', [
-            'users' => $userRepository->findBy([], ['lastname' => Order::Ascending->value]),
-        ]);
+        return $this->render('/members/list.html.twig');
     }
 
     #[Route('/members/add', name: 'membersAdd')]

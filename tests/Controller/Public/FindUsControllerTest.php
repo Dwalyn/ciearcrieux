@@ -26,7 +26,7 @@ class FindUsControllerTest extends WebTestCase
 
     public static function loginProvider(): \Generator
     {
-        yield 'user' => [
+        yield 'User' => [
             'login' => 'test@google.com',
             'status' => HttpStatusEnum::OK->value,
         ];

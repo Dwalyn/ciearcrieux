@@ -1,0 +1,9 @@
+<div {{ attributes.defaults({class: 'form-check form-switch'}) }}>
+    <input class="form-check-input"
+           data-model="enable"
+           data-action="live#action"
+           data-live-action-param="changeEnable"
+           type="checkbox"
+           {% if this.enable %} checked {% endif %}
+    >
+</div>

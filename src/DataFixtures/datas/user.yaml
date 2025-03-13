@@ -1,5 +1,5 @@
 user_1:
-  firstname: user
+  firstname: User
   lastname: test
   email: test@google.com
   licenseNumber: 000000A

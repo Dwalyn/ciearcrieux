@@ -1,12 +1,19 @@
 alert:
   success:
     addMember: Le nouveau membre est ajouté.
+  secondary:
+    nodata: Aucun résultat ne correspond à votre recherche.
 
 button:
   add: Ajouter
   cancel: Annuler
   save: Enregistrer
   signin: Se connecter
+
+components:
+  administration:
+    userSearch:
+      placeholder: Nom, Adresse email, N° de license
 
 enum:
   day:
