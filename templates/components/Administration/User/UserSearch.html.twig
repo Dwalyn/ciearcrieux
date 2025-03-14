@@ -34,7 +34,7 @@
                         <td>{{ user.email }}</td>
                         <td>{{ user.licenseNumber }}</td>
                         <td>
-                            {{ component('Administration:Common:EnableItem', {user: user}) }}
+                            {{ component('Administration:User:UserStatus', {user: user}) }}
                         </td>
                     </tr>
                 {% endfor %}

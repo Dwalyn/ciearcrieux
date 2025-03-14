@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Twig\Components\Administration\Common;
+namespace App\Twig\Components\Administration\User;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,7 +11,7 @@ use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
 #[AsLiveComponent]
-class EnableItem
+class UserStatus
 {
     use DefaultActionTrait;
 
