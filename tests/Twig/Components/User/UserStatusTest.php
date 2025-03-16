@@ -17,62 +17,33 @@ class UserStatusTest extends WebTestCase
     }
 
     #[DataProvider('userStatusProvider')]
-    public function testUserStatus(string $email, bool $baseStatus, bool $statusAction, bool $statusAfterAction): void
+    public function testUserStatus(string $email, bool $userStatus, bool $userStatusAfter): void
     {
         $this->login('admin@google.com');
-
         $user = $this->getRepository(User::class)->findOneBy(['email' => $email]);
+        $this->assertEquals($user->isEnable(), $userStatus);
+
         $testComponent = $this->createLiveComponent(
             name: 'Administration:User:UserStatus',
-            data: ['user' => $user],
+            data: ['user' => $user, 'enable' => $userStatusAfter],
         );
 
-        $crawler = $testComponent->render()->crawler();
-        if ($baseStatus) {
-            $checkbox = $crawler->filter('input[type="checkbox"]:checked');
-            $this->assertCount(1, $checkbox);
-            $checkbox = $crawler->filter('input[type="checkbox"]:not(:checked)');
-            $this->assertCount(0, $checkbox);
-        } else {
-            $checkbox = $crawler->filter('input[type="checkbox"]:checked');
-            $this->assertCount(0, $checkbox);
-            $checkbox = $crawler->filter('input[type="checkbox"]:not(:checked)');
-            $this->assertCount(1, $checkbox);
-        }
-        $testComponent->set('enable', $statusAction);
-
-        if ($statusAfterAction) {
-            $checkbox = $crawler->filter('input[type="checkbox"]:checked');
-            $this->assertCount(1, $checkbox);
-            $checkbox = $crawler->filter('input[type="checkbox"]:not(:checked)');
-            $this->assertCount(0, $checkbox);
-        } else {
-            $checkbox = $crawler->filter('input[type="checkbox"]:checked');
-            $this->assertCount(0, $checkbox);
-            $checkbox = $crawler->filter('input[type="checkbox"]:not(:checked)');
-            $this->assertCount(1, $checkbox);
-        }
+        $testComponent->call('changeEnable');
+        $user = $this->getRepository(User::class)->findOneBy(['email' => $email]);
+        $this->assertEquals($user->isEnable(), $userStatusAfter);
     }
 
     public static function userStatusProvider(): \Generator
     {
-        yield 'admin' => [
-            'email' => 'admin@google.com',
-            'baseStatus' => true,
-            'statusAction' => false,
-            'statusAfterAction' => true,
-        ];
         yield 'enable_user' => [
             'email' => 'test2@google.com',
-            'baseStatus' => false,
-            'statusAction' => true,
-            'statusAfterAction' => true,
+            'userStatus' => false,
+            'userStatusAfter' => true,
         ];
-        /*yield 'disable_user' => [
+        yield 'disable_user' => [
             'email' => 'test@google.com',
-            'baseStatus' => true,
-            'statusAction' => false,
-            'statusAfterAction' => false,
-        ];*/
+            'userStatus' => true,
+            'userStatusAfter' => false,
+        ];
     }
 }
