@@ -22,8 +22,8 @@ class AddUserFormData
     #[Assert\NotNull]
     public ?\DateTime $birthday = null;
 
-    #[Assert\NotNull]
     public ?string $licenseNumber = null;
 
-    public RoleEnum $role = RoleEnum::ROLE_USER;
+    #[Assert\NotNull]
+    public ?RoleEnum $role;
 }

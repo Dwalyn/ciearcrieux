@@ -10,11 +10,14 @@ use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfonycasts\DynamicForms\DependentField;
+use Symfonycasts\DynamicForms\DynamicFormBuilder;
 
 class AddUserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $builder = new DynamicFormBuilder($builder);
         $builder
             ->add('lastName', TextType::class, [
                 'required' => false,
@@ -28,10 +31,6 @@ class AddUserType extends AbstractType
                 'required' => false,
                 'label' => 'user.email',
             ])
-            ->add('licenseNumber', TextType::class, [
-                'required' => false,
-                'label' => 'user.license_number',
-            ])
             ->add('birthday', DateType::class, [
                 'required' => false,
                 'label' => 'user.birthday',
@@ -42,7 +41,17 @@ class AddUserType extends AbstractType
                 'choice_label' => function ($choice): string {
                     return $choice->getTranslationKey();
                 },
-            ])
+                'placeholder' => 'Choose an option',
+                'required' => false,
+            ])->addDependent('licenseNumber', 'role', function (DependentField $field, ?RoleEnum $role) {
+                if (null === $role || RoleEnum::ROLE_ADMIN === $role) {
+                    return;
+                }
+                $field->add(TextType::class, [
+                    'label' => 'user.license_number',
+                    'required' => false,
+                ]);
+            })
         ;
     }
 

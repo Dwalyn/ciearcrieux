@@ -38,8 +38,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     #[ORM\Column(type: Types::STRING, length: 50)]
     private string $lastname;
 
-    #[ORM\Column(type: Types::STRING, length: 8)]
-    private string $licenseNumber;
+    #[ORM\Column(type: Types::STRING, length: 8, nullable: true)]
+    private ?string $licenseNumber;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private \DateTime $birthday;
@@ -55,7 +55,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
         string $lastname,
         string $email,
         \DateTime $birthday,
-        string $licenseNumber,
+        ?string $licenseNumber,
         array $roles = ['ROLE_USER'],
         bool $enable = true
     ) {
@@ -153,12 +153,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
         return $this->birthday;
     }
 
-    public function setLicenseNumber(string $licenseNumber): void
+    public function setLicenseNumber(?string $licenseNumber): void
     {
         $this->licenseNumber = $licenseNumber;
     }
 
-    public function getLicenseNumber(): string
+    public function getLicenseNumber(): ?string
     {
         return $this->licenseNumber;
     }
