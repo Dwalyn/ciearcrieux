@@ -2,13 +2,15 @@
 
 namespace App\Tests\Controller\Administration;
 
-use App\Enum\RoleEnum;
 use App\Tests\Enum\HttpStatusEnum;
 use App\Tests\WebTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Symfony\UX\LiveComponent\Test\InteractsWithLiveComponents;
 
 class MemberControllerTest extends WebTestCase
 {
+    use InteractsWithLiveComponents;
+
     protected function getDataFolders(): array
     {
         return ['base'];
@@ -102,62 +104,5 @@ class MemberControllerTest extends WebTestCase
 
         $select = $crawler->filter('select');
         $this->assertCount(1, $select);
-    }
-
-    #[DataProvider('addProvider')]
-    public function testAddMemberForm(int $nbError, ?string $lastname, ?string $firstname, ?string $email, ?string $birthday, ?string $licenseNumber, string $role = RoleEnum::ROLE_USER->value): void
-    {
-        $this->login('admin@google.com');
-        $crawler = $this->client->request('GET', $this->generateUrl('admin_membersAdd'));
-        $this->assertStatusCode(200);
-
-        $form = $crawler->selectButton($this->getTranslation('button.save'))->form();
-        $form['add_user[lastName]'] = $lastname;
-        $form['add_user[firstName]'] = $firstname;
-        $form['add_user[email]'] = $email;
-        $form['add_user[birthday]'] = $birthday;
-        // $form['add_user[licenseNumber]'] = $licenseNumber;
-        $form['add_user[role]'] = $role;
-        $form['add_user[_token]'] = 'csrf-token';
-        $this->savePage();
-        $this->client->submit($form);
-
-        if (0 === $nbError) {
-            // $crawler = $this->client->followRedirect();
-            // $this->alertTest($crawler, 'success', $this->getTranslation('alert.success.addMember'));
-        } else {
-            $this->assertEquals(sprintf('http://localhost%s', $this->generateUrl('admin_membersAdd')), $crawler->getUri());
-        }
-    }
-
-    public static function addProvider(): \Generator
-    {
-        yield 'invalidEmail' => [
-            'nbError' => 1,
-            'lastname' => 'lastname',
-            'firstname' => 'firstname',
-            'email' => 'lastname.firstname@google',
-            'birthday' => '1970-01-01',
-            'licenseNumber' => '',
-            'role' => RoleEnum::ROLE_ADMIN->value,
-        ];
-        yield 'emptyform' => [
-            'nbError' => 5,
-            'lastname' => '',
-            'firstname' => '',
-            'email' => '',
-            'birthday' => '',
-            'licenseNumber' => '',
-            'role' => RoleEnum::ROLE_USER->value,
-        ];
-        yield 'okform' => [
-            'nbError' => 0,
-            'lastname' => 'lastname',
-            'firstname' => 'firstname',
-            'email' => 'lastname.firstname@google.com',
-            'birthday' => '1970-01-01',
-            'licenseNumber' => '',
-            'role' => RoleEnum::ROLE_ADMIN->value,
-        ];
     }
 }

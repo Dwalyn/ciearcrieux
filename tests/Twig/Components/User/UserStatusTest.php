@@ -43,7 +43,7 @@ class UserStatusTest extends WebTestCase
 
     public static function userStatusProvider(): \Generator
     {
-        yield 'disable_user' => [
+        yield 'enable_user' => [
             'email' => 'test2@google.com',
             'userStatus' => false,
             'resultStatus' => true,
