@@ -1,0 +1,2 @@
+constraint:
+  noNumberInString: Ce champ ne pas contenir de chiffre.

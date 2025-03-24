@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfonycasts\DynamicForms\DependentField;
 use Symfonycasts\DynamicForms\DynamicFormBuilder;
@@ -59,6 +60,13 @@ class AddUserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => AddUserFormData::class,
+            'validation_groups' => function (FormInterface $form) {
+                if (RoleEnum::ROLE_ADMIN === $form->getData()->role) {
+                    return ['admin'];
+                }
+
+                return ['user'];
+            },
         ]);
     }
 }

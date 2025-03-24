@@ -68,7 +68,7 @@ class UserAddTest extends WebTestCase
             ],
             'statusCode' => 302, // redirect if form OK
         ];
-        /*yield 'licenceEmpty' => [
+        yield 'licenceEmpty' => [
             'data' => [
                 'lastName' => 'lastNameUser',
                 'firstName' => 'firstNameUser',
@@ -77,8 +77,52 @@ class UserAddTest extends WebTestCase
                 'licenseNumber' => null,
                 'role' => RoleEnum::ROLE_USER,
             ],
-            'statusCode' => 200, //no redirect if form is invalid
-        ];*/
+            'statusCode' => 200, // no redirect if form is invalid
+        ];
+        yield 'licenceMinLengthNotOk' => [
+            'data' => [
+                'lastName' => 'lastNameUser',
+                'firstName' => 'firstNameUser',
+                'email' => 'testuser@email.com',
+                'birthday' => (new \DateTime())->format('Y-m-d'),
+                'licenseNumber' => '123456',
+                'role' => RoleEnum::ROLE_USER,
+            ],
+            'statusCode' => 200, // no redirect if form is invalid
+        ];
+        yield 'licenceMaxLengthNotOk' => [
+            'data' => [
+                'lastName' => 'lastNameUser',
+                'firstName' => 'firstNameUser',
+                'email' => 'testuser@email.com',
+                'birthday' => (new \DateTime())->format('Y-m-d'),
+                'licenseNumber' => '12345678',
+                'role' => RoleEnum::ROLE_USER,
+            ],
+            'statusCode' => 200, // no redirect if form is invalid
+        ];
+        yield 'numberInLastName' => [
+            'data' => [
+                'lastName' => 'lastNameUser1',
+                'firstName' => 'firstNameUser',
+                'email' => 'testuser@email.com',
+                'birthday' => (new \DateTime())->format('Y-m-d'),
+                'licenseNumber' => '999999A',
+                'role' => RoleEnum::ROLE_USER,
+            ],
+            'statusCode' => 200, // no redirect if form is invalid
+        ];
+        yield 'numberInFirstName' => [
+            'data' => [
+                'lastName' => 'lastNameUser1',
+                'firstName' => 'firstNameUser1',
+                'email' => 'testuser@email.com',
+                'birthday' => (new \DateTime())->format('Y-m-d'),
+                'licenseNumber' => '999999A',
+                'role' => RoleEnum::ROLE_USER,
+            ],
+            'statusCode' => 200, // no redirect if form is invalid
+        ];
         yield 'okFormUser' => [
             'data' => [
                 'lastName' => 'lastNameUser',
