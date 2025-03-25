@@ -22,7 +22,6 @@ class AddUserCommandHandler implements CommandHandlerInterface
             || is_null($addUserCommand->lastname)
             || is_null($addUserCommand->email)
             || is_null($addUserCommand->birthday)
-            || is_null($addUserCommand->licenseNumber)
         ) {
             throw new LogicException('Value can not be null.');
         }
