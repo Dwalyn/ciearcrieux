@@ -3,17 +3,13 @@
 namespace App\Form\Datas\User;
 
 use App\Enum\RoleEnum;
+use App\Validator\EmailAlreadyExists;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class AddUserFormData
 {
     #[Assert\NotNull(groups: ['admin', 'user'])]
-    #[Assert\Regex(
-        pattern: '/\d/',
-        match: false,
-        message: 'constraint.noNumberInString',
-        groups: ['admin', 'user']
-    )]
+    #[Assert\Regex(pattern: '/\d/', match: false, message: 'constraint.noNumberInString', groups: ['admin', 'user'])]
     public ?string $firstName = null;
 
     #[Assert\NotNull(groups: ['admin', 'user'])]
@@ -26,10 +22,11 @@ class AddUserFormData
     public ?string $lastName = null;
 
     #[Assert\Email(
-        message: 'The email {{ value }} is not a valid email.',
+        message: 'constraint.invalidEmail',
         groups: ['admin', 'user'],
     )]
     #[Assert\NotNull(groups: ['admin', 'user'])]
+    #[EmailAlreadyExists(groups: ['admin', 'user'])]
     public ?string $email = null;
 
     #[Assert\NotNull(groups: ['admin', 'user'])]
@@ -37,6 +34,7 @@ class AddUserFormData
 
     #[Assert\Length(min: 7, max: 7, groups: ['user'])]
     #[Assert\NotNull(groups: ['user'])]
+    #[Assert\Regex(pattern: '[0-9]{6}[a-zA-Z]{1}')]
     public ?string $licenseNumber = null;
 
     #[Assert\NotNull(groups: ['admin', 'user'])]

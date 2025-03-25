@@ -58,6 +58,16 @@ class UserAddTest extends WebTestCase
             ],
             'statusCode' => 200, // no redirect if form is invalid
         ];
+        yield 'emailAlreadyExists' => [
+            'data' => [
+                'lastName' => 'lastNameAdmin',
+                'firstName' => 'firstNameAdmin',
+                'email' => 'test@google.com',
+                'birthday' => (new \DateTime())->format('Y-m-d'),
+                'role' => RoleEnum::ROLE_ADMIN,
+            ],
+            'statusCode' => 200,
+        ];
         yield 'okFormAdmin' => [
             'data' => [
                 'lastName' => 'lastNameAdmin',

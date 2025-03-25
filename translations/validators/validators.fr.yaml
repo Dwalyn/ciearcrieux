@@ -1,2 +1,4 @@
 constraint:
+  emailAlreadyExist: Cette adresse email existe pour un autre utilisateur.
+  invalidEmail: Le format de l'email est invalide.
   noNumberInString: Ce champ ne pas contenir de chiffre.
