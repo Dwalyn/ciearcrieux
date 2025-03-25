@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\Query\Parameter;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
@@ -24,11 +25,11 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function loadUserByIdentifier(string $usernameOrEmail): ?User
     {
-        $queryBuilder = $this->createQueryBuilder('user');
+        $queryBuilder = $this->createQueryBuilder('User');
 
         $queryBuilder
-            ->where($queryBuilder->expr()->eq('user.email', ':email'))
-            ->andWhere($queryBuilder->expr()->eq('user.enable', ':enable'))
+            ->where($queryBuilder->expr()->eq('User.email', ':email'))
+            ->andWhere($queryBuilder->expr()->eq('User.enable', ':enable'))
             ->setParameters(new ArrayCollection([
                 new Parameter('email', $usernameOrEmail),
                 new Parameter('enable', true),
@@ -39,7 +40,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
-     * Used to upgrade (rehash) the user's password automatically over time.
+     * Used to upgrade (rehash) the User's password automatically over time.
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
@@ -50,5 +51,28 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newHashedPassword);
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
+    }
+
+    /**
+     * @return array<User>
+     */
+    public function findBySearchFilter(string $searchFilter): array
+    {
+        $queryBuilder = $this->createQueryBuilder('User');
+
+        $queryBuilder
+            ->where($queryBuilder->expr()->orX(
+                $queryBuilder->expr()->like('User.lastname', ':searchFilter'),
+                $queryBuilder->expr()->like('User.firstname', ':searchFilter'),
+                $queryBuilder->expr()->like('User.licenseNumber', ':searchFilter'),
+                $queryBuilder->expr()->like('User.email', ':searchFilter'),
+            ))
+            ->orderBy('User.lastname', Order::Ascending->value)
+            ->setParameters(new ArrayCollection([
+                new Parameter('searchFilter', '%'.$searchFilter.'%'),
+            ]))
+        ;
+
+        return $queryBuilder->getQuery()->getResult();
     }
 }
