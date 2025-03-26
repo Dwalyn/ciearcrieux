@@ -10,7 +10,8 @@ class LicensePeriodFixtures extends AbstractFixture
     {
         return new LicensePeriod(
             new \DateTime($data['startDate']),
-            new \DateTime($data['endDate'])
+            new \DateTime($data['endDate']),
+            $data['status'],
         );
     }
 
