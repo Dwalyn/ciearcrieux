@@ -14,16 +14,12 @@
             </div>
         </div>
         {% for licensePeriod in licensePeriods %}
-            <div class="card w-50 mb-4">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between bd-highlight mb-3">
-                        <div class="bd-highlight"><h5 class="card-title">{{ licensePeriod.startDate|date('Y') }} - {{ licensePeriod.endDate|date('Y') }}</h5></div>
-                        <div class="bd-highlight"><span class="badge bg-{{ licensePeriod.status.badgeClass(licensePeriod.status) }}">{{ licensePeriod.status.translationKey|trans }}</span></div>
-                    </div>
-                    <div class="d-flex justify-content-end"><a href="#" class="stretched-link">Détails <i class="fa-solid fa-arrow-right"></i></a></div>
-                </div>
-            </div>
+            {{ component('Administration:LicensePeriod:PeriodComponent', {
+                id: licensePeriod.id,
+                startYear: licensePeriod.startDate|date('Y'),
+                endYear: licensePeriod.endDate|date('Y'),
+                timeStatusEnum: licensePeriod.status,
+            }) }}
         {% endfor %}
-
     </div>
 {% endblock %}

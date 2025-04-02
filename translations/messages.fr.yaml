@@ -43,7 +43,9 @@ enum:
 global:
   info:
     title: Compagnie d'arc de Rieux
-    description: Site officiel de la compagnie d'arc de Rieux
+    description: Site officiel de la compagnie d'arc de
+  link:
+    details: Détails
 
 h3:
   documents: Documents

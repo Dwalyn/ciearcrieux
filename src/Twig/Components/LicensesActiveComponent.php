@@ -11,7 +11,6 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent]
 class LicensesActiveComponent
 {
-    private string $periodDate;
     /**
      * @var ArrayCollection<int, LicenceActiveDto>
      */
@@ -22,11 +21,6 @@ class LicensesActiveComponent
     ) {
         $this->listLicenseActiveDto = new ArrayCollection();
         $this->listLicenseActiveDto = $this->query->handle(new ListLicenseActiveDtoQuery(new \DateTime()));
-        $this->periodDate = sprintf(
-            '%s - %s',
-            $this->listLicenseActiveDto->first()->startYear,
-            $this->listLicenseActiveDto->first()->endYear
-        );
     }
 
     /**
@@ -35,10 +29,5 @@ class LicensesActiveComponent
     public function getLicencesInPeriod(): ArrayCollection
     {
         return $this->listLicenseActiveDto;
-    }
-
-    public function getPeriodDate(): string
-    {
-        return $this->periodDate;
     }
 }
