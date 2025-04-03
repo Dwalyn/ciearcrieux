@@ -27,19 +27,18 @@ class LicensePeriodRepository extends ServiceEntityRepository
     /**
      * @return array<int, mixed>|null
      */
-    public function getLicenceInLicensePeriodActiveByDate(\DateTime $date): ?array
+    public function getLicenceInLicensePeriodActiveByDate(\DateTime $startDate, \DateTime $endDate): ?array
     {
-        $queryBuilder = $this->createQueryBuilder('licensePeriod');
+        $queryBuilder = $this->createQueryBuilder('period');
         $queryBuilder
-            ->select('licensePeriod.startDate', 'licensePeriod.endDate')
+            ->select('period.startDate', 'period.endDate')
             ->addSelect('license.type')
             ->addSelect('license.price')
             ->addSelect('licenseDetail.label')
-            ->innerJoin('licensePeriod.licenses', 'license')
+            ->innerJoin('period.licenses', 'license')
             ->innerJoin('license.licenseDetails', 'licenseDetail')
         ;
-        $this->beetweenDate($queryBuilder, $date, 'licensePeriod');
-
+        $this->beetweenDate2($queryBuilder, $startDate, $endDate, 'period');
         $result = $queryBuilder->getQuery()->getResult();
         if (count($result)) {
             return $result;
@@ -53,13 +52,13 @@ class LicensePeriodRepository extends ServiceEntityRepository
      */
     public function getRentInLicensePeriodActiveByDate(\DateTime $date): ?array
     {
-        $queryBuilder = $this->createQueryBuilder('licensePeriod');
+        $queryBuilder = $this->createQueryBuilder('period');
         $queryBuilder
             ->select('rent.type')
             ->addSelect('rent.price')
-            ->innerJoin('licensePeriod.rents', 'rent')
+            ->innerJoin('period.rents', 'rent')
         ;
-        $this->beetweenDate($queryBuilder, $date, 'licensePeriod');
+        $this->beetweenDate($queryBuilder, $date, 'period');
 
         $result = $queryBuilder->getQuery()->getResult();
         if (count($result)) {

@@ -6,7 +6,7 @@ use App\Tests\Enum\HttpStatusEnum;
 use App\Tests\WebTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-class LicensePeriodControllerTest extends WebTestCase
+class PeriodControllerTest extends WebTestCase
 {
     protected function getDataFolders(): array
     {
@@ -18,7 +18,7 @@ class LicensePeriodControllerTest extends WebTestCase
     {
         $this->login($login);
 
-        $this->client->request('GET', $this->generateUrl('admin_licensePeriodList'));
+        $this->client->request('GET', $this->generateUrl('admin_periodList'));
         $this->assertStatusCode($status);
     }
 
@@ -43,7 +43,7 @@ class LicensePeriodControllerTest extends WebTestCase
     public function testPageList(): void
     {
         $this->login('admin@google.com');
-        $crawler = $this->client->request('GET', $this->generateUrl('admin_licensePeriodList', [
+        $crawler = $this->client->request('GET', $this->generateUrl('admin_periodList', [
         ]));
         $this->assertStatusCode(200);
 

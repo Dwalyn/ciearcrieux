@@ -14,7 +14,7 @@
             </div>
         </div>
         {% for licensePeriod in licensePeriods %}
-            {{ component('Administration:LicensePeriod:PeriodComponent', {
+            {{ component('Administration:Period:PeriodComponent', {
                 id: licensePeriod.id,
                 startYear: licensePeriod.startDate|date('Y'),
                 endYear: licensePeriod.endDate|date('Y'),

@@ -4,6 +4,6 @@
             <div class="bd-highlight"><h5 class="card-title">{{ this.startYear }} - {{ this.endYear }}</h5></div>
             <div class="bd-highlight"><span class="badge bg-{{ this.timeStatusEnum.badgeClass(this.timeStatusEnum) }}">{{ this.timeStatusEnum.translationKey|trans }}</span></div>
         </div>
-        <div class="d-flex justify-content-end"><a href="#" class="stretched-link">{{ 'global.link.details'|trans }} <i class="fa-solid fa-arrow-right"></i></a></div>
+        <div class="d-flex justify-content-end"><a href="{{ path('admin_periodDetails', {id: this.id}) }}" class="stretched-link">{{ 'global.link.details'|trans }} <i class="fa-solid fa-arrow-right"></i></a></div>
     </div>
 </div>

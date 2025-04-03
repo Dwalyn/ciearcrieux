@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title_page %}
+    {{ parent() }} - {{ licensePeriod.startDate|date('Y') }} - {{ licensePeriod.endDate|date('Y') }}
+{% endblock %}
+
+{% block h1 %} {{ 'menu.period'|trans }} {{ licensePeriod.startDate|date('Y') }} - {{ licensePeriod.endDate|date('Y') }} {% endblock %}
+
+{% block content %}
+    <div class="mb-5">
+        <h3>{{ 'h3.license'|trans }}</h3>
+
+        {{ component('LicensesActiveComponent', {licensePeriod: licensePeriod}) }}
+    </div>
+{% endblock %}
