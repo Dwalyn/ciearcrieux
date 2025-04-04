@@ -4,12 +4,19 @@
     {{ parent() }} - {{ licensePeriod.startDate|date('Y') }} - {{ licensePeriod.endDate|date('Y') }}
 {% endblock %}
 
-{% block h1 %} {{ 'menu.period'|trans }} {{ licensePeriod.startDate|date('Y') }} - {{ licensePeriod.endDate|date('Y') }} {% endblock %}
+{% block h1 %}
+    {{ 'menu.period'|trans }} {{ licensePeriod.startDate|date('Y') }} - {{ licensePeriod.endDate|date('Y') }}
+{% endblock %}
 
 {% block content %}
+    <div class="mb-4">
+        <h4 class="bd-highlight"><span class="badge bg-{{ licensePeriod.status.badgeClass(licensePeriod.status) }}">{{ licensePeriod.status.translationKey|trans }}</span></h4>
+    </div>
     <div class="mb-5">
-        <h3>{{ 'h3.license'|trans }}</h3>
-
-        {{ component('LicensesActiveComponent', {licensePeriod: licensePeriod}) }}
+        <h3>{{ 'h3.license'|trans }} </h3>
+        {{ component('LicensesActiveComponent', {
+            licensePeriod: licensePeriod,
+            showDetails: false,
+        }) }}
     </div>
 {% endblock %}

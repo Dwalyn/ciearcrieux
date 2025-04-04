@@ -13,10 +13,12 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 class LicensesActiveComponent
 {
     private ?LicensePeriod $licensePeriod = null;
+    private bool $showDetails = true;
 
-    public function mount(?LicensePeriod $licensePeriod = null): void
+    public function mount(?LicensePeriod $licensePeriod = null, bool $showDetails = true): void
     {
         $this->licensePeriod = $licensePeriod;
+        $this->showDetails = $showDetails;
     }
 
     public function __construct(
@@ -46,5 +48,10 @@ class LicensesActiveComponent
         }
 
         return $this->query->handle(new ListLicenseActiveDtoQuery($startDate, $endDate));
+    }
+
+    public function getShowDetails(): bool
+    {
+        return $this->showDetails;
     }
 }

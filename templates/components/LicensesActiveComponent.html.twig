@@ -4,22 +4,24 @@
             <div class="col-sm-12 col-lg-4 col-md-6 license">
                 <div class="card">
                     <div class="card-body">
-                        <div class="card-title d-flex bd-highlight">
+                        <div class="card-title d-flex bd-highlight m-0">
                             <div class="flex-grow-1 bd-highlight"><h4 class="licenseType">{{ licenceInPeriod.type.value }}</h4></div>
                             <div class="bd-highlight"><h4 class="price">{{ licenceInPeriod.price }}€ <small class="text-muted"> / an</small></h4></div>
                         </div>
                     </div>
-                    <ul>
-                        {% for detail in licenceInPeriod.details %}
-                            <li class="ms-3 licenseDetail">{{ detail }}</li>
-                        {% endfor %}
-                    </ul>
+                    {% if this.showDetails %}
+                        <ul>
+                            {% for detail in licenceInPeriod.details %}
+                                <li class="ms-3 licenseDetail">{{ detail }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}
     </div>
 {% else %}
     {{ component('Common:AlertComponent', {
-        messageKey: 'test',
+        messageKey: 'license.noLicense',
     }) }}
 {% endif %}
