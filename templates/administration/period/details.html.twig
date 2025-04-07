@@ -9,14 +9,21 @@
 {% endblock %}
 
 {% block content %}
-    <div class="mb-4">
-        <h4 class="bd-highlight"><span class="badge bg-{{ licensePeriod.status.badgeClass(licensePeriod.status) }}">{{ licensePeriod.status.translationKey|trans }}</span></h4>
-    </div>
-    <div class="mb-5">
-        <h3>{{ 'h3.license'|trans }} </h3>
-        {{ component('LicensesActiveComponent', {
-            licensePeriod: licensePeriod,
-            showDetails: false,
-        }) }}
+    <div class="w-75">
+        <div class="d-flex justify-content-between align-middle bd-highlight mb-3">
+            <div>
+                <h4 class="bd-highlight"><span class="badge bg-{{ licensePeriod.status.badgeClass(licensePeriod.status) }}">{{ licensePeriod.status.translationKey|trans }}</span></h4>
+            </div>
+            <div class="mt-2">
+                <a href="{{ path('admin_periodList') }}"> <i class="fa-solid fa-arrow-left"></i> Retour</a>
+            </div>
+        </div>
+        <div class="mb-5">
+            <h3>{{ 'h3.license'|trans }} </h3>
+            {{ component('LicensesActiveComponent', {
+                licensePeriod: licensePeriod,
+                showDetails: false,
+            }) }}
+        </div>
     </div>
 {% endblock %}
