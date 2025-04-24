@@ -28,7 +28,7 @@ abstract class WebTestCase extends BaseWebTestCase
 
     private ?EntityManagerInterface $entityManager = null;
 
-    private TranslatorInterface $translator;
+    protected TranslatorInterface $translator;
 
     /**
      * @return string[]

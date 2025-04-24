@@ -9,7 +9,6 @@
     {% endif %}
 
     {%- set widget_attr = {attr: {class: var_class}} -%}
-
     <div {% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
         {{- form_label(form) -}}
         {{- form_widget(form, widget_attr) -}}

@@ -2,6 +2,7 @@
 
 namespace App\Tests\Controller\Administration;
 
+use App\Enum\LicenseTypeEnum;
 use App\Tests\Enum\HttpStatusEnum;
 use App\Tests\WebTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -19,6 +20,12 @@ class PeriodControllerTest extends WebTestCase
         $this->login($login);
 
         $this->client->request('GET', $this->generateUrl('admin_periodList'));
+        $this->assertStatusCode($status);
+
+        $this->client->request('GET', $this->generateUrl('admin_periodDetails', ['id' => 1]));
+        $this->assertStatusCode($status);
+
+        $this->client->request('GET', $this->generateUrl('admin_periodLicensePrice', ['id' => 1]));
         $this->assertStatusCode($status);
     }
 
@@ -53,7 +60,7 @@ class PeriodControllerTest extends WebTestCase
 
         $button = $crawler->filter('.btn-primary');
         $this->assertCount(1, $button);
-        $this->assertEquals($this->getTranslation('button.add'), $button->text());
+        $this->assertEquals($this->getTranslation('button.nextPeriod'), $button->text());
 
         $card = $crawler->filter('.card');
         $this->assertCount(3, $card);
@@ -72,5 +79,92 @@ class PeriodControllerTest extends WebTestCase
 
         $link = $crawler->filter('.stretched-link');
         $this->assertCount(3, $link);
+    }
+
+    public function testPageDetail(): void
+    {
+        $this->login('admin@google.com');
+        $crawler = $this->client->request('GET', $this->generateUrl('admin_periodDetails', [
+            'id' => 1,
+        ]));
+        $this->assertStatusCode(200);
+
+        $h1 = $crawler->filter('h1');
+        $this->assertCount(1, $h1);
+        $this->assertEquals(sprintf('%s %s-%s', $this->getTranslation('menu.period'), 2024, 2025), $h1->text());
+
+        $badge = $crawler->filter('.bg-success');
+        $this->assertCount(1, $badge);
+
+        $h3 = $crawler->filter('h3');
+        $this->assertCount(1, $h3);
+
+        $btn = $crawler->filter('.btn-primary');
+        $this->assertCount(1, $btn);
+
+        $table = $crawler->filter('table');
+        $this->assertCount(1, $table);
+
+        $lines = $table->filter('tr');
+        $this->assertCount(4, $lines);
+
+        $columns = $table->filter('th');
+        $this->assertCount(3, $columns);
+    }
+
+    #[DataProvider('editLicencePriceProvider')]
+    public function testEditLicensePrice(array $data, int $nbErrors, int $statusCode): void
+    {
+        $this->login('admin@google.com');
+        $crawler = $this->client->request('GET', $this->generateUrl('admin_periodLicensePrice', [
+            'id' => 1,
+        ]));
+
+        $form = $crawler->filter('form')->form();
+        $values = $form->getPhpValues();
+        $values['edit_price']['licensePriceFormDataCollection'][0]['price'] = $data[LicenseTypeEnum::ADULT->value];
+        $values['edit_price']['licensePriceFormDataCollection'][1]['price'] = $data[LicenseTypeEnum::MINOR->value];
+        $values['edit_price']['licensePriceFormDataCollection'][2]['price'] = $data[LicenseTypeEnum::DISCOVER->value];
+        $crawler = $this->client->request($form->getMethod(), $form->getUri(), $values);
+
+        $errors = $crawler->filter('.invalid-feedback');
+        $this->assertCount($nbErrors, $errors);
+        $this->assertStatusCode($statusCode);
+
+        if (0 === $nbErrors) {
+            $crawler = $this->client->followRedirect();
+            $this->alertTest($crawler, 'success', $this->translator->trans('alert.success.updateLicencePrice'));
+        }
+    }
+
+    public static function editLicencePriceProvider(): \Generator
+    {
+        yield 'formEmpty' => [
+            'data' => [
+                LicenseTypeEnum::ADULT->value => null,
+                LicenseTypeEnum::MINOR->value => null,
+                LicenseTypeEnum::DISCOVER->value => null,
+            ],
+            'nbErrors' => 3,
+            'statusCode' => 200, // no redirect if form is invalid
+        ];
+        yield 'formNegativeValue' => [
+            'data' => [
+                LicenseTypeEnum::ADULT->value => -1,
+                LicenseTypeEnum::MINOR->value => -1,
+                LicenseTypeEnum::DISCOVER->value => -1,
+            ],
+            'nbErrors' => 3,
+            'statusCode' => 200, // no redirect if form is invalid
+        ];
+        yield 'formOk' => [
+            'data' => [
+                LicenseTypeEnum::ADULT->value => 100,
+                LicenseTypeEnum::MINOR->value => 90,
+                LicenseTypeEnum::DISCOVER->value => 50,
+            ],
+            'nbErrors' => 0,
+            'statusCode' => 302,
+        ];
     }
 }

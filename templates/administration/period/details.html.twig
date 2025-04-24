@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block h1 %}
-    {{ 'menu.period'|trans }} {{ licensePeriod.startDate|date('Y') }} - {{ licensePeriod.endDate|date('Y') }}
+    {{ 'menu.period'|trans }} {{ licensePeriod.startDate|date('Y') }}-{{ licensePeriod.endDate|date('Y') }}
 {% endblock %}
 
 {% block content %}
@@ -18,12 +18,17 @@
                 <a href="{{ path('admin_periodList') }}"> <i class="fa-solid fa-arrow-left"></i> Retour</a>
             </div>
         </div>
-        <div class="mb-5">
-            <h3>{{ 'h3.license'|trans }} </h3>
-            {{ component('LicensesActiveComponent', {
-                licensePeriod: licensePeriod,
-                showDetails: false,
-            }) }}
+        <div class="d-flex flex-row mb-3">
+            <div>
+                <h3>{{ 'h3.license'|trans }} </h3>
+            </div>
+            {% if is_granted('edit', licensePeriod) %}
+                <div class="ms-4"><a href="{{ path('admin_periodLicensePrice', {id: licensePeriod.id}) }}" class="btn btn-primary"><i class="fa-solid fa-pen"></i> Modifier</a></div>
+            {% endif %}
         </div>
+        {{ component('LicensesActiveComponent', {
+            licensePeriod: licensePeriod,
+            showDetails: false,
+        }) }}
     </div>
 {% endblock %}

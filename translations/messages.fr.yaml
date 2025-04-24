@@ -1,12 +1,16 @@
 alert:
+  danger:
+    unauthorizedEditLicensePeriod: La période %start%-%end% est terminée. Elle ne peut plus être modifiée.
   success:
     addMember: Le nouveau membre est ajouté.
+    updateLicencePrice: Le prix des licences de la période sont modifiés.
   secondary:
     nodata: Aucun résultat ne correspond à votre recherche.
 
 button:
   add: Ajouter
   cancel: Annuler
+  nextPeriod: Créer la période suivante
   save: Enregistrer
   signin: Se connecter
 
@@ -57,6 +61,8 @@ license:
   rent:
     free: OFFERT
   noLicense: Aucune license trouvée pour cette période.
+  licensePrice:
+    h1: Modification du tarif des licenses
 
 menu:
   admin:
