@@ -61,6 +61,7 @@ license:
   rent:
     free: OFFERT
   noLicense: Aucune license trouvée pour cette période.
+  noRent: Aucune offre de location trouvée pour cette période.
   licensePrice:
     h1: Modification du tarif des licenses
 

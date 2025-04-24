@@ -23,8 +23,7 @@
         <table class="table table-hover table-responsive align-middle">
             <thead class="table-light">
             <tr>
-                <th scope="col">Type de license</th>
-                <th class="text-center" scope="col">Membres</th>
+                <th scope="col"></th>
                 <th class="text-center" scope="col">€</th>
             </tr>
             </thead>
@@ -32,7 +31,6 @@
             {% for licenceInPeriod in this.licencesInPeriod %}
                 <tr>
                     <td>{{ licenceInPeriod.type.value }}</td>
-                    <td class="text-center"> - </td>
                     <td class="text-center">{{ licenceInPeriod.price }}</td>
                 </tr>
             {% endfor %}

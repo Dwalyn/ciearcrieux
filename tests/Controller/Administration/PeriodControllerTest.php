@@ -97,19 +97,25 @@ class PeriodControllerTest extends WebTestCase
         $this->assertCount(1, $badge);
 
         $h3 = $crawler->filter('h3');
-        $this->assertCount(1, $h3);
+        $this->assertCount(2, $h3);
 
         $btn = $crawler->filter('.btn-primary');
-        $this->assertCount(1, $btn);
+        $this->assertCount(2, $btn);
 
         $table = $crawler->filter('table');
-        $this->assertCount(1, $table);
+        $this->assertCount(2, $table);
 
-        $lines = $table->filter('tr');
+        $lines = $table->first()->filter('tr');
         $this->assertCount(4, $lines);
 
-        $columns = $table->filter('th');
-        $this->assertCount(3, $columns);
+        $columns = $table->first()->filter('th');
+        $this->assertCount(2, $columns);
+
+        $lines = $table->last()->filter('tr');
+        $this->assertCount(3, $lines);
+
+        $columns = $table->first()->filter('th');
+        $this->assertCount(2, $columns);
     }
 
     #[DataProvider('editLicencePriceProvider')]

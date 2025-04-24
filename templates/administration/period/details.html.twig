@@ -18,17 +18,33 @@
                 <a href="{{ path('admin_periodList') }}"> <i class="fa-solid fa-arrow-left"></i> Retour</a>
             </div>
         </div>
-        <div class="d-flex flex-row mb-3">
-            <div>
-                <h3>{{ 'h3.license'|trans }} </h3>
+        <div class="mb-5">
+            <div class="d-flex flex-row mb-3">
+                <div>
+                    <h3>{{ 'h3.license'|trans }} </h3>
+                </div>
+                {% if is_granted('edit', licensePeriod) %}
+                    <div class="ms-4"><a href="{{ path('admin_periodLicensePrice', {id: licensePeriod.id}) }}" class="btn btn-primary"><i class="fa-solid fa-pen"></i> Modifier</a></div>
+                {% endif %}
             </div>
-            {% if is_granted('edit', licensePeriod) %}
-                <div class="ms-4"><a href="{{ path('admin_periodLicensePrice', {id: licensePeriod.id}) }}" class="btn btn-primary"><i class="fa-solid fa-pen"></i> Modifier</a></div>
-            {% endif %}
+            {{ component('LicensesActiveComponent', {
+                licensePeriod: licensePeriod,
+                showDetails: false,
+            }) }}
         </div>
-        {{ component('LicensesActiveComponent', {
-            licensePeriod: licensePeriod,
-            showDetails: false,
-        }) }}
+        <div>
+            <div class="d-flex flex-row mb-3">
+                <div>
+                    <h3>{{ 'h3.rent'|trans }} </h3>
+                </div>
+                {% if is_granted('edit', licensePeriod) %}
+                    <div class="ms-4"><a href="{{ path('admin_periodLicensePrice', {id: licensePeriod.id}) }}" class="btn btn-primary"><i class="fa-solid fa-pen"></i> Modifier</a></div>
+                {% endif %}
+            </div>
+            {{ component('RentsActiveComponent', {
+                licensePeriod: licensePeriod,
+                showDetails: false,
+            }) }}
+        </div>
     </div>
 {% endblock %}
