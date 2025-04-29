@@ -62,22 +62,22 @@ class PeriodControllerTest extends WebTestCase
         $this->assertCount(1, $button);
         $this->assertEquals($this->getTranslation('button.nextPeriod'), $button->text());
 
-        $card = $crawler->filter('.card');
-        $this->assertCount(3, $card);
+        $table = $crawler->filter('table');
+        $this->assertCount(1, $table);
 
-        $cardTitle = $card->first()->filter('.card-title');
+        $line = $table->filter('tbody tr');
         $this->assertEquals(sprintf(
             '%s - %s',
             (new \DateTime())->modify('-1 year')->format('Y'),
             (new \DateTime())->format('Y'),
-        ), $cardTitle->text());
+        ), $line->filter('td')->first()->text());
 
         $badges = $crawler->filter('.bg-success');
         $this->assertCount(1, $badges);
         $badges = $crawler->filter('.bg-danger');
         $this->assertCount(2, $badges);
 
-        $link = $crawler->filter('.stretched-link');
+        $link = $crawler->filter('.btn-outline-secondary');
         $this->assertCount(3, $link);
     }
 

@@ -7,19 +7,28 @@
 {% block h1 %} {{ 'menu.period'|trans }} {% endblock %}
 
 {% block content %}
-    <div>
+    <div class="w-75">
         <div class="d-flex mb-4">
             <div class="">
                 <a class="btn btn-primary" href="#"><i class="fa-solid fa-calendar-plus"></i> {{ 'button.nextPeriod'|trans }}</a>
             </div>
         </div>
-        {% for licensePeriod in licensePeriods %}
-            {{ component('Administration:Period:PeriodComponent', {
-                id: licensePeriod.id,
-                startYear: licensePeriod.startDate|date('Y'),
-                endYear: licensePeriod.endDate|date('Y'),
-                timeStatusEnum: licensePeriod.status,
-            }) }}
-        {% endfor %}
+        <table class="table table-hover table-responsive align-middle">
+            <tbody class="table-hover">
+                {% for licensePeriod in licensePeriods %}
+                    <tr>
+                        <td>
+                            {{ licensePeriod.startDate|date('Y') }} - {{ licensePeriod.endDate|date('Y') }}
+                        </td>
+                        <td class="text-center">
+                            <span class="bd-highlight"><span class="badge bg-{{ licensePeriod.status.badgeClass(licensePeriod.status) }}">{{ licensePeriod.status.translationKey|trans }}</span></span>
+                        </td>
+                        <td class="text-end">
+                            <a href="{{ path('admin_periodDetails', {id: licensePeriod.id}) }}" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-euro-sign"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}
