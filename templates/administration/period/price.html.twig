@@ -13,10 +13,11 @@
 <div class="w-75">
     <div class="d-flex justify-content-between align-middle bd-highlight mb-3">
         <div>
-            <h4 class="bd-highlight">{{ 'license.licensePrice.h1'|trans }}</h4>
+            <h4 class="bd-highlight">{{ h1|trans }}</h4>
         </div>
         <div class="mt-2">
-            <a href="{{ path('admin_periodDetails', {id: licensePeriod.id}) }}"> <i class="fa-solid fa-arrow-left"></i> Retour</a>
+            <a href="{{ path('admin_periodPriceDetails', {id: licensePeriod.id}) }}"> <i class="fa-solid fa-arrow-left"></i>
+                {{ 'button.back'|trans }}</a>
         </div>
     </div>
 
@@ -31,7 +32,7 @@
             {% endif %}
             <div class="mb-3">
                 <div class="input-group">
-                    <span class="input-group-text">{{ widget.vars.data.type.value }} </span>
+                    <span class="input-group-text">{{ widget.vars.data.type.translationKey|trans }} </span>
                     {{ form_widget(widget.price, {attr: {class: var_class}}) }}
                     <span class="input-group-text">€ / an</span>
                     {{ form_errors(widget.price) }}
@@ -41,7 +42,7 @@
 
         <div>
             <button type="submit" class="btn btn-success"><i class="fa-solid fa-check"></i> {{ 'button.save'|trans }}</button>
-            <a href="{{ path('admin_periodDetails', {id: licensePeriod.id}) }}" class="btn btn-outline-secondary">{{ 'button.cancel'|trans }}</a>
+            <a href="{{ path('admin_periodPriceDetails', {id: licensePeriod.id}) }}" class="btn btn-outline-secondary">{{ 'button.cancel'|trans }}</a>
         </div>
         {{ form_end(form) }}
 

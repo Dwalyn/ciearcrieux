@@ -15,7 +15,7 @@
                 <h4 class="bd-highlight"><span class="badge bg-{{ licensePeriod.status.badgeClass(licensePeriod.status) }}">{{ licensePeriod.status.translationKey|trans }}</span></h4>
             </div>
             <div class="mt-2">
-                <a href="{{ path('admin_periodList') }}"> <i class="fa-solid fa-arrow-left"></i> Retour</a>
+                <a href="{{ path('admin_periodList') }}"> <i class="fa-solid fa-arrow-left"></i> {{ 'button.back'|trans }}</a>
             </div>
         </div>
         <div class="mb-5">
@@ -24,7 +24,8 @@
                     <h3>{{ 'h3.license'|trans }} </h3>
                 </div>
                 {% if is_granted('edit', licensePeriod) %}
-                    <div class="ms-4"><a href="{{ path('admin_periodLicensePrice', {id: licensePeriod.id}) }}" class="btn btn-primary"><i class="fa-solid fa-pen"></i> Modifier</a></div>
+                    <div class="ms-4"><a href="{{ path('admin_periodLicensePrice', {id: licensePeriod.id}) }}" class="btn btn-primary"><i class="fa-solid fa-pen"></i>
+                        {{ 'button.edit'|trans }}</a></div>
                 {% endif %}
             </div>
             {{ component('LicensesActiveComponent', {
@@ -38,7 +39,7 @@
                     <h3>{{ 'h3.rent'|trans }} </h3>
                 </div>
                 {% if is_granted('edit', licensePeriod) %}
-                    <div class="ms-4"><a href="{{ path('admin_periodLicensePrice', {id: licensePeriod.id}) }}" class="btn btn-primary"><i class="fa-solid fa-pen"></i> Modifier</a></div>
+                    <div class="ms-4"><a href="{{ path('admin_periodRentPrice', {id: licensePeriod.id}) }}" class="btn btn-primary"><i class="fa-solid fa-pen"></i> {{ 'button.edit'|trans }}</a></div>
                 {% endif %}
             </div>
             {{ component('RentsActiveComponent', {

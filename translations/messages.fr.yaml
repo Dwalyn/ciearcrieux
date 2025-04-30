@@ -3,13 +3,16 @@ alert:
     unauthorizedEditLicensePeriod: La période %start%-%end% est terminée. Elle ne peut plus être modifiée.
   success:
     addMember: Le nouveau membre est ajouté.
-    updateLicencePrice: Le prix des licences de la période sont modifiés.
+    updateLicencePrice: Le prix des licences sont modifiés.
+    updateRentPrice: Le prix des locations sont modifiés.
   secondary:
     nodata: Aucun résultat ne correspond à votre recherche.
 
 button:
   add: Ajouter
+  back: Retour
   cancel: Annuler
+  edit: Modifier
   nextPeriod: Créer la période suivante
   save: Enregistrer
   signin: Se connecter
@@ -28,6 +31,10 @@ enum:
     DAY_4: Jeudi
     DAY_5: Vendredi
     DAY_6: Samedi
+  license:
+    adult: Adulte
+    discover: Découverte
+    minor: "- de 18 ans"
   licensedType:
     beginner: débutant
     confirmed: confirmé
@@ -64,6 +71,8 @@ license:
   noRent: Aucune offre de location trouvée pour cette période.
   licensePrice:
     h1: Modification du tarif des licenses
+  rentPrice:
+    h1: Modification du tarif des locations
 
 menu:
   admin:

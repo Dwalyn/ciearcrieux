@@ -24,7 +24,7 @@
                             <span class="bd-highlight"><span class="badge bg-{{ licensePeriod.status.badgeClass(licensePeriod.status) }}">{{ licensePeriod.status.translationKey|trans }}</span></span>
                         </td>
                         <td class="text-end">
-                            <a href="{{ path('admin_periodDetails', {id: licensePeriod.id}) }}" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-euro-sign"></i></a>
+                            <a href="{{ path('admin_periodPriceDetails', {id: licensePeriod.id}) }}" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-euro-sign"></i></a>
                         </td>
                     </tr>
                 {% endfor %}

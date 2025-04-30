@@ -3,6 +3,7 @@
 namespace App\Tests\Controller\Administration;
 
 use App\Enum\LicenseTypeEnum;
+use App\Enum\RentTypeEnum;
 use App\Tests\Enum\HttpStatusEnum;
 use App\Tests\WebTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -22,10 +23,14 @@ class PeriodControllerTest extends WebTestCase
         $this->client->request('GET', $this->generateUrl('admin_periodList'));
         $this->assertStatusCode($status);
 
-        $this->client->request('GET', $this->generateUrl('admin_periodDetails', ['id' => 1]));
+        $this->client->request('GET', $this->generateUrl('admin_periodPriceDetails', ['id' => 1]));
         $this->assertStatusCode($status);
 
         $this->client->request('GET', $this->generateUrl('admin_periodLicensePrice', ['id' => 1]));
+        $this->savePage();
+        $this->assertStatusCode($status);
+
+        $this->client->request('GET', $this->generateUrl('admin_periodRentPrice', ['id' => 1]));
         $this->assertStatusCode($status);
     }
 
@@ -84,7 +89,7 @@ class PeriodControllerTest extends WebTestCase
     public function testPageDetail(): void
     {
         $this->login('admin@google.com');
-        $crawler = $this->client->request('GET', $this->generateUrl('admin_periodDetails', [
+        $crawler = $this->client->request('GET', $this->generateUrl('admin_periodPriceDetails', [
             'id' => 1,
         ]));
         $this->assertStatusCode(200);
@@ -128,9 +133,9 @@ class PeriodControllerTest extends WebTestCase
 
         $form = $crawler->filter('form')->form();
         $values = $form->getPhpValues();
-        $values['edit_price']['licensePriceFormDataCollection'][0]['price'] = $data[LicenseTypeEnum::ADULT->value];
-        $values['edit_price']['licensePriceFormDataCollection'][1]['price'] = $data[LicenseTypeEnum::MINOR->value];
-        $values['edit_price']['licensePriceFormDataCollection'][2]['price'] = $data[LicenseTypeEnum::DISCOVER->value];
+        $values['edit_license_price']['licensePriceFormDataCollection'][0]['price'] = $data[LicenseTypeEnum::ADULT->value];
+        $values['edit_license_price']['licensePriceFormDataCollection'][1]['price'] = $data[LicenseTypeEnum::MINOR->value];
+        $values['edit_license_price']['licensePriceFormDataCollection'][2]['price'] = $data[LicenseTypeEnum::DISCOVER->value];
         $crawler = $this->client->request($form->getMethod(), $form->getUri(), $values);
 
         $errors = $crawler->filter('.invalid-feedback');
@@ -154,6 +159,15 @@ class PeriodControllerTest extends WebTestCase
             'nbErrors' => 3,
             'statusCode' => 200, // no redirect if form is invalid
         ];
+        yield 'formNotNumber' => [
+            'data' => [
+                LicenseTypeEnum::ADULT->value => 'aaa',
+                LicenseTypeEnum::MINOR->value => 'aaa',
+                LicenseTypeEnum::DISCOVER->value => 'aaa',
+            ],
+            'nbErrors' => 3,
+            'statusCode' => 200, // no redirect if form is invalid
+        ];
         yield 'formNegativeValue' => [
             'data' => [
                 LicenseTypeEnum::ADULT->value => -1,
@@ -163,11 +177,88 @@ class PeriodControllerTest extends WebTestCase
             'nbErrors' => 3,
             'statusCode' => 200, // no redirect if form is invalid
         ];
+        yield 'formWithZeroValue' => [
+            'data' => [
+                LicenseTypeEnum::ADULT->value => 0,
+                LicenseTypeEnum::MINOR->value => 90,
+                LicenseTypeEnum::DISCOVER->value => 50,
+            ],
+            'nbErrors' => 1,
+            'statusCode' => 200, // no redirect if form is invalid
+        ];
         yield 'formOk' => [
             'data' => [
                 LicenseTypeEnum::ADULT->value => 100,
                 LicenseTypeEnum::MINOR->value => 90,
                 LicenseTypeEnum::DISCOVER->value => 50,
+            ],
+            'nbErrors' => 0,
+            'statusCode' => 302,
+        ];
+    }
+
+    #[DataProvider('editRentPriceProvider')]
+    public function testEditRentPrice(array $data, int $nbErrors, int $statusCode): void
+    {
+        $this->login('admin@google.com');
+        $crawler = $this->client->request('GET', $this->generateUrl('admin_periodRentPrice', [
+            'id' => 1,
+        ]));
+
+        $form = $crawler->filter('form')->form();
+        $values = $form->getPhpValues();
+        $values['edit_rent_price']['licensePriceFormDataCollection'][0]['price'] = $data[RentTypeEnum::FIRST->value];
+        $values['edit_rent_price']['licensePriceFormDataCollection'][1]['price'] = $data[RentTypeEnum::OTHER->value];
+        $crawler = $this->client->request($form->getMethod(), $form->getUri(), $values);
+
+        $errors = $crawler->filter('.invalid-feedback');
+        $this->assertCount($nbErrors, $errors);
+        $this->assertStatusCode($statusCode);
+
+        if (0 === $nbErrors) {
+            $crawler = $this->client->followRedirect();
+            $this->alertTest($crawler, 'success', $this->translator->trans('alert.success.updateRentPrice'));
+        }
+    }
+
+    public static function editRentPriceProvider(): \Generator
+    {
+        yield 'formEmpty' => [
+            'data' => [
+                RentTypeEnum::FIRST->value => null,
+                RentTypeEnum::OTHER->value => null,
+            ],
+            'nbErrors' => 2,
+            'statusCode' => 200, // no redirect if form is invalid
+        ];
+        yield 'formNotNumber' => [
+            'data' => [
+                RentTypeEnum::FIRST->value => 'aaa',
+                RentTypeEnum::OTHER->value => 'aaa',
+            ],
+            'nbErrors' => 2,
+            'statusCode' => 200, // no redirect if form is invalid
+        ];
+        yield 'formNegativeValue' => [
+            'data' => [
+                RentTypeEnum::FIRST->value => -1,
+                RentTypeEnum::OTHER->value => -1,
+            ],
+            'nbErrors' => 2,
+            'statusCode' => 200, // no redirect if form is invalid
+        ];
+        yield 'formWithZeroValue' => [
+            'data' => [
+                RentTypeEnum::FIRST->value => 0,
+                RentTypeEnum::OTHER->value => 0,
+            ],
+            'nbErrors' => 0,
+            'statusCode' => 302,
+        ];
+        yield 'formOk' => [
+            'data' => [
+                RentTypeEnum::FIRST->value => 100,
+                RentTypeEnum::OTHER->value => 90,
             ],
             'nbErrors' => 0,
             'statusCode' => 302,

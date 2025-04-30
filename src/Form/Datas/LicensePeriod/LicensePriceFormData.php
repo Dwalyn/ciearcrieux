@@ -12,8 +12,7 @@ class LicensePriceFormData
     public readonly LicenseTypeEnum $type;
 
     #[Assert\NotNull]
-    #[Assert\Positive]
-    #[Assert\NotEqualTo(value: 0)]
+    #[Assert\GreaterThan(value: 0)]
     public ?int $price;
 
     public function __construct(License $license)

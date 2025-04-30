@@ -8,12 +8,12 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EditPriceType extends AbstractType
+class EditRentPriceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('licensePriceFormDataCollection', CollectionType::class, [
-            'entry_type' => LicensePriceType::class,
+            'entry_type' => RentPriceType::class,
             'block_name' => 'license_price',
         ]);
     }

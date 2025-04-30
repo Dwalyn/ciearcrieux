@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class EditPriceFormData
 {
     /**
-     * @var ArrayCollection<int, LicensePriceFormData>
+     * @var ArrayCollection<int, LicensePriceFormData|RentPriceFormData>
      */
     #[Assert\Valid]
     private ArrayCollection $licensePriceFormDataCollection;
@@ -19,13 +19,13 @@ class EditPriceFormData
         $this->licensePriceFormDataCollection = new ArrayCollection();
     }
 
-    public function addLicenseFormData(LicensePriceFormData $licenseFormData): void
+    public function addLicenseFormData(LicensePriceFormData|RentPriceFormData $licenseFormData): void
     {
         $this->licensePriceFormDataCollection->add($licenseFormData);
     }
 
     /**
-     * @return ArrayCollection<int, LicensePriceFormData>
+     * @return ArrayCollection<int, LicensePriceFormData|RentPriceFormData>
      */
     public function getLicensePriceFormDataCollection(): Collection
     {

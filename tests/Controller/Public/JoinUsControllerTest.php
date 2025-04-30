@@ -2,6 +2,8 @@
 
 namespace App\Tests\Controller\Public;
 
+use App\Enum\LicenseTypeEnum;
+use App\Enum\RentTypeEnum;
 use App\Tests\Enum\HttpStatusEnum;
 use App\Tests\WebTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -60,7 +62,7 @@ class JoinUsControllerTest extends WebTestCase
 
         $licenseType = $licenses->first()->filter('.licenseType');
         $this->assertCount(1, $licenseType);
-        $this->assertEquals('Adulte', $licenseType->text());
+        $this->assertEquals($this->translator->trans(LicenseTypeEnum::ADULT->getTranslationKey()), $licenseType->text());
 
         $price = $licenses->first()->filter('.price');
         $this->assertCount(1, $price);
@@ -79,7 +81,7 @@ class JoinUsControllerTest extends WebTestCase
 
         $rentType = $rents->first()->filter('.rentType');
         $this->assertCount(1, $rentType);
-        $this->assertEquals('Première année', $rentType->text());
+        $this->assertEquals($this->translator->trans(RentTypeEnum::FIRST->getTranslationKey()), $rentType->text());
 
         $price = $rents->first()->filter('.price');
         $this->assertCount(1, $price);
@@ -87,7 +89,7 @@ class JoinUsControllerTest extends WebTestCase
 
         $rentType = $rents->last()->filter('.rentType');
         $this->assertCount(1, $rentType);
-        $this->assertEquals('Deuxième année et plus', $rentType->text());
+        $this->assertEquals($this->translator->trans(RentTypeEnum::OTHER->getTranslationKey()), $rentType->text());
 
         $price = $rents->last()->filter('.price');
         $this->assertCount(1, $price);

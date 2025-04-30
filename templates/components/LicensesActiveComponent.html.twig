@@ -6,7 +6,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="card-title d-flex bd-highlight m-0">
-                                <div class="flex-grow-1 bd-highlight"><h4 class="licenseType">{{ licenceInPeriod.type.value }}</h4></div>
+                                <div class="flex-grow-1 bd-highlight"><h4 class="licenseType">{{ licenceInPeriod.type.translationKey|trans }}</h4></div>
                                 <div class="bd-highlight"><h4 class="price">{{ licenceInPeriod.price }}€ <small class="text-muted"> / an</small></h4></div>
                             </div>
                         </div>
@@ -30,7 +30,7 @@
             <tbody class="table-hover">
             {% for licenceInPeriod in this.licencesInPeriod %}
                 <tr>
-                    <td>{{ licenceInPeriod.type.value }}</td>
+                    <td>{{ licenceInPeriod.type.translationKey|trans }}</td>
                     <td class="text-center">{{ licenceInPeriod.price }}</td>
                 </tr>
             {% endfor %}

@@ -4,14 +4,17 @@ namespace App\Controller\Administration;
 
 use App\Command\CommandBusInterface;
 use App\Command\LicensePeriod\UpdateLicensePriceCommand;
+use App\Command\LicensePeriod\UpdateRentPriceCommand;
 use App\Entity\LicensePeriod;
 use App\Enum\RoleEnum;
 use App\Factory\LicensePeriod\EditPriceFormDataFactory;
-use App\Form\Type\LicensePeriod\EditPriceType;
+use App\Form\Type\LicensePeriod\EditLicensePriceType;
+use App\Form\Type\LicensePeriod\EditRentPriceType;
 use App\Repository\LicensePeriodRepository;
 use App\Security\LicensePeriodVoter;
 use Doctrine\Common\Collections\Order;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -20,6 +23,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route('/admin', name: 'admin_')]
 class PeriodController extends AbstractController
 {
+    public function __construct(
+        private readonly CommandBusInterface $commandBus,
+        private readonly TranslatorInterface $translator,
+        private readonly EditPriceFormDataFactory $editPriceFormDataFactory
+    ) {
+    }
+
     #[Route('/periods', name: 'periodList')]
     public function list(
         LicensePeriodRepository $licensePeriodRepository,
@@ -31,13 +41,13 @@ class PeriodController extends AbstractController
         ]);
     }
 
-    #[Route('/periods/{id}', name: 'periodDetails', requirements: ['id' => '\d+'])]
-    public function details(
+    #[Route('/periods/{id}', name: 'periodPriceDetails', requirements: ['id' => '\d+'])]
+    public function pricedetails(
         LicensePeriod $licensePeriod,
     ): Response {
         $this->denyAccessUnlessGranted(RoleEnum::ROLE_ADMIN->value);
 
-        return $this->render('/administration/period/details.html.twig', [
+        return $this->render('/administration/period/priceDetails.html.twig', [
             'licensePeriod' => $licensePeriod,
         ]);
     }
@@ -46,13 +56,58 @@ class PeriodController extends AbstractController
     public function price(
         LicensePeriod $licensePeriod,
         Request $request,
-        EditPriceFormDataFactory $editPriceFormDataFactory,
-        CommandBusInterface $commandBus,
-        TranslatorInterface $translator,
     ): Response {
         $this->denyAccessUnlessGranted(RoleEnum::ROLE_ADMIN->value);
+        $this->alertUnauthorizedEditPeriod($licensePeriod);
+
+        $dataForm = $this->editPriceFormDataFactory->buildDataLicense($licensePeriod);
+        $form = $this->createForm(EditLicensePriceType::class, $dataForm);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->commandBus->dispatch(new UpdateLicensePriceCommand($form->getData()));
+            $this->addFlash('success', $this->translator->trans('alert.success.updateLicencePrice'));
+
+            return $this->redirectToRoute('admin_periodPriceDetails', ['id' => $licensePeriod->getId()]);
+        }
+
+        return $this->render('/administration/period/price.html.twig', [
+            'licensePeriod' => $licensePeriod,
+            'form' => $form->createView(),
+            'h1' => 'license.licensePrice.h1',
+        ]);
+    }
+
+    #[Route('/periods/{id}/rent', name: 'periodRentPrice', requirements: ['id' => '\d+'])]
+    public function priceRent(
+        LicensePeriod $licensePeriod,
+        Request $request,
+    ): Response {
+        $this->denyAccessUnlessGranted(RoleEnum::ROLE_ADMIN->value);
+        $this->alertUnauthorizedEditPeriod($licensePeriod);
+
+        $dataForm = $this->editPriceFormDataFactory->buildDataRent($licensePeriod);
+        $form = $this->createForm(EditRentPriceType::class, $dataForm);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->commandBus->dispatch(new UpdateRentPriceCommand($form->getData()));
+            $this->addFlash('success', $this->translator->trans('alert.success.updateRentPrice'));
+
+            return $this->redirectToRoute('admin_periodPriceDetails', ['id' => $licensePeriod->getId()]);
+        }
+
+        return $this->render('/administration/period/price.html.twig', [
+            'licensePeriod' => $licensePeriod,
+            'form' => $form->createView(),
+            'h1' => 'license.rentPrice.h1',
+        ]);
+    }
+
+    private function alertUnauthorizedEditPeriod(LicensePeriod $licensePeriod): ?RedirectResponse
+    {
         if (!$this->isGranted(LicensePeriodVoter::EDIT, $licensePeriod)) {
-            $this->addFlash('danger', $translator->trans('alert.danger.unauthorizedEditLicensePeriod', [
+            $this->addFlash('danger', $this->translator->trans('alert.danger.unauthorizedEditLicensePeriod', [
                 '%start%' => $licensePeriod->getStartDate()->format('Y'),
                 '%end%' => $licensePeriod->getEndDate()->format('Y'),
             ]));
@@ -60,20 +115,6 @@ class PeriodController extends AbstractController
             return $this->redirectToRoute('admin_periodDetails', ['id' => $licensePeriod->getId()]);
         }
 
-        $dataForm = $editPriceFormDataFactory->buildData($licensePeriod);
-        $form = $this->createForm(EditPriceType::class, $dataForm);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $commandBus->dispatch(new UpdateLicensePriceCommand($form->getData()));
-            $this->addFlash('success', $translator->trans('alert.success.updateLicencePrice'));
-
-            return $this->redirectToRoute('admin_periodDetails', ['id' => $licensePeriod->getId()]);
-        }
-
-        return $this->render('/administration/period/licensePrice.html.twig', [
-            'licensePeriod' => $licensePeriod,
-            'form' => $form->createView(),
-        ]);
+        return null;
     }
 }

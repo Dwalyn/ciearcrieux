@@ -5,16 +5,19 @@ namespace App\Factory\LicensePeriod;
 use App\Entity\LicensePeriod;
 use App\Form\Datas\LicensePeriod\EditPriceFormData;
 use App\Form\Datas\LicensePeriod\LicensePriceFormData;
+use App\Form\Datas\LicensePeriod\RentPriceFormData;
 use App\Repository\LicenseRepository;
+use App\Repository\RentRepository;
 
 class EditPriceFormDataFactory
 {
     public function __construct(
         private LicenseRepository $licenseRepository,
+        private RentRepository $rentRepository,
     ) {
     }
 
-    public function buildData(LicensePeriod $licensePeriod): EditPriceFormData
+    public function buildDataLicense(LicensePeriod $licensePeriod): EditPriceFormData
     {
         $formData = new EditPriceFormData();
         $licenses = $this->licenseRepository->findBy(['licensePeriod' => $licensePeriod]);
@@ -22,6 +25,19 @@ class EditPriceFormDataFactory
         foreach ($licenses as $license) {
             $licenseFormData = new LicensePriceFormData($license);
             $formData->addLicenseFormData($licenseFormData);
+        }
+
+        return $formData;
+    }
+
+    public function buildDataRent(LicensePeriod $licensePeriod): EditPriceFormData
+    {
+        $formData = new EditPriceFormData();
+        $rents = $this->rentRepository->findBy(['licensePeriod' => $licensePeriod]);
+
+        foreach ($rents as $rent) {
+            $rentFormData = new RentPriceFormData($rent);
+            $formData->addLicenseFormData($rentFormData);
         }
 
         return $formData;
