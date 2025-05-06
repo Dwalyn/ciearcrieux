@@ -9,8 +9,11 @@
 {% block content %}
     <div class="w-75">
         <div class="d-flex mb-4">
-            <div class="">
-                <a class="btn btn-primary" href="#"><i class="fa-solid fa-calendar-plus"></i> {{ 'button.nextPeriod'|trans }}</a>
+            <div>
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#newPeriod">
+                    <i class="fa-solid fa-calendar-plus"></i> {{ 'button.nextPeriod'|trans }}
+                </button>
+{# <a class="btn btn-primary" href="{{ path('admin_periodCreate') }}"><i class="fa-solid fa-calendar-plus"></i> {{ 'button.nextPeriod'|trans }}</a> #}
             </div>
         </div>
         <table class="table table-hover table-responsive align-middle">
@@ -30,5 +33,23 @@
                 {% endfor %}
             </tbody>
         </table>
+    </div>
+
+    <div class="modal fade" id="newPeriod" tabindex="-1" aria-labelledby="newPeriodLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-calendar-plus"></i> {{ 'button.nextPeriod'|trans }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{{ 'button.cancel'|trans }}</button>
+                    <a href="{{ path('admin_periodCreate') }}" type="button" class="btn btn-success"><i class="fa-solid fa-check"></i> {{ 'button.save'|trans }}</a>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

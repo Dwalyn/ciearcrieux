@@ -3,6 +3,7 @@
 namespace App\Controller\Administration;
 
 use App\Command\CommandBusInterface;
+use App\Command\LicensePeriod\NewLicensePeriodCommand;
 use App\Command\LicensePeriod\UpdateLicensePriceCommand;
 use App\Command\LicensePeriod\UpdateRentPriceCommand;
 use App\Entity\LicensePeriod;
@@ -102,6 +103,16 @@ class PeriodController extends AbstractController
             'form' => $form->createView(),
             'h1' => 'license.rentPrice.h1',
         ]);
+    }
+
+    #[Route('/periods/create', name: 'periodCreate')]
+    public function create(
+    ): Response {
+        $this->denyAccessUnlessGranted(RoleEnum::ROLE_ADMIN->value);
+        $this->commandBus->dispatch(new NewLicensePeriodCommand());
+        $this->addFlash('success', $this->translator->trans('alert.success.newPeriod'));
+
+        return $this->redirectToRoute('admin_periodList');
     }
 
     private function alertUnauthorizedEditPeriod(LicensePeriod $licensePeriod): ?RedirectResponse
