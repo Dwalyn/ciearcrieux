@@ -22,7 +22,7 @@ class LicensePeriod
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     protected \DateTime $endDate;
 
-    #[ORM\Column(type: Types::STRING, length: 8, enumType: TimeStatusEnum::class)]
+    #[ORM\Column(type: Types::STRING, length: 11, enumType: TimeStatusEnum::class)]
     public TimeStatusEnum $status;
 
     /**

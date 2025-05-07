@@ -16,39 +16,97 @@ class PeriodControllerTest extends WebTestCase
     }
 
     #[DataProvider('loginProvider')]
-    public function testAccessPage(?string $login, int $status)
+    public function testAccessPage(string $url, array $param, array $users)
     {
-        $this->login($login);
-
-        $this->client->request('GET', $this->generateUrl('admin_periodList'));
-        $this->assertStatusCode($status);
-
-        $this->client->request('GET', $this->generateUrl('admin_periodPriceDetails', ['id' => 1]));
-        $this->assertStatusCode($status);
-
-        $this->client->request('GET', $this->generateUrl('admin_periodLicensePrice', ['id' => 1]));
-        $this->savePage();
-        $this->assertStatusCode($status);
-
-        $this->client->request('GET', $this->generateUrl('admin_periodRentPrice', ['id' => 1]));
-        $this->assertStatusCode($status);
+        foreach ($users as $user) {
+            $this->login($user['login']);
+            $this->client->request('GET', $this->generateUrl($url, $param));
+            $this->assertStatusCode($user['status']);
+            $this->logout();
+        }
     }
 
     public static function loginProvider(): \Generator
     {
-        yield 'user' => [
-            'login' => 'test@google.com',
-            'status' => HttpStatusEnum::FORBIDDEN->value,
+        yield 'admin_periodList' => [
+            'url' => 'admin_periodList',
+            'param' => [],
+            'users' => [
+                [
+                    'login' => 'test@google.com',
+                    'status' => HttpStatusEnum::FORBIDDEN->value,
+                ], [
+                    'login' => 'admin@google.com',
+                    'status' => HttpStatusEnum::OK->value,
+                ], [
+                    'login' => null,
+                    'status' => HttpStatusEnum::REDIRECT->value,
+                ],
+            ],
         ];
-
-        yield 'admin' => [
-            'login' => 'admin@google.com',
-            'status' => HttpStatusEnum::OK->value,
+        yield 'admin_periodPriceDetails' => [
+            'url' => 'admin_periodPriceDetails',
+            'param' => ['id' => 1],
+            'users' => [
+                [
+                    'login' => 'test@google.com',
+                    'status' => HttpStatusEnum::FORBIDDEN->value,
+                ], [
+                    'login' => 'admin@google.com',
+                    'status' => HttpStatusEnum::OK->value,
+                ], [
+                    'login' => null,
+                    'status' => HttpStatusEnum::REDIRECT->value,
+                ],
+            ],
         ];
-
-        yield 'anonymous' => [
-            'login' => null,
-            'status' => HttpStatusEnum::REDIRECT->value,
+        yield 'admin_periodLicensePrice' => [
+            'url' => 'admin_periodLicensePrice',
+            'param' => ['id' => 1],
+            'users' => [
+                [
+                    'login' => 'test@google.com',
+                    'status' => HttpStatusEnum::FORBIDDEN->value,
+                ], [
+                    'login' => 'admin@google.com',
+                    'status' => HttpStatusEnum::OK->value,
+                ], [
+                    'login' => null,
+                    'status' => HttpStatusEnum::REDIRECT->value,
+                ],
+            ],
+        ];
+        yield 'admin_periodRentPrice' => [
+            'url' => 'admin_periodRentPrice',
+            'param' => ['id' => 1],
+            'users' => [
+                [
+                    'login' => 'test@google.com',
+                    'status' => HttpStatusEnum::FORBIDDEN->value,
+                ], [
+                    'login' => 'admin@google.com',
+                    'status' => HttpStatusEnum::OK->value,
+                ], [
+                    'login' => null,
+                    'status' => HttpStatusEnum::REDIRECT->value,
+                ],
+            ],
+        ];
+        yield 'admin_periodCreate' => [
+            'url' => 'admin_periodCreate',
+            'param' => ['id' => 1],
+            'users' => [
+                [
+                    'login' => 'test@google.com',
+                    'status' => HttpStatusEnum::FORBIDDEN->value,
+                ], [
+                    'login' => 'admin@google.com',
+                    'status' => HttpStatusEnum::REDIRECT->value,
+                ], [
+                    'login' => null,
+                    'status' => HttpStatusEnum::REDIRECT->value,
+                ],
+            ],
         ];
     }
 
@@ -75,15 +133,24 @@ class PeriodControllerTest extends WebTestCase
             '%s - %s',
             (new \DateTime())->modify('-1 year')->format('Y'),
             (new \DateTime())->format('Y'),
-        ), $line->filter('td')->first()->text());
+        ), $line->eq(1)->filter('td')->first()->text());
 
         $badges = $crawler->filter('.bg-success');
         $this->assertCount(1, $badges);
         $badges = $crawler->filter('.bg-danger');
         $this->assertCount(2, $badges);
 
-        $link = $crawler->filter('.btn-outline-secondary');
-        $this->assertCount(3, $link);
+        $link = $crawler->filter('table .btn-outline-secondary');
+        $this->assertCount(4, $link);
+
+        $modal = $crawler->filter('.modal-dialog');
+        $this->assertCount(1, $modal);
+
+        $btnSave = $crawler->filter('.modal-dialog .btn-success');
+        $this->assertCount(1, $btnSave);
+
+        $btnCancel = $crawler->filter('.modal-dialog .btn-outline-secondary');
+        $this->assertCount(1, $btnCancel);
     }
 
     public function testPageDetail(): void

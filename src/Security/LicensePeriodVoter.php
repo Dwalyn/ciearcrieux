@@ -43,6 +43,6 @@ class LicensePeriodVoter extends Voter
 
     private function canEdit(LicensePeriod $licensePeriod): bool
     {
-        return TimeStatusEnum::IN_PROGRESS === $licensePeriod->getStatus();
+        return TimeStatusEnum::IN_PROGRESS === $licensePeriod->getStatus() || TimeStatusEnum::NOT_BEGIN === $licensePeriod->getStatus();
     }
 }

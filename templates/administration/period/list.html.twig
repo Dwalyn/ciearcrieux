@@ -10,10 +10,9 @@
     <div class="w-75">
         <div class="d-flex mb-4">
             <div>
-                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#newPeriod">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newPeriod">
                     <i class="fa-solid fa-calendar-plus"></i> {{ 'button.nextPeriod'|trans }}
                 </button>
-{# <a class="btn btn-primary" href="{{ path('admin_periodCreate') }}"><i class="fa-solid fa-calendar-plus"></i> {{ 'button.nextPeriod'|trans }}</a> #}
             </div>
         </div>
         <table class="table table-hover table-responsive align-middle">
@@ -43,7 +42,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
+                    <p>Souhaitez vous créer la période suivante ?</p>
+                    <p>La période suivante aura les tarifs de licenses et de locations de la période en cours.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{{ 'button.cancel'|trans }}</button>

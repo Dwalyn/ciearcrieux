@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\LicensePeriod;
 use App\Trait\QueryBuilder\DateConditionTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -66,5 +67,17 @@ class LicensePeriodRepository extends ServiceEntityRepository
         }
 
         return null;
+    }
+
+    public function getLastPeriod(): ?LicensePeriod
+    {
+        $queryBuilder = $this->createQueryBuilder('period');
+
+        $queryBuilder
+            ->orderBy('period.endDate', Order::Descending->value)
+            ->setMaxResults(1)
+        ;
+
+        return $queryBuilder->getQuery()->getOneOrNullResult();
     }
 }

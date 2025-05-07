@@ -45,8 +45,9 @@ enum:
     ROLE_USER: Membre
     ROLE_ADMIN: Administrateur
   timestatus:
-    IN_PROGRESS: En cours
     FINISHED: Terminée
+    IN_PROGRESS: En cours
+    NOT_BEGIN: A venir
   trainingPlace:
     indoor: Intérieur
     outdoor: Extérieur

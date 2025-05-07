@@ -20,4 +20,21 @@ class LicenseRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, License::class);
     }
+
+    /**
+     * @return array<int>
+     */
+    public function getIdLicenseDetails(License $license): array
+    {
+        $queryBuilder = $this->createQueryBuilder('license');
+
+        $queryBuilder
+            ->select('licenseDetail.id')
+            ->innerJoin('license.licenseDetails', 'licenseDetail')
+            ->where($queryBuilder->expr()->eq('license.id', ':licenseId'))
+            ->setParameter('licenseId', $license->getId())
+        ;
+
+        return $queryBuilder->getQuery()->getSingleColumnResult();
+    }
 }
