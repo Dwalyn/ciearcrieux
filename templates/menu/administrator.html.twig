@@ -1,10 +1,16 @@
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
     <div class="position-sticky pt-3 my-3">
+        <h6 class="text-muted">
+            <span>{{ 'menu.admin.title.members'|trans }} </span>
+        </h6>
         <ul class="nav flex-column">
-            <h6 class="text-muted">
-                <span>Administration</span>
-            </h6>
             <li class="nav-item"><a href="{{ path('admin_membersList') }}" class="nav-link px-2"><i class="fa-solid fa-user"></i> {{ 'menu.members'|trans }}</a></li>
+        </ul>
+        <h6 class="text-muted mt-2">
+            <span>{{ 'menu.admin.title.license_period'|trans }} </span>
+        </h6>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a href="{{ path('admin_periodList') }}" class="nav-link px-2"><i class="fa-regular fa-calendar"></i> {{ 'menu.period'|trans }}</a></li>
         </ul>
     </div>
 </nav>

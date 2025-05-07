@@ -1,20 +1,51 @@
-<div class="row">
-    {% for rentInPeriod in this.rentsInPeriod %}
-        <div class="col-sm-12 col-lg-6 col-md-6 rent">
-            <div class="card">
-                <div class="card-body mt-3">
-                    <div class="card-title d-flex bd-highlight">
-                        <div class="flex-grow-1 bd-highlight"><h4 class="rentType">{{ rentInPeriod.type.translationKey|trans }}</h4></div>
-                        <div class="bd-highlight"><h4 class="price">
-                                {% if 0 != rentInPeriod.price %}
-                                    {{ rentInPeriod.price }}€ <small class="text-muted"> / an</small>
-                                {% else %}
-                                    {{ 'license.rent.free'|trans }}
-                                {% endif %}
-                            </h4></div>
+{% if this.rentsInPeriod is not null %}
+    {% if this.showDetails %}
+        <div class="row">
+            {% for rentInPeriod in this.rentsInPeriod %}
+                <div class="col-sm-12 col-lg-6 col-md-6 rent">
+                    <div class="card">
+                        <div class="card-body mt-3">
+                            <div class="card-title d-flex bd-highlight">
+                                <div class="flex-grow-1 bd-highlight"><h4 class="rentType">{{ rentInPeriod.type.translationKey|trans }}</h4></div>
+                                <div class="bd-highlight"><h4 class="price">
+                                        {% if 0 != rentInPeriod.price %}
+                                            {{ rentInPeriod.price }}€ <small class="text-muted"> / an</small>
+                                        {% else %}
+                                            {{ 'license.rent.free'|trans }}
+                                        {% endif %}
+                                    </h4></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-</div>
+    {% else %}
+        <table class="table table-hover table-responsive align-middle">
+            <thead class="table-light">
+            <tr>
+                <th scope="col"></th>
+                <th class="text-center" scope="col">€</th>
+            </tr>
+            </thead>
+            <tbody class="table-hover">
+            {% for rentInPeriod in this.rentsInPeriod %}
+                <tr>
+                    <td>{{ rentInPeriod.type.translationKey|trans }}</td>
+                    <td class="text-center">
+                        {% if 0 != rentInPeriod.price %}
+                            {{ rentInPeriod.price }}
+                        {% else %}
+                            {{ 'license.rent.free'|trans }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% else %}
+    {{ component('Common:AlertComponent', {
+        messageKey: 'license.noRent',
+    }) }}
+{% endif %}

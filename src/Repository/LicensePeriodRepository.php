@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\LicensePeriod;
+use App\Enum\TimeStatusEnum;
 use App\Trait\QueryBuilder\DateConditionTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -27,19 +29,19 @@ class LicensePeriodRepository extends ServiceEntityRepository
     /**
      * @return array<int, mixed>|null
      */
-    public function getLicenceInLicensePeriodActiveByDate(\DateTime $date): ?array
+    public function getLicenceInLicensePeriodActive(): ?array
     {
-        $queryBuilder = $this->createQueryBuilder('licensePeriod');
+        $queryBuilder = $this->createQueryBuilder('period');
         $queryBuilder
-            ->select('licensePeriod.startDate', 'licensePeriod.endDate')
+            ->select('period.startDate', 'period.endDate')
             ->addSelect('license.type')
             ->addSelect('license.price')
             ->addSelect('licenseDetail.label')
-            ->innerJoin('licensePeriod.licenses', 'license')
+            ->innerJoin('period.licenses', 'license')
             ->innerJoin('license.licenseDetails', 'licenseDetail')
+            ->where($queryBuilder->expr()->eq('period.status', ':status'))
+            ->setParameter('status', TimeStatusEnum::IN_PROGRESS)
         ;
-        $this->beetweenDate($queryBuilder, $date, 'licensePeriod');
-
         $result = $queryBuilder->getQuery()->getResult();
         if (count($result)) {
             return $result;
@@ -51,15 +53,16 @@ class LicensePeriodRepository extends ServiceEntityRepository
     /**
      * @return array<int, mixed>|null
      */
-    public function getRentInLicensePeriodActiveByDate(\DateTime $date): ?array
+    public function getRentInLicensePeriodActive(): ?array
     {
-        $queryBuilder = $this->createQueryBuilder('licensePeriod');
+        $queryBuilder = $this->createQueryBuilder('period');
         $queryBuilder
             ->select('rent.type')
             ->addSelect('rent.price')
-            ->innerJoin('licensePeriod.rents', 'rent')
+            ->innerJoin('period.rents', 'rent')
+            ->where($queryBuilder->expr()->eq('period.status', ':status'))
+            ->setParameter('status', TimeStatusEnum::IN_PROGRESS)
         ;
-        $this->beetweenDate($queryBuilder, $date, 'licensePeriod');
 
         $result = $queryBuilder->getQuery()->getResult();
         if (count($result)) {
@@ -67,5 +70,17 @@ class LicensePeriodRepository extends ServiceEntityRepository
         }
 
         return null;
+    }
+
+    public function getLastPeriod(): ?LicensePeriod
+    {
+        $queryBuilder = $this->createQueryBuilder('period');
+
+        $queryBuilder
+            ->orderBy('period.endDate', Order::Descending->value)
+            ->setMaxResults(1)
+        ;
+
+        return $queryBuilder->getQuery()->getOneOrNullResult();
     }
 }

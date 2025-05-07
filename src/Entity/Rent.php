@@ -48,6 +48,11 @@ class Rent
         return $this->price;
     }
 
+    public function setPrice(int $price): void
+    {
+        $this->price = $price;
+    }
+
     public function getLicensePeriod(): LicensePeriod
     {
         return $this->licensePeriod;

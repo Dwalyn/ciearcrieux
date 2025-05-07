@@ -1,12 +1,19 @@
 alert:
+  danger:
+    unauthorizedEditLicensePeriod: La période %start%-%end% est terminée. Elle ne peut plus être modifiée.
   success:
     addMember: Le nouveau membre est ajouté.
+    updateLicencePrice: Le prix des licences sont modifiés.
+    updateRentPrice: Le prix des locations sont modifiés.
   secondary:
     nodata: Aucun résultat ne correspond à votre recherche.
 
 button:
   add: Ajouter
+  back: Retour
   cancel: Annuler
+  edit: Modifier
+  nextPeriod: Créer la période suivante
   save: Enregistrer
   signin: Se connecter
 
@@ -24,6 +31,10 @@ enum:
     DAY_4: Jeudi
     DAY_5: Vendredi
     DAY_6: Samedi
+  license:
+    adult: Adulte
+    discover: Découverte
+    minor: "- de 18 ans"
   licensedType:
     beginner: débutant
     confirmed: confirmé
@@ -33,6 +44,10 @@ enum:
   role:
     ROLE_USER: Membre
     ROLE_ADMIN: Administrateur
+  timestatus:
+    FINISHED: Terminée
+    IN_PROGRESS: En cours
+    NOT_BEGIN: A venir
   trainingPlace:
     indoor: Intérieur
     outdoor: Extérieur
@@ -40,7 +55,9 @@ enum:
 global:
   info:
     title: Compagnie d'arc de Rieux
-    description: Site officiel de la compagnie d'arc de Rieux
+    description: Site officiel de la compagnie d'arc de
+  link:
+    details: Détails
 
 h3:
   documents: Documents
@@ -51,14 +68,25 @@ h3:
 license:
   rent:
     free: OFFERT
+  noLicense: Aucune license trouvée pour cette période.
+  noRent: Aucune offre de location trouvée pour cette période.
+  licensePrice:
+    h1: Modification du tarif des licenses
+  rentPrice:
+    h1: Modification du tarif des locations
 
 menu:
+  admin:
+    title:
+      license_period: Saison sportive
+      members: Membres
   club: La compagnie
   findUs: Où nous trouver ?
   joinUs: Rejoignez nous
   login: S'identifier
   logout: Se déconnecter
   home: Accueil
+  period: Périodes
   members: Membres
   news: Actualités
 

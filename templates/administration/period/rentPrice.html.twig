@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title_page %}
+    {{ parent() }} - {{ 'license.licensePrice.h1'|trans }}
+{% endblock %}
+
+{% block h1 %}
+    {{ 'menu.period'|trans }} {{ licensePeriod.startDate|date('Y') }} - {{ licensePeriod.endDate|date('Y') }}
+{% endblock %}
+
+{% block content %}
+    <div class="w-75">
+        <div class="d-flex justify-content-between align-middle bd-highlight mb-3">
+            <div>
+                <h4 class="bd-highlight"><span class="badge bg-{{ licensePeriod.status.badgeClass(licensePeriod.status) }}">{{ licensePeriod.status.translationKey|trans }}</span></h4>
+            </div>
+            <div class="mt-2">
+                <a href="{{ path('admin_periodPriceDetails', {id: licensePeriod.id}) }}"> <i class="fa-solid fa-arrow-left"></i> {{ 'button.back'|trans }}</a>
+            </div>
+        </div>
+        <div class="mb-5">
+
+    </div>
+{% endblock %}
