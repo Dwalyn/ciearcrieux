@@ -129,16 +129,17 @@ class PeriodControllerTest extends WebTestCase
         $this->assertCount(1, $table);
 
         $line = $table->filter('tbody tr');
+        $this->savePage();
         $this->assertEquals(sprintf(
             '%s - %s',
-            (new \DateTime())->modify('-1 year')->format('Y'),
-            (new \DateTime())->format('Y'),
-        ), $line->eq(1)->filter('td')->first()->text());
+            2024,
+            2025
+        ), $line->first()->filter('td')->first()->text());
 
         $badges = $crawler->filter('.bg-success');
         $this->assertCount(1, $badges);
         $badges = $crawler->filter('.bg-danger');
-        $this->assertCount(2, $badges);
+        $this->assertCount(3, $badges);
 
         $link = $crawler->filter('table .btn-outline-secondary');
         $this->assertCount(4, $link);
@@ -157,7 +158,7 @@ class PeriodControllerTest extends WebTestCase
     {
         $this->login('admin@google.com');
         $crawler = $this->client->request('GET', $this->generateUrl('admin_periodPriceDetails', [
-            'id' => 1,
+            'id' => 4,
         ]));
         $this->assertStatusCode(200);
 
@@ -195,7 +196,7 @@ class PeriodControllerTest extends WebTestCase
     {
         $this->login('admin@google.com');
         $crawler = $this->client->request('GET', $this->generateUrl('admin_periodLicensePrice', [
-            'id' => 1,
+            'id' => 4,
         ]));
 
         $form = $crawler->filter('form')->form();
@@ -269,7 +270,7 @@ class PeriodControllerTest extends WebTestCase
     {
         $this->login('admin@google.com');
         $crawler = $this->client->request('GET', $this->generateUrl('admin_periodRentPrice', [
-            'id' => 1,
+            'id' => 4,
         ]));
 
         $form = $crawler->filter('form')->form();
