@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\LicensePeriod;
+use App\Enum\TimeStatusEnum;
 use App\Trait\QueryBuilder\DateConditionTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Order;
@@ -28,7 +29,7 @@ class LicensePeriodRepository extends ServiceEntityRepository
     /**
      * @return array<int, mixed>|null
      */
-    public function getLicenceInLicensePeriodActiveByDate(\DateTime $startDate, \DateTime $endDate): ?array
+    public function getLicenceInLicensePeriodActive(): ?array
     {
         $queryBuilder = $this->createQueryBuilder('period');
         $queryBuilder
@@ -38,8 +39,9 @@ class LicensePeriodRepository extends ServiceEntityRepository
             ->addSelect('licenseDetail.label')
             ->innerJoin('period.licenses', 'license')
             ->innerJoin('license.licenseDetails', 'licenseDetail')
+            ->where($queryBuilder->expr()->eq('period.status', ':status'))
+            ->setParameter('status', TimeStatusEnum::IN_PROGRESS)
         ;
-        $this->beetweenDate2($queryBuilder, $startDate, $endDate, 'period');
         $result = $queryBuilder->getQuery()->getResult();
         if (count($result)) {
             return $result;
@@ -51,15 +53,16 @@ class LicensePeriodRepository extends ServiceEntityRepository
     /**
      * @return array<int, mixed>|null
      */
-    public function getRentInLicensePeriodActiveByDate(\DateTime $startDate, \DateTime $endDate): ?array
+    public function getRentInLicensePeriodActive(): ?array
     {
         $queryBuilder = $this->createQueryBuilder('period');
         $queryBuilder
             ->select('rent.type')
             ->addSelect('rent.price')
             ->innerJoin('period.rents', 'rent')
+            ->where($queryBuilder->expr()->eq('period.status', ':status'))
+            ->setParameter('status', TimeStatusEnum::IN_PROGRESS)
         ;
-        $this->beetweenDate2($queryBuilder, $startDate, $endDate, 'period');
 
         $result = $queryBuilder->getQuery()->getResult();
         if (count($result)) {

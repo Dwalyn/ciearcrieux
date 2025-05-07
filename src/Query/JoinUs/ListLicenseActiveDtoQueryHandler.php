@@ -27,7 +27,7 @@ class ListLicenseActiveDtoQueryHandler implements QueryHandlerInterface
     public function __invoke(ListLicenseActiveDtoQuery $query): ?ArrayCollection
     {
         $this->listLicenseActiveDto = new ArrayCollection();
-        $licensesActive = $this->licensePeriodRepository->getLicenceInLicensePeriodActiveByDate($query->startDate, $query->endDate);
+        $licensesActive = $this->licensePeriodRepository->getLicenceInLicensePeriodActive();
         if (null !== $licensesActive) {
             foreach ($licensesActive as $licenseActive) {
                 $licenceActiveDto = $this->hasLicenseActiveDtoType($licenseActive['type']);

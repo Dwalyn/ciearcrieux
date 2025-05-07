@@ -6,9 +6,7 @@ use App\Query\QueryInterface;
 
 class ListLicenseActiveDtoQuery implements QueryInterface
 {
-    public function __construct(
-        public readonly \DateTime $startDate,
-        public readonly \DateTime $endDate,
-    ) {
+    public function __construct()
+    {
     }
 }
