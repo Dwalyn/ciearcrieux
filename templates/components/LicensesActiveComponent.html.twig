@@ -1,19 +1,44 @@
-<div class="row">
-    {% for licenceInPeriod in this.licencesInPeriod %}
-        <div class="col-sm-12 col-lg-4 col-md-6 license">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title d-flex bd-highlight">
-                        <div class="flex-grow-1 bd-highlight"><h4 class="licenseType">{{ licenceInPeriod.type.value }}</h4></div>
-                        <div class="bd-highlight"><h4 class="price">{{ licenceInPeriod.price }}€ <small class="text-muted"> / an</small></h4></div>
+{% if this.licencesInPeriod is not null %}
+    {% if this.showDetails %}
+        <div class="row">
+            {% for licenceInPeriod in this.licencesInPeriod %}
+                <div class="col-sm-12 col-lg-4 col-md-6 license">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title d-flex bd-highlight m-0">
+                                <div class="flex-grow-1 bd-highlight"><h4 class="licenseType">{{ licenceInPeriod.type.translationKey|trans }}</h4></div>
+                                <div class="bd-highlight"><h4 class="price">{{ licenceInPeriod.price }}€ <small class="text-muted"> / an</small></h4></div>
+                            </div>
+                        </div>
+                        <ul>
+                            {% for detail in licenceInPeriod.details %}
+                                <li class="ms-3 licenseDetail">{{ detail }}</li>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
-                <ul>
-                    {% for detail in licenceInPeriod.details %}
-                        <li class="ms-3 licenseDetail">{{ detail }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-</div>
+    {% else %}
+        <table class="table table-hover table-responsive align-middle">
+            <thead class="table-light">
+            <tr>
+                <th scope="col"></th>
+                <th class="text-center" scope="col">€</th>
+            </tr>
+            </thead>
+            <tbody class="table-hover">
+            {% for licenceInPeriod in this.licencesInPeriod %}
+                <tr>
+                    <td>{{ licenceInPeriod.type.translationKey|trans }}</td>
+                    <td class="text-center">{{ licenceInPeriod.price }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% else %}
+    {{ component('Common:AlertComponent', {
+        messageKey: 'license.noLicense',
+    }) }}
+{% endif %}

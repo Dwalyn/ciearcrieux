@@ -28,7 +28,7 @@ abstract class WebTestCase extends BaseWebTestCase
 
     private ?EntityManagerInterface $entityManager = null;
 
-    private TranslatorInterface $translator;
+    protected TranslatorInterface $translator;
 
     /**
      * @return string[]
@@ -165,5 +165,10 @@ abstract class WebTestCase extends BaseWebTestCase
     {
         $fileSystem = new Filesystem();
         $fileSystem->dumpFile(sprintf('public/%s.html', $pageName), $this->client->getCrawler()->html());
+    }
+
+    protected function logout(): void
+    {
+        $this->client->request('GET', $this->generateUrl('app_logout'));
     }
 }

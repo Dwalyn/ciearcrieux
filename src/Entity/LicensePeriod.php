@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\TimeStatusEnum;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -21,6 +22,9 @@ class LicensePeriod
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     protected \DateTime $endDate;
 
+    #[ORM\Column(type: Types::STRING, length: 11, enumType: TimeStatusEnum::class)]
+    public TimeStatusEnum $status;
+
     /**
      * @var Collection<int, License>
      */
@@ -36,9 +40,11 @@ class LicensePeriod
     public function __construct(
         \DateTime $startDate,
         \DateTime $endDate,
+        TimeStatusEnum $status
     ) {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
+        $this->status = $status;
         $this->licenses = new ArrayCollection();
         $this->rents = new ArrayCollection();
     }
@@ -56,6 +62,16 @@ class LicensePeriod
     public function getEndDate(): \DateTime
     {
         return $this->endDate;
+    }
+
+    public function getStatus(): TimeStatusEnum
+    {
+        return $this->status;
+    }
+
+    public function setStatus(TimeStatusEnum $status): void
+    {
+        $this->status = $status;
     }
 
     /**

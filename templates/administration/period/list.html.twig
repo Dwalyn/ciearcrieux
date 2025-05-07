@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title_page %}
+    {{ parent() }} - {{ 'menu.period'|trans }}
+{% endblock %}
+
+{% block h1 %} {{ 'menu.period'|trans }} {% endblock %}
+
+{% block content %}
+    <div class="w-75">
+        <div class="d-flex mb-4">
+            <div>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newPeriod">
+                    <i class="fa-solid fa-calendar-plus"></i> {{ 'button.nextPeriod'|trans }}
+                </button>
+            </div>
+        </div>
+        <table class="table table-hover table-responsive align-middle">
+            <tbody class="table-hover">
+                {% for licensePeriod in licensePeriods %}
+                    <tr>
+                        <td>
+                            {{ licensePeriod.startDate|date('Y') }} - {{ licensePeriod.endDate|date('Y') }}
+                        </td>
+                        <td class="text-center">
+                            <span class="bd-highlight"><span class="badge bg-{{ licensePeriod.status.badgeClass(licensePeriod.status) }}">{{ licensePeriod.status.translationKey|trans }}</span></span>
+                        </td>
+                        <td class="text-end">
+                            <a href="{{ path('admin_periodPriceDetails', {id: licensePeriod.id}) }}" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-euro-sign"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="newPeriod" tabindex="-1" aria-labelledby="newPeriodLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-calendar-plus"></i> {{ 'button.nextPeriod'|trans }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Souhaitez vous créer la période suivante ?</p>
+                    <p>La période suivante aura les tarifs de licenses et de locations de la période en cours.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{{ 'button.cancel'|trans }}</button>
+                    <a href="{{ path('admin_periodCreate') }}" type="button" class="btn btn-success"><i class="fa-solid fa-check"></i> {{ 'button.save'|trans }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

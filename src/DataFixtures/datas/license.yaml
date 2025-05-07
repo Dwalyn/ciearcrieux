@@ -24,3 +24,30 @@ license_3:
     - licenseDetail: licenseDetail_4
     - licenseDetail: licenseDetail_5
     - licenseDetail: licenseDetail_6
+
+license_4:
+  type: !php/enum App\Enum\LicenseTypeEnum::ADULT
+  price: 100
+  licensePeriod: licensePeriod_2
+  licenseDetails:
+    - licenseDetail: licenseDetail_1
+    - licenseDetail: licenseDetail_2
+    - licenseDetail: licenseDetail_3
+
+license_5:
+  type: !php/enum App\Enum\LicenseTypeEnum::MINOR
+  price: 100
+  licensePeriod: licensePeriod_2
+  licenseDetails:
+    - licenseDetail: licenseDetail_1
+    - licenseDetail: licenseDetail_2
+
+license_6:
+  type: !php/enum App\Enum\LicenseTypeEnum::DISCOVER
+  price: 40
+  licensePeriod: licensePeriod_2
+  licenseDetails:
+    - licenseDetail: licenseDetail_1
+    - licenseDetail: licenseDetail_4
+    - licenseDetail: licenseDetail_5
+    - licenseDetail: licenseDetail_6
