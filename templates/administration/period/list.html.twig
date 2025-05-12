@@ -1,10 +1,4 @@
-{% extends 'base.html.twig' %}
-
-{% block title_page %}
-    {{ parent() }} - {{ 'menu.period'|trans }}
-{% endblock %}
-
-{% block h1 %} {{ 'menu.period'|trans }} {% endblock %}
+{% extends 'administration/period/base-period.html.twig' %}
 
 {% block content %}
     <div class="w-75">
@@ -26,6 +20,7 @@
                             <span class="bd-highlight"><span class="badge bg-{{ licensePeriod.status.badgeClass(licensePeriod.status) }}">{{ licensePeriod.status.translationKey|trans }}</span></span>
                         </td>
                         <td class="text-end">
+                            <a href="{{ path('admin_periodTraining', {id: licensePeriod.id}) }}" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-bullseye"></i></a>
                             <a href="{{ path('admin_periodPriceDetails', {id: licensePeriod.id}) }}" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-euro-sign"></i></a>
                         </td>
                     </tr>

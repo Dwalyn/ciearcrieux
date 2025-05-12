@@ -52,3 +52,31 @@ trainingDay8:
   endTime: 21h15
   licensedType: !php/enum App\Enum\LicensedTypeEnum::CONFIRMED
   trainingPeriod: trainingPeriod2
+##################################################################
+#trainingDay9:
+#  day: !php/enum App\Enum\DayEnum::DAY_6
+#  startTime: 09h30
+#  endTime: 11h00
+#  licensedType: !php/enum App\Enum\LicensedTypeEnum::BEGINNER
+#  trainingPeriod: trainingPeriod3
+#
+#trainingDay10:
+#  day: !php/enum App\Enum\DayEnum::DAY_6
+#  startTime: 09h30
+#  endTime: 11h30
+#  licensedType: !php/enum App\Enum\LicensedTypeEnum::CONFIRMED
+#  trainingPeriod: trainingPeriod3
+#
+#trainingDay11:
+#  day: !php/enum App\Enum\DayEnum::DAY_1
+#  startTime: 17h30
+#  endTime: 19h00
+#  licensedType: !php/enum App\Enum\LicensedTypeEnum::BEGINNER
+#  trainingPeriod: trainingPeriod3
+#
+#trainingDay12:
+#  day: !php/enum App\Enum\DayEnum::DAY_1
+#  startTime: 17h30
+#  endTime: 19h30
+#  licensedType: !php/enum App\Enum\LicensedTypeEnum::CONFIRMED
+#  trainingPeriod: trainingPeriod3

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title_page %}
+    {{ parent() }}
+    {% if licensePeriod is defined %}
+        - {{ licensePeriod.startDate|date('Y') }} - {{ licensePeriod.endDate|date('Y') }}
+    {% endif %}
+{% endblock %}
+
+{% block h1 %}
+    {{ 'menu.period'|trans }}
+    {% if licensePeriod is defined %}
+        {{ licensePeriod.startDate|date('Y') }}-{{ licensePeriod.endDate|date('Y') }}
+    {% endif %}
+{% endblock %}

@@ -1,51 +1,33 @@
-{% extends 'base.html.twig' %}
+{% extends 'administration/period/base-details.html.twig' %}
 
-{% block title_page %}
-    {{ parent() }} - {{ licensePeriod.startDate|date('Y') }} - {{ licensePeriod.endDate|date('Y') }}
-{% endblock %}
-
-{% block h1 %}
-    {{ 'menu.period'|trans }} {{ licensePeriod.startDate|date('Y') }}-{{ licensePeriod.endDate|date('Y') }}
-{% endblock %}
-
-{% block content %}
-    <div class="w-75">
-        <div class="d-flex justify-content-between align-middle bd-highlight mb-3">
+{% block content_details %}
+    <div class="mb-5">
+        <div class="d-flex flex-row mb-3">
             <div>
-                <h4 class="bd-highlight"><span class="badge bg-{{ licensePeriod.status.badgeClass(licensePeriod.status) }}">{{ licensePeriod.status.translationKey|trans }}</span></h4>
+                <h3>{{ 'h3.license'|trans }} </h3>
             </div>
-            <div class="mt-2">
-                <a href="{{ path('admin_periodList') }}"> <i class="fa-solid fa-arrow-left"></i> {{ 'button.back'|trans }}</a>
-            </div>
-        </div>
-        <div class="mb-5">
-            <div class="d-flex flex-row mb-3">
-                <div>
-                    <h3>{{ 'h3.license'|trans }} </h3>
-                </div>
-                {% if is_granted('edit', licensePeriod) %}
-                    <div class="ms-4"><a href="{{ path('admin_periodLicensePrice', {id: licensePeriod.id}) }}" class="btn btn-primary"><i class="fa-solid fa-pen"></i>
+            {% if is_granted('edit', licensePeriod) %}
+                <div class="ms-4"><a href="{{ path('admin_periodLicensePrice', {id: licensePeriod.id}) }}" class="btn btn-primary"><i class="fa-solid fa-pen"></i>
                         {{ 'button.edit'|trans }}</a></div>
-                {% endif %}
-            </div>
-            {{ component('LicensesActiveComponent', {
-                licensePeriod: licensePeriod,
-                showDetails: false,
-            }) }}
+            {% endif %}
         </div>
-        <div>
-            <div class="d-flex flex-row mb-3">
-                <div>
-                    <h3>{{ 'h3.rent'|trans }} </h3>
-                </div>
-                {% if is_granted('edit', licensePeriod) %}
-                    <div class="ms-4"><a href="{{ path('admin_periodRentPrice', {id: licensePeriod.id}) }}" class="btn btn-primary"><i class="fa-solid fa-pen"></i> {{ 'button.edit'|trans }}</a></div>
-                {% endif %}
+        {{ component('LicensesActiveComponent', {
+            licensePeriod: licensePeriod,
+            showDetails: false,
+        }) }}
+    </div>
+    <div>
+        <div class="d-flex flex-row mb-3">
+            <div>
+                <h3>{{ 'h3.rent'|trans }} </h3>
             </div>
-            {{ component('RentsActiveComponent', {
-                licensePeriod: licensePeriod,
-                showDetails: false,
-            }) }}
+            {% if is_granted('edit', licensePeriod) %}
+                <div class="ms-4"><a href="{{ path('admin_periodRentPrice', {id: licensePeriod.id}) }}" class="btn btn-primary"><i class="fa-solid fa-pen"></i> {{ 'button.edit'|trans }}</a></div>
+            {% endif %}
         </div>
+        {{ component('RentsActiveComponent', {
+            licensePeriod: licensePeriod,
+            showDetails: false,
+        }) }}
     </div>
 {% endblock %}
