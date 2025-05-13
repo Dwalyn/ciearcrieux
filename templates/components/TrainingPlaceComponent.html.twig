@@ -39,10 +39,17 @@
                         </ul>
                     {% endfor %}
                 </div>
+                {% if this.display == enum('App\\Enum\\TrainingPlaceDisplayEnum').BLOCK %}
+                    <div class="text-end">
+                        <a href="{{ path('findUs', {typePlace: typePlaceActive().value}) }}">{{ 'global.link.details'|trans }} <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                {% endif %}
             </div>
         </div>
-        <div class="{{ colMap }} mt-1 map">
-            {{ this.trainingPlaceDto.adressDto.googleMapUrl|raw }}
-        </div>
+        {% if this.display == enum('App\\Enum\\TrainingPlaceDisplayEnum').INLINE %}
+            <div class="{{ colMap }} mt-1 map">
+                {{ this.trainingPlaceDto.adressDto.googleMapUrl|raw }}
+            </div>
+        {% endif %}
     </div>
 </div>

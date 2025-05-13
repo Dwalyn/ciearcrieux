@@ -2,6 +2,8 @@
 
 namespace App\Twig\Components;
 
+use App\Command\CommandBusInterface;
+use App\Command\LicensePeriod\CheckLicensePeriodCommand;
 use App\Dto\Training\TrainingPlaceDto;
 use App\Enum\TrainingPlaceDisplayEnum;
 use App\Enum\TypePlaceEnum;
@@ -17,11 +19,14 @@ class TrainingPlaceComponent
 
     public function __construct(
         private readonly QueryBusInterface $query,
+        private readonly CommandBusInterface $commandBus,
     ) {
     }
 
     public function getTrainingPlaceDto(): TrainingPlaceDto
     {
+        $this->commandBus->dispatch(new CheckLicensePeriodCommand());
+
         return $this->query->handle(new TrainingActiveDtoQuery($this->typePlaceEnum));
     }
 }

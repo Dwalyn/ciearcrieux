@@ -1,41 +1,41 @@
 trainingPeriod1:
-  startDate: '2024-09-01'
-  endDate: '2024-10-31'
+  startDate: '2023-09-01'
+  endDate: '2023-10-31'
   trainingSeason: !php/enum App\Enum\TypePlaceEnum::OUTDOOR
   trainingPlace: trainingPlace1
   licensePeriod: licensePeriod_1
 
 trainingPeriod2:
-  startDate: '2024-11-01'
-  endDate: '2025-03-30'
+  startDate: '2023-11-01'
+  endDate: '2024-03-30'
   trainingSeason: !php/enum App\Enum\TypePlaceEnum::INDOOR
   trainingPlace: trainingPlace2
   licensePeriod: licensePeriod_1
 
 trainingPeriod3:
-  startDate: '2025-04-01'
-  endDate: '2025-08-31'
+  startDate: '2024-04-01'
+  endDate: '2024-08-31'
   trainingSeason: !php/enum App\Enum\TypePlaceEnum::OUTDOOR
   trainingPlace: trainingPlace1
   licensePeriod: licensePeriod_1
 
 trainingPeriod4:
-  startDate: '2023-09-01'
-  endDate: '2023-10-31'
+  startDate: '2022-09-01'
+  endDate: '2022-10-31'
   trainingSeason: !php/enum App\Enum\TypePlaceEnum::OUTDOOR
   trainingPlace: trainingPlace1
   licensePeriod: licensePeriod_2
 
 trainingPeriod5:
-  startDate: '2023-11-01'
-  endDate: '2024-03-30'
+  startDate: '2022-11-01'
+  endDate: '2023-03-30'
   trainingSeason: !php/enum App\Enum\TypePlaceEnum::INDOOR
   trainingPlace: trainingPlace2
   licensePeriod: licensePeriod_2
 
 trainingPeriod6:
-  startDate: '2024-04-01'
-  endDate: '2024-08-31'
+  startDate: '2023-04-01'
+  endDate: '2023-08-31'
   trainingSeason: !php/enum App\Enum\TypePlaceEnum::OUTDOOR
   trainingPlace: trainingPlace1
   licensePeriod: licensePeriod_2

@@ -1,6 +1,6 @@
 alert:
   danger:
-    unauthorizedEditLicensePeriod: La période %start%-%end% est terminée. Elle ne peut plus être modifiée.
+    unauthorizedEditLicensePeriod: La saison %start%-%end% est terminée. Elle ne peut plus être modifiée.
   success:
     addMember: Le nouveau membre est ajouté.
     updateLicencePrice: Le prix des licences sont modifiés.
@@ -13,7 +13,7 @@ button:
   back: Retour
   cancel: Annuler
   edit: Modifier
-  nextPeriod: Créer la période suivante
+  nextPeriod: Créer la prochaine saison
   save: Enregistrer
   signin: Se connecter
 
@@ -57,7 +57,7 @@ global:
     title: Compagnie d'arc de Rieux
     description: Site officiel de la compagnie d'arc de
   link:
-    details: Détails
+    details: Plus d'informations
 
 h3:
   documents: Documents
@@ -68,18 +68,14 @@ h3:
 license:
   rent:
     free: OFFERT
-  noLicense: Aucune license trouvée pour cette période.
-  noRent: Aucune offre de location trouvée pour cette période.
+  noLicense: Aucune license trouvée pour cette saison.
+  noRent: Aucune offre de location trouvée pour cette saison.
   licensePrice:
     h1: Modification du tarif des licenses
   rentPrice:
     h1: Modification du tarif des locations
 
 menu:
-  admin:
-    title:
-      license_period: Saison sportive
-      members: Membres
   club: La compagnie
   findUs: Où nous trouver ?
   joinUs: Rejoignez nous
@@ -88,11 +84,15 @@ menu:
   home: Accueil
   members: Membres
   news: Actualités
-  period: Périodes
+  period: Saison sportive
   training: Entrainements
 
 signin:
   password: Mot de passe
+
+tooltip:
+  price: Tarifs
+  training: Entrainements
 
 user:
   birthday: Date de naissance

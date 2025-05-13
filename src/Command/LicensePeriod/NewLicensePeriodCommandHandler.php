@@ -26,6 +26,7 @@ class NewLicensePeriodCommandHandler implements CommandHandlerInterface
         $newLicensePeriod = $this->licensePeriodFactory->buildNewLicensePeriod($lastLicensePeriod);
         $this->licensePeriodFactory->buildLicenseInLicensePeriod($lastLicensePeriod, $newLicensePeriod);
         $this->licensePeriodFactory->buildRentInLicensePeriod($lastLicensePeriod, $newLicensePeriod);
+        $this->licensePeriodFactory->buildTrainingPeriodInLicensePeriod($lastLicensePeriod, $newLicensePeriod);
         $this->entityManager->flush();
     }
 }
