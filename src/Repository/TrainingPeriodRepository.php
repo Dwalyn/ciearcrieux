@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\LicensePeriod;
 use App\Entity\TrainingPeriod;
 use App\Enum\TimeStatusEnum;
 use App\Enum\TypePlaceEnum;
@@ -67,5 +68,28 @@ class TrainingPeriodRepository extends ServiceEntityRepository
         $queryBuilder = $this->beetweenDate($queryBuilder, $date, 'trainingPeriod');
 
         return $queryBuilder->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @return array<int, mixed>|null
+     */
+    public function findTrainingPeriodInLicensePeriod(LicensePeriod $licensePeriod): ?array
+    {
+        $queryBuilder = $this->createQueryBuilder('trainingPeriod');
+
+        $queryBuilder
+            ->select('trainingPeriod.id', 'trainingPeriod.startDate', 'trainingPeriod.endDate', 'trainingPeriod.typePlaceEnum')
+            ->where($queryBuilder->expr()->eq('trainingPeriod.licensePeriod', ':licencePeriodId'))
+            ->setParameters(new ArrayCollection([
+                new Parameter('licencePeriodId', $licensePeriod->getId()),
+            ]))
+        ;
+
+        $result = $queryBuilder->getQuery()->getResult();
+        if (count($result)) {
+            return $result;
+        }
+
+        return null;
     }
 }

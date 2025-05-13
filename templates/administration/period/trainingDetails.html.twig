@@ -1,1 +1,17 @@
 {% extends 'administration/period/base-details.html.twig' %}
+
+{% block content_details %}
+    <ul class="nav nav-pills">
+        {% for trainingInLicensePeriodDto in listTrainingInLicensePeriodDto %}
+            <li class="nav-item">
+                <a class="nav-link
+                    {% if trainingInLicensePeriodDto.isActive %}active{% endif %}"
+                    aria-current="page"
+                   data-bs-toggle="tooltip" data-bs-placement="top" title="{{ trainingInLicensePeriodDto.typePlaceEnum.getTranslationKey|trans }}"
+                    href="#">
+                    {{ trainingInLicensePeriodDto.startDate|date('d/m/Y') }} <i class="fa-solid fa-arrow-right"></i> {{ trainingInLicensePeriodDto.endDate|date('d/m/Y') }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -46,11 +46,11 @@ class ListLicenseActiveDtoQueryHandler implements QueryHandlerInterface
                 }
                 $licenceActiveDto->addDetail($licenseActive['label']);
             }
-        } else {
-            return null;
+
+            return $this->listLicenseActiveDto;
         }
 
-        return $this->listLicenseActiveDto;
+        return null;
     }
 
     private function hasLicenseActiveDtoType(LicenseTypeEnum $licenseTypeEnum): ?LicenceActiveDto

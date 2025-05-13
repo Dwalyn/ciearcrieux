@@ -15,10 +15,7 @@ class FindUsController extends AbstractController
     #[Route('/find-us/{typePlace}', name: 'findUs', requirements: ['typePlace' => new EnumRequirement(TypePlaceEnum::class)])]
     public function findUs(
         TypePlaceEnum $typePlace,
-        CommandBusInterface $commandBus
     ): Response {
-        $commandBus->dispatch(new CheckLicensePeriodCommand());
-
         return $this->render('/findUs/page.html.twig', [
             'typePlace' => $typePlace,
         ]);

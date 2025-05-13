@@ -11,6 +11,8 @@ use App\Enum\RoleEnum;
 use App\Factory\LicensePeriod\EditPriceFormDataFactory;
 use App\Form\Type\LicensePeriod\EditLicensePriceType;
 use App\Form\Type\LicensePeriod\EditRentPriceType;
+use App\Query\QueryBusInterface;
+use App\Query\Training\TrainingInLicensePeriodDtoQuery;
 use App\Repository\LicensePeriodRepository;
 use App\Security\LicensePeriodVoter;
 use Doctrine\Common\Collections\Order;
@@ -118,11 +120,14 @@ class PeriodController extends AbstractController
     #[Route('/periods/{id}/training', name: 'periodTraining', requirements: ['id' => '\d+'])]
     public function priceTraining(
         LicensePeriod $licensePeriod,
+        QueryBusInterface $queryBus,
     ): Response {
         $this->denyAccessUnlessGranted(RoleEnum::ROLE_ADMIN->value);
+        $listTrainingInLicensePeriodDto = $queryBus->handle(new TrainingInLicensePeriodDtoQuery($licensePeriod));
 
         return $this->render('/administration/period/trainingDetails.html.twig', [
             'licensePeriod' => $licensePeriod,
+            'listTrainingInLicensePeriodDto' => $listTrainingInLicensePeriodDto,
         ]);
     }
 
