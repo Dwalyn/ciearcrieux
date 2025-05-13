@@ -108,6 +108,22 @@ class PeriodControllerTest extends WebTestCase
                 ],
             ],
         ];
+        yield 'admin_periodTraining' => [
+            'url' => 'admin_periodTraining',
+            'param' => ['id' => 1],
+            'users' => [
+                [
+                    'login' => 'test@google.com',
+                    'status' => HttpStatusEnum::FORBIDDEN->value,
+                ], [
+                    'login' => 'admin@google.com',
+                    'status' => HttpStatusEnum::OK->value,
+                ], [
+                    'login' => null,
+                    'status' => HttpStatusEnum::REDIRECT->value,
+                ],
+            ],
+        ];
     }
 
     public function testPageList(): void
@@ -142,7 +158,7 @@ class PeriodControllerTest extends WebTestCase
         $this->assertCount(3, $badges);
 
         $link = $crawler->filter('table .btn-outline-secondary');
-        $this->assertCount(4, $link);
+        $this->assertCount(8, $link);
 
         $modal = $crawler->filter('.modal-dialog');
         $this->assertCount(1, $modal);

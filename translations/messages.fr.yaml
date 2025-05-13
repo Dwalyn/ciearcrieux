@@ -86,9 +86,10 @@ menu:
   login: S'identifier
   logout: Se déconnecter
   home: Accueil
-  period: Périodes
   members: Membres
   news: Actualités
+  period: Périodes
+  training: Entrainements
 
 signin:
   password: Mot de passe

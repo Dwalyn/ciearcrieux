@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\TrainingPeriod;
+use App\Enum\TimeStatusEnum;
 use App\Enum\TypePlaceEnum;
 use App\Trait\QueryBuilder\DateConditionTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -40,14 +41,17 @@ class TrainingPeriodRepository extends ServiceEntityRepository
             ->addSelect('trainingDay.day', 'trainingDay.startTime', 'trainingDay.endTime', 'trainingDay.licensedType')
             ->innerJoin('trainingPeriod.trainingPlace', 'trainingPlace')
             ->innerJoin('trainingPeriod.trainingDays', 'trainingDay')
-            ->where($queryBuilder->expr()->eq('trainingPeriod.active', ':active'))
-            ->andWhere($queryBuilder->expr()->eq('trainingPeriod.typePlaceEnum', ':typePlaceEnum'))
+            ->innerJoin('trainingPeriod.licensePeriod', 'licensePeriod')
+            ->where($queryBuilder->expr()->eq('trainingPeriod.typePlaceEnum', ':typePlaceEnum'))
+            ->andWhere($queryBuilder->expr()->eq('licensePeriod.status', ':status'))
             ->setParameters(new ArrayCollection([
-                new Parameter('active', true),
                 new Parameter('typePlaceEnum', $typePlaceEnum),
+                new Parameter('status', TimeStatusEnum::IN_PROGRESS->value),
             ]))
         ;
-
+        if (TypePlaceEnum::OUTDOOR === $typePlaceEnum) {
+            $queryBuilder = $this->toDayBeetweenDate($queryBuilder, 'trainingPeriod');
+        }
         $result = $queryBuilder->getQuery()->getResult();
         if (count($result)) {
             return $result;

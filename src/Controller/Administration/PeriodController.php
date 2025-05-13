@@ -104,16 +104,7 @@ class PeriodController extends AbstractController
             'h1' => 'license.rentPrice.h1',
         ]);
     }
-    #[Route('/periods/{id}/training', name: 'periodTraining', requirements: ['id' => '\d+'])]
-    public function priceTraining(
-        LicensePeriod $licensePeriod,
-        Request $request,
-    ): Response {
-        return $this->render('/administration/period/trainingDetails.html.twig', [
-            'licensePeriod' => $licensePeriod,
-        ]);
-    }
-    
+
     #[Route('/periods/create', name: 'periodCreate')]
     public function create(
     ): Response {
@@ -122,6 +113,17 @@ class PeriodController extends AbstractController
         $this->addFlash('success', $this->translator->trans('alert.success.newPeriod'));
 
         return $this->redirectToRoute('admin_periodList');
+    }
+
+    #[Route('/periods/{id}/training', name: 'periodTraining', requirements: ['id' => '\d+'])]
+    public function priceTraining(
+        LicensePeriod $licensePeriod,
+    ): Response {
+        $this->denyAccessUnlessGranted(RoleEnum::ROLE_ADMIN->value);
+
+        return $this->render('/administration/period/trainingDetails.html.twig', [
+            'licensePeriod' => $licensePeriod,
+        ]);
     }
 
     private function alertUnauthorizedEditPeriod(LicensePeriod $licensePeriod): ?RedirectResponse
