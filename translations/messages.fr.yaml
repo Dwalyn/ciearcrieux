@@ -94,6 +94,9 @@ tooltip:
   price: Tarifs
   training: Entrainements
 
+training:
+  noTraining: Aucun entrainement trouvé pour cette saison.
+
 user:
   birthday: Date de naissance
   email: Adresse email

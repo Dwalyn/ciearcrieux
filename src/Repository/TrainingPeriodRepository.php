@@ -61,6 +61,33 @@ class TrainingPeriodRepository extends ServiceEntityRepository
         return null;
     }
 
+    /**
+     * @return array<int, mixed>|null
+     */
+    public function getTrainingPeriodById(string $id): ?array
+    {
+        $queryBuilder = $this->createQueryBuilder('trainingPeriod');
+
+        $queryBuilder
+            ->select('trainingPeriod.startDate', 'trainingPeriod.endDate', 'trainingPeriod.typePlaceEnum')
+            ->addSelect('trainingPlace.id as trainingPlaceId', 'trainingPlace.name', 'trainingPlace.city', 'trainingPlace.cityNumber', 'trainingPlace.adress', 'trainingPlace.googleMapUrl')
+            ->addSelect('trainingDay.day', 'trainingDay.startTime', 'trainingDay.endTime', 'trainingDay.licensedType')
+            ->innerJoin('trainingPeriod.trainingPlace', 'trainingPlace')
+            ->innerJoin('trainingPeriod.trainingDays', 'trainingDay')
+
+            ->where($queryBuilder->expr()->eq('trainingPeriod.id', ':trainingPeriodId'))
+            ->setParameters(new ArrayCollection([
+                new Parameter('trainingPeriodId', $id),
+            ]))
+        ;
+        $result = $queryBuilder->getQuery()->getResult();
+        if (count($result)) {
+            return $result;
+        }
+
+        return null;
+    }
+
     public function getCurrentTrainingPeriod(\DateTime $date): ?TrainingPeriod
     {
         $queryBuilder = $this->createQueryBuilder('trainingPeriod');
@@ -78,14 +105,14 @@ class TrainingPeriodRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder('trainingPeriod');
 
         $queryBuilder
-            ->select('trainingPeriod.id', 'trainingPeriod.startDate', 'trainingPeriod.endDate', 'trainingPeriod.typePlaceEnum')
+            ->select('trainingPeriod.id')
             ->where($queryBuilder->expr()->eq('trainingPeriod.licensePeriod', ':licencePeriodId'))
             ->setParameters(new ArrayCollection([
                 new Parameter('licencePeriodId', $licensePeriod->getId()),
             ]))
         ;
 
-        $result = $queryBuilder->getQuery()->getResult();
+        $result = $queryBuilder->getQuery()->getSingleColumnResult();
         if (count($result)) {
             return $result;
         }

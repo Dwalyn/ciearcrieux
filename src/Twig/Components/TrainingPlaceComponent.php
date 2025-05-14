@@ -14,8 +14,9 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 #[AsTwigComponent]
 class TrainingPlaceComponent
 {
-    public TypePlaceEnum $typePlaceEnum = TypePlaceEnum::INDOOR;
+    public ?TypePlaceEnum $typePlaceEnum = null;
     public TrainingPlaceDisplayEnum $display = TrainingPlaceDisplayEnum::INLINE;
+    public ?string $id = null;
 
     public function __construct(
         private readonly QueryBusInterface $query,
@@ -25,8 +26,12 @@ class TrainingPlaceComponent
 
     public function getTrainingPlaceDto(): TrainingPlaceDto
     {
-        $this->commandBus->dispatch(new CheckLicensePeriodCommand());
+        if (null === $this->id) {
+            $this->commandBus->dispatch(new CheckLicensePeriodCommand());
 
-        return $this->query->handle(new TrainingActiveDtoQuery($this->typePlaceEnum));
+            return $this->query->handle(new TrainingActiveDtoQuery(typePlaceEnum: $this->typePlaceEnum));
+        }
+
+        return $this->query->handle(new TrainingActiveDtoQuery(id: $this->id));
     }
 }

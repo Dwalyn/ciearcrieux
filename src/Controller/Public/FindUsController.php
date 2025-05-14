@@ -2,8 +2,6 @@
 
 namespace App\Controller\Public;
 
-use App\Command\CommandBusInterface;
-use App\Command\LicensePeriod\CheckLicensePeriodCommand;
 use App\Enum\TypePlaceEnum;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
