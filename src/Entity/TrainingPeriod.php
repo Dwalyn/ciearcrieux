@@ -31,23 +31,24 @@ class TrainingPeriod
     #[ORM\OneToMany(targetEntity: TrainingDay::class, mappedBy: 'trainingPeriod')]
     protected Collection $trainingDays;
 
-    #[ORM\OneToOne(targetEntity: TrainingPlace::class)]
+    #[ORM\ManyToOne(targetEntity: TrainingPlace::class)]
     protected TrainingPlace $trainingPlace;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
-    protected bool $active;
+    #[ORM\ManyToOne(targetEntity: LicensePeriod::class)]
+    protected LicensePeriod $licensePeriod;
 
     public function __construct(
         \DateTime $startDate,
         \DateTime $endDate,
         TypePlaceEnum $typePlaceEnum,
         TrainingPlace $trainingPlace,
+        LicensePeriod $licensePeriod,
     ) {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->typePlaceEnum = $typePlaceEnum;
         $this->trainingPlace = $trainingPlace;
-        $this->active = true;
+        $this->licensePeriod = $licensePeriod;
         $this->trainingDays = new ArrayCollection();
     }
 
@@ -79,13 +80,13 @@ class TrainingPeriod
         return $this->trainingDays;
     }
 
-    public function getActive(): bool
-    {
-        return $this->active;
-    }
-
     public function getTypePlaceEnum(): TypePlaceEnum
     {
         return $this->typePlaceEnum;
+    }
+
+    public function getLicensePeriod(): LicensePeriod
+    {
+        return $this->licensePeriod;
     }
 }

@@ -5,10 +5,14 @@ namespace App\Factory\LicensePeriod;
 use App\Entity\License;
 use App\Entity\LicensePeriod;
 use App\Entity\Rent;
+use App\Entity\TrainingDay;
+use App\Entity\TrainingPeriod;
 use App\Enum\TimeStatusEnum;
 use App\Repository\LicenseDetailRepository;
 use App\Repository\LicenseRepository;
 use App\Repository\RentRepository;
+use App\Repository\TrainingDayRepository;
+use App\Repository\TrainingPeriodRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class LicensePeriodFactory
@@ -17,6 +21,8 @@ class LicensePeriodFactory
         private LicenseRepository $licenseRepository,
         private LicenseDetailRepository $licenseDetailRepository,
         private RentRepository $rentRepository,
+        private TrainingPeriodRepository $trainingPeriodRepository,
+        private TrainingDayRepository $trainingDayRepository,
         private EntityManagerInterface $entityManager,
     ) {
     }
@@ -59,6 +65,33 @@ class LicensePeriodFactory
         foreach ($listRent as $rent) {
             $newRent = new Rent($rent->getType(), $rent->getPrice(), $newLicensePeriod);
             $this->entityManager->persist($newRent);
+        }
+    }
+
+    public function buildTrainingPeriodInLicensePeriod(LicensePeriod $lastLicensePeriod, LicensePeriod $newLicensePeriod): void
+    {
+        $listTrainingPeriod = $this->trainingPeriodRepository->findBy(['licensePeriod' => $lastLicensePeriod]);
+        foreach ($listTrainingPeriod as $trainingPeriod) {
+            $newTrainingPeriod = new TrainingPeriod(
+                (clone $trainingPeriod->getStartDate())->modify('+1 year'),
+                (clone $trainingPeriod->getEndDate())->modify('+1 year'),
+                $trainingPeriod->getTypePlaceEnum(),
+                $trainingPeriod->getTrainingPlace(),
+                $newLicensePeriod
+            );
+            $this->entityManager->persist($newTrainingPeriod);
+
+            $listTrainingDay = $this->trainingDayRepository->findBy(['trainingPeriod' => $trainingPeriod]);
+            foreach ($listTrainingDay as $trainingDay) {
+                $newTrainingDay = new TrainingDay(
+                    $trainingDay->getDay(),
+                    clone $trainingDay->getStartTime(),
+                    clone $trainingDay->getEndTime(),
+                    $trainingDay->getLicensedType(),
+                    $newTrainingPeriod
+                );
+                $this->entityManager->persist($newTrainingDay);
+            }
         }
     }
 }

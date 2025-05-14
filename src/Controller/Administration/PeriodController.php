@@ -12,6 +12,7 @@ use App\Factory\LicensePeriod\EditPriceFormDataFactory;
 use App\Form\Type\LicensePeriod\EditLicensePriceType;
 use App\Form\Type\LicensePeriod\EditRentPriceType;
 use App\Repository\LicensePeriodRepository;
+use App\Repository\TrainingPeriodRepository;
 use App\Security\LicensePeriodVoter;
 use Doctrine\Common\Collections\Order;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -113,6 +114,20 @@ class PeriodController extends AbstractController
         $this->addFlash('success', $this->translator->trans('alert.success.newPeriod'));
 
         return $this->redirectToRoute('admin_periodList');
+    }
+
+    #[Route('/periods/{id}/training', name: 'periodTraining', requirements: ['id' => '\d+'])]
+    public function priceTraining(
+        LicensePeriod $licensePeriod,
+        TrainingPeriodRepository $trainingPeriodRepository,
+    ): Response {
+        $this->denyAccessUnlessGranted(RoleEnum::ROLE_ADMIN->value);
+        $trainingsInLicense = $trainingPeriodRepository->findTrainingPeriodInLicensePeriod($licensePeriod);
+
+        return $this->render('/administration/period/trainingDetails.html.twig', [
+            'licensePeriod' => $licensePeriod,
+            'trainingsInLicense' => $trainingsInLicense,
+        ]);
     }
 
     private function alertUnauthorizedEditPeriod(LicensePeriod $licensePeriod): ?RedirectResponse
