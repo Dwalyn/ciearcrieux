@@ -20,14 +20,23 @@
                             <span class="bd-highlight"><span class="badge bg-{{ licensePeriod.status.badgeClass(licensePeriod.status) }}">{{ licensePeriod.status.translationKey|trans }}</span></span>
                         </td>
                         <td class="text-end">
-                            <a href="{{ path('admin_periodTraining', {id: licensePeriod.id}) }}"
-                               type="button" class="btn btn-outline-secondary"
-                               data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'tooltip.training'|trans }}"
-                            ><i class="fa-solid fa-bullseye"></i></a>
-                            <a href="{{ path('admin_periodPriceDetails', {id: licensePeriod.id}) }}"
-                               type="button" class="btn btn-outline-secondary"
-                               data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'tooltip.price'|trans }}"
-                            ><i class="fa-solid fa-euro-sign"></i></a>
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-info"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li>
+                                        <a href="{{ path('admin_periodTraining', {id: licensePeriod.id}) }}"
+                                           class="dropdown-item"
+                                        >{{ 'tooltip.training'|trans }}</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('admin_periodPriceDetails', {id: licensePeriod.id}) }}"
+                                           class="dropdown-item"
+                                        >{{ 'tooltip.price'|trans }}</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </td>
                     </tr>
                 {% endfor %}
@@ -43,8 +52,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Souhaitez vous créer la période suivante ?</p>
-                    <p>La période suivante aura les tarifs de licenses et de locations de la période en cours.</p>
+                    <p>Souhaitez vous créer la prochaine saison ?</p>
+                    <p>Les tarifs des licenses et des locations ainsi que les entrainements seront repris de la saison actuelle.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{{ 'button.cancel'|trans }}</button>
