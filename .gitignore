@@ -1,6 +1,7 @@
 ###> symfony/framework-bundle ###
 /var/
 /vendor/
+/coverage/
 ###< symfony/framework-bundle ###
 
 docker-compose.override.yml
@@ -29,6 +30,7 @@ yarn-error.log
 ###> phpunit/phpunit ###
 #/phpunit.xml
 .phpunit.result.cache
+.phpunit.cache
 ###< phpunit/phpunit ###
 
 ###> vincentlanglet/twig-cs-fixer ###

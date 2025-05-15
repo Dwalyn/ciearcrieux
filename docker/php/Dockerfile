@@ -33,6 +33,10 @@ RUN curl -L -o /tmp/yarn.tar.gz https://github.com/yarnpkg/yarn/releases/downloa
  && tar xfvz /tmp/yarn.tar.gz -C /usr/local --strip-components=1 \
  && rm -f /tmp/yarn.tar.gz
 
+# PHPPCOV FOR Coverage
+RUN pecl install pcov && docker-php-ext-enable pcov
+
+
 RUN apt-get update && apt-get install -y sudo --no-install-recommends && rm -rf /var/lib/apt/lists/* \
  && useradd --system --uid 666 --shell /bin/bash docker-user \
  && { \
