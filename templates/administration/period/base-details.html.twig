@@ -7,7 +7,7 @@
                 <h4 class="bd-highlight"><span class="badge bg-{{ licensePeriod.status.badgeClass(licensePeriod.status) }}">{{ licensePeriod.status.translationKey|trans }}</span></h4>
             </div>
             <div class="mt-2">
-                <a href="{{ path('admin_periodList') }}"> <i class="fa-solid fa-arrow-left"></i> {{ 'button.back'|trans }}</a>
+                <a href={% block backLink %}"{{ path('admin_periodList') }}"{% endblock %}> <i class="fa-solid fa-arrow-left"></i> {{ 'button.back'|trans }}</a>
             </div>
         </div>
         {% block content_details %}

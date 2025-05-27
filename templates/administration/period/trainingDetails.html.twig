@@ -9,7 +9,7 @@
                 <twig:block name="buttonEdit">
                     {% if is_granted('edit', licensePeriod) %}
                         <div>
-                            <a href="#" class="btn btn-primary"><i class="fa-solid fa-pen"></i>
+                            <a href="{{ path('admin_trainingEdit', {id: training}) }}" class="btn btn-primary"><i class="fa-solid fa-pen"></i>
                                 {{ 'button.edit'|trans }}
                             </a>
                         </div>

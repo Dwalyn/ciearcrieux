@@ -20,21 +20,21 @@
                             <span class="bd-highlight"><span class="badge bg-{{ licensePeriod.status.badgeClass(licensePeriod.status) }}">{{ licensePeriod.status.translationKey|trans }}</span></span>
                         </td>
                         <td class="text-end">
-                            <div class="dropdown">
-                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="btn-group dropstart">
+                                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-info"></i>
                                 </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li>
-                                        <a href="{{ path('admin_periodTraining', {id: licensePeriod.id}) }}"
-                                           class="dropdown-item"
-                                        >{{ 'tooltip.training'|trans }}</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ path('admin_periodPriceDetails', {id: licensePeriod.id}) }}"
-                                           class="dropdown-item"
-                                        >{{ 'tooltip.price'|trans }}</a>
-                                    </li>
+                                <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="{{ path('admin_periodTraining', {id: licensePeriod.id}) }}"
+                                               class="dropdown-item"
+                                            >{{ 'tooltip.training'|trans }}</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ path('admin_periodPriceDetails', {id: licensePeriod.id}) }}"
+                                               class="dropdown-item"
+                                            >{{ 'tooltip.price'|trans }}</a>
+                                        </li>
                                 </ul>
                             </div>
                         </td>

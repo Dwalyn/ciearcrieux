@@ -3,14 +3,18 @@
 namespace App\Controller\Administration;
 
 use App\Command\CommandBusInterface;
+use App\Command\LicensePeriod\EditTrainingCommand;
 use App\Command\LicensePeriod\NewLicensePeriodCommand;
 use App\Command\LicensePeriod\UpdateLicensePriceCommand;
 use App\Command\LicensePeriod\UpdateRentPriceCommand;
 use App\Entity\LicensePeriod;
+use App\Entity\TrainingPeriod;
 use App\Enum\RoleEnum;
-use App\Factory\LicensePeriod\EditPriceFormDataFactory;
-use App\Form\Type\LicensePeriod\EditLicensePriceType;
-use App\Form\Type\LicensePeriod\EditRentPriceType;
+use App\Factory\LicensePeriod\Price\EditPriceFormDataFactory;
+use App\Factory\LicensePeriod\Training\EditTrainingFormDataFactory;
+use App\Form\Type\LicensePeriod\Price\EditLicensePriceType;
+use App\Form\Type\LicensePeriod\Price\EditRentPriceType;
+use App\Form\Type\LicensePeriod\Training\EditTrainingType;
 use App\Repository\LicensePeriodRepository;
 use App\Repository\TrainingPeriodRepository;
 use App\Security\LicensePeriodVoter;
@@ -28,7 +32,8 @@ class PeriodController extends AbstractController
     public function __construct(
         private readonly CommandBusInterface $commandBus,
         private readonly TranslatorInterface $translator,
-        private readonly EditPriceFormDataFactory $editPriceFormDataFactory
+        private readonly EditPriceFormDataFactory $editPriceFormDataFactory,
+        private readonly EditTrainingFormDataFactory $editTrainingFormDataFactory,
     ) {
     }
 
@@ -127,6 +132,27 @@ class PeriodController extends AbstractController
         return $this->render('/administration/period/trainingDetails.html.twig', [
             'licensePeriod' => $licensePeriod,
             'trainingsInLicense' => $trainingsInLicense,
+        ]);
+    }
+
+    #[Route('/periods/training/edit/{id}', name: 'trainingEdit', requirements: ['id' => '\d+'])]
+    public function editTraining(
+        TrainingPeriod $trainingPeriod,
+        Request $request,
+    ): Response {
+        $this->denyAccessUnlessGranted(RoleEnum::ROLE_ADMIN->value);
+
+        $dataForm = $this->editTrainingFormDataFactory->buildDataTraining($trainingPeriod);
+        $form = $this->createForm(EditTrainingType::class, $dataForm);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->commandBus->dispatch(new EditTrainingCommand($dataForm));
+        }
+
+        return $this->render('/administration/period/trainingEdit.html.twig', [
+            'licensePeriod' => $trainingPeriod->getLicensePeriod(),
+            'form' => $form->createView(),
         ]);
     }
 

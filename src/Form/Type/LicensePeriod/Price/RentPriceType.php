@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Form\Type\LicensePeriod;
+namespace App\Form\Type\LicensePeriod\Price;
 
-use App\Form\Datas\LicensePeriod\LicensePriceFormData;
+use App\Form\Datas\LicensePeriod\Price\RentPriceFormData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class LicensePriceType extends AbstractType implements FormTypeInterface
+class RentPriceType extends AbstractType implements FormTypeInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -21,7 +21,7 @@ class LicensePriceType extends AbstractType implements FormTypeInterface
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => LicensePriceFormData::class,
+            'data_class' => RentPriceFormData::class,
         ]);
     }
 }
