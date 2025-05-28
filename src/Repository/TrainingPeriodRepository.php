@@ -119,4 +119,32 @@ class TrainingPeriodRepository extends ServiceEntityRepository
 
         return null;
     }
+
+    public function getPreviousTrainingPeriod(TrainingPeriod $trainingPeriod): TrainingPeriod
+    {
+        $queryBuilder = $this->createQueryBuilder('trainingPeriod');
+
+        $queryBuilder
+            ->where($queryBuilder->expr()->eq('trainingPeriod.endDate', ':endDate'))
+            ->setParameters(new ArrayCollection([
+                new Parameter('endDate', clone $trainingPeriod->getStartDate()->modify('-1 day')),
+            ]))
+        ;
+
+        return $queryBuilder->getQuery()->getSingleResult();
+    }
+
+    public function getNextTrainingPeriod(TrainingPeriod $trainingPeriod): TrainingPeriod
+    {
+        $queryBuilder = $this->createQueryBuilder('trainingPeriod');
+
+        $queryBuilder
+            ->where($queryBuilder->expr()->eq('trainingPeriod.startDate', ':startDate'))
+            ->setParameters(new ArrayCollection([
+                new Parameter('startDate', clone $trainingPeriod->getEndDate()->modify('+1 day')),
+            ]))
+        ;
+
+        return $queryBuilder->getQuery()->getSingleResult();
+    }
 }

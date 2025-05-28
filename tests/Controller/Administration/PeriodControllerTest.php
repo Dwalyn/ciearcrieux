@@ -94,7 +94,7 @@ class PeriodControllerTest extends WebTestCase
         ];
         yield 'admin_periodCreate' => [
             'url' => 'admin_periodCreate',
-            'param' => ['id' => 1],
+            'param' => [],
             'users' => [
                 [
                     'login' => 'test@google.com',
@@ -148,17 +148,17 @@ class PeriodControllerTest extends WebTestCase
         $this->savePage();
         $this->assertEquals(sprintf(
             '%s - %s',
-            2024,
-            2025
+            2023,
+            2024
         ), $line->first()->filter('td')->first()->text());
 
         $badges = $crawler->filter('.bg-success');
         $this->assertCount(1, $badges);
         $badges = $crawler->filter('.bg-danger');
-        $this->assertCount(3, $badges);
+        $this->assertCount(2, $badges);
 
         $link = $crawler->filter('table .btn-outline-secondary');
-        $this->assertCount(8, $link);
+        $this->assertCount(3, $link);
 
         $modal = $crawler->filter('.modal-dialog');
         $this->assertCount(1, $modal);

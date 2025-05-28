@@ -62,14 +62,29 @@ class TrainingPeriod
         return $this->startDate;
     }
 
+    public function setStartDate(\DateTime $startDate): void
+    {
+        $this->startDate = $startDate;
+    }
+
     public function getEndDate(): \DateTime
     {
         return $this->endDate;
     }
 
+    public function setEndDate(\DateTime $endDate): void
+    {
+        $this->endDate = $endDate;
+    }
+
     public function getTrainingPlace(): TrainingPlace
     {
         return $this->trainingPlace;
+    }
+
+    public function setTrainingPlace(TrainingPlace $trainingPlace): void
+    {
+        $this->trainingPlace = $trainingPlace;
     }
 
     /**

@@ -8,12 +8,13 @@
     {{ form_start(form) }}
     <div class="row">
         <div class="col-6">
-            {{ form_row(form.startDate, {attr: {class: 'form-control'}}) }}
+            {{ form_row(form.startDate, {attr: {class: 'form-control col-6'}}) }}
         </div>
         <div class="col-6">
             {{ form_row(form.endDate, {attr: {class: 'form-control'}}) }}
         </div>
     </div>
+    {{ form_row(form.trainingPlace, {attr: {class: 'form-control'}}) }}
     <div>
         <button type="submit" class="btn btn-success"><i class="fa-solid fa-check"></i> {{ 'button.save'|trans }}</button>
         <a href="{{ path('admin_periodTraining', {id: licensePeriod.id}) }}" class="btn btn-outline-secondary">{{ 'button.cancel'|trans }}</a>

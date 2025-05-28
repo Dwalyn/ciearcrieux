@@ -147,7 +147,10 @@ class PeriodController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->commandBus->dispatch(new EditTrainingCommand($dataForm));
+            $this->commandBus->dispatch(new EditTrainingCommand($trainingPeriod, $dataForm));
+            $this->addFlash('success', $this->translator->trans('alert.success.updateTrainingPeriod'));
+
+            return $this->redirectToRoute('admin_periodTraining', ['id' => $trainingPeriod->getLicensePeriod()->getId()]);
         }
 
         return $this->render('/administration/period/trainingEdit.html.twig', [

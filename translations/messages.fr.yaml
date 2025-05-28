@@ -5,6 +5,7 @@ alert:
     addMember: Le nouveau membre est ajouté.
     updateLicencePrice: Le prix des licences sont modifiés.
     updateRentPrice: Le prix des locations sont modifiés.
+    updateTrainingPeriod: La période d'entrainement est modifiée.
   secondary:
     nodata: Aucun résultat ne correspond à votre recherche.
 
@@ -96,6 +97,11 @@ tooltip:
 
 training:
   noTraining: Aucun entrainement trouvé pour cette saison.
+
+trainingPlace:
+  startDate: Du
+  endDate: Au
+  place: Lieu
 
 user:
   birthday: Date de naissance
