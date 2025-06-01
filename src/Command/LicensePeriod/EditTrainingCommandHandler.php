@@ -30,7 +30,7 @@ class EditTrainingCommandHandler implements CommandHandlerInterface
         $diffEnd = $trainingPeriod->getEndDate()->diff($data->endDate);
         if ($diffEnd->days) {
             $nextTrainingPeriod = $this->trainingPeriodRepository->getNextTrainingPeriod($command->trainingPeriod);
-            //$this->commandBus->dispatch(new UpdateStartNextTrainingPeriodCommand($nextTrainingPeriod, $diffEnd));
+            $this->commandBus->dispatch(new UpdateStartNextTrainingPeriodCommand($nextTrainingPeriod, $diffEnd));
         }
 
         $trainingPeriod->setStartDate($data->startDate);

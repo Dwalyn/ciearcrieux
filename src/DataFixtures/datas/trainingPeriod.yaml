@@ -7,7 +7,7 @@ trainingPeriod1:
 
 trainingPeriod2:
   startDate: '2023-11-01'
-  endDate: '2024-03-30'
+  endDate: '2024-03-31'
   trainingSeason: !php/enum App\Enum\TypePlaceEnum::INDOOR
   trainingPlace: trainingPlace2
   licensePeriod: licensePeriod_1
@@ -28,7 +28,7 @@ trainingPeriod4:
 
 trainingPeriod5:
   startDate: '2022-11-01'
-  endDate: '2023-03-30'
+  endDate: '2023-03-31'
   trainingSeason: !php/enum App\Enum\TypePlaceEnum::INDOOR
   trainingPlace: trainingPlace2
   licensePeriod: licensePeriod_2

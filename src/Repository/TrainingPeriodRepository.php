@@ -125,9 +125,12 @@ class TrainingPeriodRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder('trainingPeriod');
 
         $queryBuilder
+            ->innerJoin('trainingPeriod.licensePeriod', 'licensePeriod')
             ->where($queryBuilder->expr()->eq('trainingPeriod.endDate', ':endDate'))
+            ->andWhere($queryBuilder->expr()->eq('licensePeriod.id', ':idLicensePeriod'))
             ->setParameters(new ArrayCollection([
-                new Parameter('endDate', clone $trainingPeriod->getStartDate()->modify('-1 day')),
+                new Parameter('endDate', clone ($trainingPeriod->getStartDate())->modify('-1 day')),
+                new Parameter('idLicensePeriod', $trainingPeriod->getLicensePeriod()->getId()),
             ]))
         ;
 
@@ -139,9 +142,12 @@ class TrainingPeriodRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder('trainingPeriod');
 
         $queryBuilder
+            ->innerJoin('trainingPeriod.licensePeriod', 'licensePeriod')
             ->where($queryBuilder->expr()->eq('trainingPeriod.startDate', ':startDate'))
+            ->andWhere($queryBuilder->expr()->eq('licensePeriod.id', ':idLicensePeriod'))
             ->setParameters(new ArrayCollection([
                 new Parameter('startDate', clone $trainingPeriod->getEndDate()->modify('+1 day')),
+                new Parameter('idLicensePeriod', $trainingPeriod->getLicensePeriod()->getId()),
             ]))
         ;
 
