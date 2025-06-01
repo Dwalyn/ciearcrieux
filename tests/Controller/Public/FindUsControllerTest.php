@@ -74,7 +74,7 @@ class FindUsControllerTest extends WebTestCase
         $this->assertCount(1, $planing);
 
         $day = $card->filter('.day');
-        $this->assertCount(2, $day);
+        $this->assertCount(3, $day);
 
         $map = $card->filter('.map');
         $this->assertCount(1, $map);

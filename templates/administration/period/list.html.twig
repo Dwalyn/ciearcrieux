@@ -1,10 +1,4 @@
-{% extends 'base.html.twig' %}
-
-{% block title_page %}
-    {{ parent() }} - {{ 'menu.period'|trans }}
-{% endblock %}
-
-{% block h1 %} {{ 'menu.period'|trans }} {% endblock %}
+{% extends 'administration/period/base-period.html.twig' %}
 
 {% block content %}
     <div class="w-75">
@@ -26,7 +20,23 @@
                             <span class="bd-highlight"><span class="badge bg-{{ licensePeriod.status.badgeClass(licensePeriod.status) }}">{{ licensePeriod.status.translationKey|trans }}</span></span>
                         </td>
                         <td class="text-end">
-                            <a href="{{ path('admin_periodPriceDetails', {id: licensePeriod.id}) }}" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-euro-sign"></i></a>
+                            <div class="btn-group dropstart">
+                                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-info"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="{{ path('admin_periodTraining', {id: licensePeriod.id}) }}"
+                                               class="dropdown-item"
+                                            >{{ 'tooltip.training'|trans }}</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ path('admin_periodPriceDetails', {id: licensePeriod.id}) }}"
+                                               class="dropdown-item"
+                                            >{{ 'tooltip.price'|trans }}</a>
+                                        </li>
+                                </ul>
+                            </div>
                         </td>
                     </tr>
                 {% endfor %}
@@ -42,8 +52,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Souhaitez vous créer la période suivante ?</p>
-                    <p>La période suivante aura les tarifs de licenses et de locations de la période en cours.</p>
+                    <p>Souhaitez vous créer la prochaine saison ?</p>
+                    <p>Les tarifs des licenses et des locations ainsi que les entrainements seront repris de la saison actuelle.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{{ 'button.cancel'|trans }}</button>

@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\LicensePeriod;
 use App\Entity\TrainingPeriod;
+use App\Enum\TimeStatusEnum;
 use App\Enum\TypePlaceEnum;
 use App\Trait\QueryBuilder\DateConditionTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -40,14 +42,44 @@ class TrainingPeriodRepository extends ServiceEntityRepository
             ->addSelect('trainingDay.day', 'trainingDay.startTime', 'trainingDay.endTime', 'trainingDay.licensedType')
             ->innerJoin('trainingPeriod.trainingPlace', 'trainingPlace')
             ->innerJoin('trainingPeriod.trainingDays', 'trainingDay')
-            ->where($queryBuilder->expr()->eq('trainingPeriod.active', ':active'))
-            ->andWhere($queryBuilder->expr()->eq('trainingPeriod.typePlaceEnum', ':typePlaceEnum'))
+            ->innerJoin('trainingPeriod.licensePeriod', 'licensePeriod')
+            ->where($queryBuilder->expr()->eq('trainingPeriod.typePlaceEnum', ':typePlaceEnum'))
+            ->andWhere($queryBuilder->expr()->eq('licensePeriod.status', ':status'))
             ->setParameters(new ArrayCollection([
-                new Parameter('active', true),
                 new Parameter('typePlaceEnum', $typePlaceEnum),
+                new Parameter('status', TimeStatusEnum::IN_PROGRESS->value),
             ]))
         ;
+        if (TypePlaceEnum::OUTDOOR === $typePlaceEnum) {
+            $queryBuilder = $this->toDayBeetweenDate($queryBuilder, 'trainingPeriod');
+        }
+        $result = $queryBuilder->getQuery()->getResult();
+        if (count($result)) {
+            return $result;
+        }
 
+        return null;
+    }
+
+    /**
+     * @return array<int, mixed>|null
+     */
+    public function getTrainingPeriodById(string $id): ?array
+    {
+        $queryBuilder = $this->createQueryBuilder('trainingPeriod');
+
+        $queryBuilder
+            ->select('trainingPeriod.startDate', 'trainingPeriod.endDate', 'trainingPeriod.typePlaceEnum')
+            ->addSelect('trainingPlace.id as trainingPlaceId', 'trainingPlace.name', 'trainingPlace.city', 'trainingPlace.cityNumber', 'trainingPlace.adress', 'trainingPlace.googleMapUrl')
+            ->addSelect('trainingDay.day', 'trainingDay.startTime', 'trainingDay.endTime', 'trainingDay.licensedType')
+            ->innerJoin('trainingPeriod.trainingPlace', 'trainingPlace')
+            ->innerJoin('trainingPeriod.trainingDays', 'trainingDay')
+
+            ->where($queryBuilder->expr()->eq('trainingPeriod.id', ':trainingPeriodId'))
+            ->setParameters(new ArrayCollection([
+                new Parameter('trainingPeriodId', $id),
+            ]))
+        ;
         $result = $queryBuilder->getQuery()->getResult();
         if (count($result)) {
             return $result;
@@ -63,5 +95,62 @@ class TrainingPeriodRepository extends ServiceEntityRepository
         $queryBuilder = $this->beetweenDate($queryBuilder, $date, 'trainingPeriod');
 
         return $queryBuilder->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @return array<int, mixed>|null
+     */
+    public function findTrainingPeriodInLicensePeriod(LicensePeriod $licensePeriod): ?array
+    {
+        $queryBuilder = $this->createQueryBuilder('trainingPeriod');
+
+        $queryBuilder
+            ->select('trainingPeriod.id')
+            ->where($queryBuilder->expr()->eq('trainingPeriod.licensePeriod', ':licencePeriodId'))
+            ->setParameters(new ArrayCollection([
+                new Parameter('licencePeriodId', $licensePeriod->getId()),
+            ]))
+        ;
+
+        $result = $queryBuilder->getQuery()->getSingleColumnResult();
+        if (count($result)) {
+            return $result;
+        }
+
+        return null;
+    }
+
+    public function getPreviousTrainingPeriod(TrainingPeriod $trainingPeriod): TrainingPeriod
+    {
+        $queryBuilder = $this->createQueryBuilder('trainingPeriod');
+
+        $queryBuilder
+            ->innerJoin('trainingPeriod.licensePeriod', 'licensePeriod')
+            ->where($queryBuilder->expr()->eq('trainingPeriod.endDate', ':endDate'))
+            ->andWhere($queryBuilder->expr()->eq('licensePeriod.id', ':idLicensePeriod'))
+            ->setParameters(new ArrayCollection([
+                new Parameter('endDate', clone ($trainingPeriod->getStartDate())->modify('-1 day')),
+                new Parameter('idLicensePeriod', $trainingPeriod->getLicensePeriod()->getId()),
+            ]))
+        ;
+
+        return $queryBuilder->getQuery()->getSingleResult();
+    }
+
+    public function getNextTrainingPeriod(TrainingPeriod $trainingPeriod): TrainingPeriod
+    {
+        $queryBuilder = $this->createQueryBuilder('trainingPeriod');
+
+        $queryBuilder
+            ->innerJoin('trainingPeriod.licensePeriod', 'licensePeriod')
+            ->where($queryBuilder->expr()->eq('trainingPeriod.startDate', ':startDate'))
+            ->andWhere($queryBuilder->expr()->eq('licensePeriod.id', ':idLicensePeriod'))
+            ->setParameters(new ArrayCollection([
+                new Parameter('startDate', clone $trainingPeriod->getEndDate()->modify('+1 day')),
+                new Parameter('idLicensePeriod', $trainingPeriod->getLicensePeriod()->getId()),
+            ]))
+        ;
+
+        return $queryBuilder->getQuery()->getSingleResult();
     }
 }

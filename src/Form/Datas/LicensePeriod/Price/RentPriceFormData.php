@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Datas\LicensePeriod;
+namespace App\Form\Datas\LicensePeriod\Price;
 
 use App\Entity\Rent;
 use App\Enum\RentTypeEnum;

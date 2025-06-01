@@ -16,7 +16,8 @@ class TrainingPeriodFixtures extends AbstractFixture implements DependentFixture
             new \DateTime($data['startDate']),
             new \DateTime($data['endDate']),
             $data['trainingSeason'],
-            $this->getReferenceTrainingPlace($data)
+            $this->getReferenceTrainingPlace($data),
+            $this->getReferenceLicensePeriod($data)
         );
     }
 
@@ -28,6 +29,7 @@ class TrainingPeriodFixtures extends AbstractFixture implements DependentFixture
     public function getDependencies(): array
     {
         return [
+            LicensePeriodFixtures::class,
             TrainingPlaceFixtures::class,
         ];
     }
