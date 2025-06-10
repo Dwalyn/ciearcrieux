@@ -3,7 +3,7 @@
 namespace App\Command\LicensePeriod;
 
 use App\Command\CommandInterface;
-use App\Form\Datas\LicensePeriod\EditPriceFormData;
+use App\Form\Datas\LicensePeriod\Price\EditPriceFormData;
 
 class UpdateLicensePriceCommand implements CommandInterface
 {

@@ -53,6 +53,30 @@ class LicensePeriodRepository extends ServiceEntityRepository
     /**
      * @return array<int, mixed>|null
      */
+    public function getLicenceInLicensePeriod(LicensePeriod $licensePeriod): ?array
+    {
+        $queryBuilder = $this->createQueryBuilder('period');
+        $queryBuilder
+            ->select('period.startDate', 'period.endDate')
+            ->addSelect('license.type')
+            ->addSelect('license.price')
+            ->addSelect('licenseDetail.label')
+            ->innerJoin('period.licenses', 'license')
+            ->innerJoin('license.licenseDetails', 'licenseDetail')
+            ->where($queryBuilder->expr()->eq('period.id', ':id'))
+            ->setParameter('id', $licensePeriod->getId())
+        ;
+        $result = $queryBuilder->getQuery()->getResult();
+        if (count($result)) {
+            return $result;
+        }
+
+        return null;
+    }
+
+    /**
+     * @return array<int, mixed>|null
+     */
     public function getRentInLicensePeriodActive(): ?array
     {
         $queryBuilder = $this->createQueryBuilder('period');
@@ -62,6 +86,28 @@ class LicensePeriodRepository extends ServiceEntityRepository
             ->innerJoin('period.rents', 'rent')
             ->where($queryBuilder->expr()->eq('period.status', ':status'))
             ->setParameter('status', TimeStatusEnum::IN_PROGRESS)
+        ;
+
+        $result = $queryBuilder->getQuery()->getResult();
+        if (count($result)) {
+            return $result;
+        }
+
+        return null;
+    }
+
+    /**
+     * @return array<int, mixed>|null
+     */
+    public function getRentInLicensePeriod(LicensePeriod $licensePeriod): ?array
+    {
+        $queryBuilder = $this->createQueryBuilder('period');
+        $queryBuilder
+            ->select('rent.type')
+            ->addSelect('rent.price')
+            ->innerJoin('period.rents', 'rent')
+            ->where($queryBuilder->expr()->eq('period.id', ':id'))
+            ->setParameter('id', $licensePeriod->getId())
         ;
 
         $result = $queryBuilder->getQuery()->getResult();

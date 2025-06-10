@@ -27,7 +27,11 @@ class ListLicenseActiveDtoQueryHandler implements QueryHandlerInterface
     public function __invoke(ListLicenseActiveDtoQuery $query): ?ArrayCollection
     {
         $this->listLicenseActiveDto = new ArrayCollection();
-        $licensesActive = $this->licensePeriodRepository->getLicenceInLicensePeriodActive();
+        if (null === $query->licensePeriod) {
+            $licensesActive = $this->licensePeriodRepository->getLicenceInLicensePeriodActive();
+        } else {
+            $licensesActive = $this->licensePeriodRepository->getLicenceInLicensePeriod($query->licensePeriod);
+        }
         if (null !== $licensesActive) {
             foreach ($licensesActive as $licenseActive) {
                 $licenceActiveDto = $this->hasLicenseActiveDtoType($licenseActive['type']);
@@ -42,11 +46,11 @@ class ListLicenseActiveDtoQueryHandler implements QueryHandlerInterface
                 }
                 $licenceActiveDto->addDetail($licenseActive['label']);
             }
-        } else {
-            return null;
+
+            return $this->listLicenseActiveDto;
         }
 
-        return $this->listLicenseActiveDto;
+        return null;
     }
 
     private function hasLicenseActiveDtoType(LicenseTypeEnum $licenseTypeEnum): ?LicenceActiveDto

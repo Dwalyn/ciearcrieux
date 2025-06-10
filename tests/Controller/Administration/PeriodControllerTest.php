@@ -94,7 +94,7 @@ class PeriodControllerTest extends WebTestCase
         ];
         yield 'admin_periodCreate' => [
             'url' => 'admin_periodCreate',
-            'param' => ['id' => 1],
+            'param' => [],
             'users' => [
                 [
                     'login' => 'test@google.com',
@@ -102,6 +102,38 @@ class PeriodControllerTest extends WebTestCase
                 ], [
                     'login' => 'admin@google.com',
                     'status' => HttpStatusEnum::REDIRECT->value,
+                ], [
+                    'login' => null,
+                    'status' => HttpStatusEnum::REDIRECT->value,
+                ],
+            ],
+        ];
+        yield 'admin_periodTraining' => [
+            'url' => 'admin_periodTraining',
+            'param' => ['id' => 1],
+            'users' => [
+                [
+                    'login' => 'test@google.com',
+                    'status' => HttpStatusEnum::FORBIDDEN->value,
+                ], [
+                    'login' => 'admin@google.com',
+                    'status' => HttpStatusEnum::OK->value,
+                ], [
+                    'login' => null,
+                    'status' => HttpStatusEnum::REDIRECT->value,
+                ],
+            ],
+        ];
+        yield 'admin_trainingEdit' => [
+            'url' => 'admin_trainingEdit',
+            'param' => ['id' => 2],
+            'users' => [
+                [
+                    'login' => 'test@google.com',
+                    'status' => HttpStatusEnum::FORBIDDEN->value,
+                ], [
+                    'login' => 'admin@google.com',
+                    'status' => HttpStatusEnum::OK->value,
                 ], [
                     'login' => null,
                     'status' => HttpStatusEnum::REDIRECT->value,
@@ -132,17 +164,17 @@ class PeriodControllerTest extends WebTestCase
         $this->savePage();
         $this->assertEquals(sprintf(
             '%s - %s',
-            2024,
-            2025
+            2023,
+            2024
         ), $line->first()->filter('td')->first()->text());
 
         $badges = $crawler->filter('.bg-success');
         $this->assertCount(1, $badges);
         $badges = $crawler->filter('.bg-danger');
-        $this->assertCount(3, $badges);
+        $this->assertCount(2, $badges);
 
-        $link = $crawler->filter('table .btn-outline-secondary');
-        $this->assertCount(4, $link);
+        $link = $crawler->filter('table .btn-group');
+        $this->assertCount(3, $link);
 
         $modal = $crawler->filter('.modal-dialog');
         $this->assertCount(1, $modal);
@@ -225,7 +257,7 @@ class PeriodControllerTest extends WebTestCase
                 LicenseTypeEnum::DISCOVER->value => null,
             ],
             'nbErrors' => 3,
-            'statusCode' => 200, // no redirect if form is invalid
+            'statusCode' => HttpStatusEnum::OK->value, // no redirect if form is invalid
         ];
         yield 'formNotNumber' => [
             'data' => [
@@ -234,7 +266,7 @@ class PeriodControllerTest extends WebTestCase
                 LicenseTypeEnum::DISCOVER->value => 'aaa',
             ],
             'nbErrors' => 3,
-            'statusCode' => 200, // no redirect if form is invalid
+            'statusCode' => HttpStatusEnum::OK->value, // no redirect if form is invalid
         ];
         yield 'formNegativeValue' => [
             'data' => [
@@ -243,7 +275,7 @@ class PeriodControllerTest extends WebTestCase
                 LicenseTypeEnum::DISCOVER->value => -1,
             ],
             'nbErrors' => 3,
-            'statusCode' => 200, // no redirect if form is invalid
+            'statusCode' => HttpStatusEnum::OK->value, // no redirect if form is invalid
         ];
         yield 'formWithZeroValue' => [
             'data' => [
@@ -252,7 +284,7 @@ class PeriodControllerTest extends WebTestCase
                 LicenseTypeEnum::DISCOVER->value => 50,
             ],
             'nbErrors' => 1,
-            'statusCode' => 200, // no redirect if form is invalid
+            'statusCode' => HttpStatusEnum::OK->value, // no redirect if form is invalid
         ];
         yield 'formOk' => [
             'data' => [
@@ -297,7 +329,7 @@ class PeriodControllerTest extends WebTestCase
                 RentTypeEnum::OTHER->value => null,
             ],
             'nbErrors' => 2,
-            'statusCode' => 200, // no redirect if form is invalid
+            'statusCode' => HttpStatusEnum::OK->value, // no redirect if form is invalid
         ];
         yield 'formNotNumber' => [
             'data' => [
@@ -305,7 +337,7 @@ class PeriodControllerTest extends WebTestCase
                 RentTypeEnum::OTHER->value => 'aaa',
             ],
             'nbErrors' => 2,
-            'statusCode' => 200, // no redirect if form is invalid
+            'statusCode' => HttpStatusEnum::OK->value, // no redirect if form is invalid
         ];
         yield 'formNegativeValue' => [
             'data' => [
@@ -313,7 +345,7 @@ class PeriodControllerTest extends WebTestCase
                 RentTypeEnum::OTHER->value => -1,
             ],
             'nbErrors' => 2,
-            'statusCode' => 200, // no redirect if form is invalid
+            'statusCode' => HttpStatusEnum::OK->value, // no redirect if form is invalid
         ];
         yield 'formWithZeroValue' => [
             'data' => [
@@ -321,7 +353,7 @@ class PeriodControllerTest extends WebTestCase
                 RentTypeEnum::OTHER->value => 0,
             ],
             'nbErrors' => 0,
-            'statusCode' => 302,
+            'statusCode' => HttpStatusEnum::REDIRECT->value,
         ];
         yield 'formOk' => [
             'data' => [
@@ -329,7 +361,83 @@ class PeriodControllerTest extends WebTestCase
                 RentTypeEnum::OTHER->value => 90,
             ],
             'nbErrors' => 0,
-            'statusCode' => 302,
+            'statusCode' => HttpStatusEnum::REDIRECT->value,
+        ];
+    }
+
+    #[DataProvider('editTrainingPeriodProvider')]
+    public function testEditTrainingPeriod(array $data, int $nbErrors, int $statusCode)
+    {
+        $this->login('admin@google.com');
+        $crawler = $this->client->request('GET', $this->generateUrl('admin_trainingEdit', [
+            'id' => 2,
+        ]));
+
+        $form = $crawler->filter('form')->form();
+        $values = $form->getPhpValues();
+        $values['edit_training']['startDate'] = $data['startDate'];
+        $values['edit_training']['endDate'] = $data['endDate'];
+        $values['edit_training']['trainingPlace'] = $data['trainingPlace'];
+        $crawler = $this->client->request($form->getMethod(), $form->getUri(), $values);
+
+        $errors = $crawler->filter('.invalid-feedback');
+        $this->savePage();
+        $this->assertCount($nbErrors, $errors);
+        $this->assertStatusCode($statusCode);
+
+        if (0 === $nbErrors) {
+            $crawler = $this->client->followRedirect();
+            $this->alertTest($crawler, 'success', $this->translator->trans('alert.success.updateTrainingPeriod'));
+        }
+    }
+
+    public static function editTrainingPeriodProvider(): \Generator
+    {
+        yield 'formEmpty' => [
+            'data' => [
+                'startDate' => null,
+                'endDate' => null,
+                'trainingPlace' => 2,
+            ],
+            'nbErrors' => 2,
+            'statusCode' => HttpStatusEnum::OK->value, // no redirect if form is invalid
+        ];
+        yield 'lessThanLimitStartDate' => [
+            'data' => [
+                'startDate' => '2023-08-31',
+                'endDate' => '2024-03-31',
+                'trainingPlace' => 2,
+            ],
+            'nbErrors' => 1,
+            'statusCode' => HttpStatusEnum::OK->value, // no redirect if form is invalid
+        ];
+        yield 'moreThanLimitEndDate' => [
+            'data' => [
+                'startDate' => '2023-10-31',
+                'endDate' => '2024-09-01',
+                'trainingPlace' => 2,
+            ],
+            'nbErrors' => 1,
+            'statusCode' => HttpStatusEnum::OK->value, // no redirect if form is invalid
+        ];
+        yield 'formReducePeriod' => [
+            'data' => [
+                'startDate' => '2023-11-03',
+                'endDate' => '2024-03-29',
+                'trainingPlace' => 2,
+            ],
+            'nbErrors' => 0,
+            'statusCode' => HttpStatusEnum::REDIRECT->value, // no redirect if form is invalid
+        ];
+
+        yield 'formExtendPeriod' => [
+            'data' => [
+                'startDate' => '2023-10-30',
+                'endDate' => '2024-04-02',
+                'trainingPlace' => 2,
+            ],
+            'nbErrors' => 0,
+            'statusCode' => HttpStatusEnum::REDIRECT->value, // no redirect if form is invalid
         ];
     }
 }

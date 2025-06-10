@@ -25,7 +25,11 @@ class ListRentActiveDtoQueryHandler implements QueryHandlerInterface
     public function __invoke(ListRentActiveDtoQuery $query): ?ArrayCollection
     {
         $this->listRentActiveDto = new ArrayCollection();
-        $rentsActive = $this->licensePeriodRepository->getRentInLicensePeriodActive();
+        if (null === $query->licensePeriod) {
+            $rentsActive = $this->licensePeriodRepository->getRentInLicensePeriodActive();
+        } else {
+            $rentsActive = $this->licensePeriodRepository->getRentInLicensePeriod($query->licensePeriod);
+        }
 
         if (null !== $rentsActive) {
             foreach ($rentsActive as $rentActive) {
