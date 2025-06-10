@@ -21,20 +21,26 @@ class EditTrainingCommandHandler implements CommandHandlerInterface
         $data = $command->formData;
         $trainingPeriod = $command->trainingPeriod;
 
-        $diffStart = $trainingPeriod->getStartDate()->diff($data->startDate);
-        if ($diffStart->days) {
-            $previousTrainingPeriod = $this->trainingPeriodRepository->getPreviousTrainingPeriod($command->trainingPeriod);
-            $this->commandBus->dispatch(new UpdateEndPreviousTrainingPeriodCommand($previousTrainingPeriod, $diffStart));
+        if (null !== $data->startDate) {
+            $diffStart = $trainingPeriod->getStartDate()->diff($data->startDate);
+            if ($diffStart->days) {
+                $previousTrainingPeriod = $this->trainingPeriodRepository->getPreviousTrainingPeriod($command->trainingPeriod);
+                $this->commandBus->dispatch(new UpdateEndPreviousTrainingPeriodCommand($previousTrainingPeriod, $diffStart));
+            }
         }
 
-        $diffEnd = $trainingPeriod->getEndDate()->diff($data->endDate);
-        if ($diffEnd->days) {
-            $nextTrainingPeriod = $this->trainingPeriodRepository->getNextTrainingPeriod($command->trainingPeriod);
-            $this->commandBus->dispatch(new UpdateStartNextTrainingPeriodCommand($nextTrainingPeriod, $diffEnd));
+        if (null !== $data->endDate) {
+            $diffEnd = $trainingPeriod->getEndDate()->diff($data->endDate);
+            if ($diffEnd->days) {
+                $nextTrainingPeriod = $this->trainingPeriodRepository->getNextTrainingPeriod($command->trainingPeriod);
+                $this->commandBus->dispatch(new UpdateStartNextTrainingPeriodCommand($nextTrainingPeriod, $diffEnd));
+            }
         }
 
-        $trainingPeriod->setStartDate($data->startDate);
-        $trainingPeriod->setEndDate($data->endDate);
+        if (null !== $data->startDate && null !== $data->endDate) {
+            $trainingPeriod->setStartDate($data->startDate);
+            $trainingPeriod->setEndDate($data->endDate);
+        }
         $trainingPeriod->setTrainingPlace($data->trainingPlace);
         $this->entityManager->flush();
     }

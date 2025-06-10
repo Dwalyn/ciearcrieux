@@ -3,7 +3,6 @@
 namespace App\Controller\Administration;
 
 use App\Command\CommandBusInterface;
-use App\Command\LicensePeriod\CheckLicensePeriodCommand;
 use App\Command\LicensePeriod\EditTrainingCommand;
 use App\Command\LicensePeriod\NewLicensePeriodCommand;
 use App\Command\LicensePeriod\UpdateLicensePriceCommand;
