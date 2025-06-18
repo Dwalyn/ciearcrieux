@@ -3,6 +3,7 @@ alert:
     unauthorizedEditLicensePeriod: La saison %start%-%end% est terminée. Elle ne peut plus être modifiée.
   success:
     addMember: Le nouveau membre est ajouté.
+    removeTrainingDay: La jour d'entrainement est supprimé.
     updateLicencePrice: Le prix des licences sont modifiés.
     updateRentPrice: Le prix des locations sont modifiés.
     updateTrainingPeriod: La période d'entrainement est modifiée.

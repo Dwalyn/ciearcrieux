@@ -34,7 +34,9 @@
                     <td>{{ form_row(trainingDayFormData.endTime) }}</td>
                     <td>{{ form_row(trainingDayFormData.licensedTypeEnum) }}</td>
                     <td class="text-center">
-                        <a href="" class="btn btn-sm btn-danger"><i class="fa-solid fa-xmark"></i></a>
+                        <a href="{{ path('admin_trainingDayRemove', {
+                            'id': form.vars.data.listTrainingDayFormData[loop.index0].id,
+                        }) }}" class="btn btn-sm btn-danger"><i class="fa-solid fa-xmark"></i></a>
                     </td>
                 </tr>
             {% endfor %}

@@ -8,6 +8,7 @@ use App\Command\LicensePeriod\NewLicensePeriodCommand;
 use App\Command\LicensePeriod\UpdateLicensePriceCommand;
 use App\Command\LicensePeriod\UpdateRentPriceCommand;
 use App\Entity\LicensePeriod;
+use App\Entity\TrainingDay;
 use App\Entity\TrainingPeriod;
 use App\Enum\RoleEnum;
 use App\Factory\LicensePeriod\Price\EditPriceFormDataFactory;
@@ -157,6 +158,18 @@ class PeriodController extends AbstractController
             'licensePeriod' => $trainingPeriod->getLicensePeriod(),
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/periods/training-day/remove/{id}', name: 'trainingDayRemove', requirements: ['id' => '\d+'])]
+    public function removeTrainingDay(
+        TrainingDay $trainingDay,
+    ): Response {
+        $this->denyAccessUnlessGranted(RoleEnum::ROLE_ADMIN->value);
+
+        $trainingPeriod = $trainingDay->getTrainingPeriod();
+        $this->addFlash('success', $this->translator->trans('alert.success.removeTrainingDay'));
+
+        return $this->redirectToRoute('admin_trainingEdit', ['id' => $trainingPeriod->getId()]);
     }
 
     private function alertUnauthorizedEditPeriod(LicensePeriod $licensePeriod): ?RedirectResponse
