@@ -25,7 +25,7 @@ components:
 
 enum:
   day:
-    DAY_0: Dimanche,
+    DAY_0: Dimanche
     DAY_1: Lundi
     DAY_2: Mardi
     DAY_3: Mercredi
@@ -54,11 +54,15 @@ enum:
     outdoor: Extérieur
 
 global:
+  day: Jour
   info:
     title: Compagnie d'arc de Rieux
     description: Site officiel de la compagnie d'arc de
+  licensedType: Licencié
   link:
     details: Plus d'informations
+  startTime: Début
+  endTime: Fin
 
 h3:
   documents: Documents

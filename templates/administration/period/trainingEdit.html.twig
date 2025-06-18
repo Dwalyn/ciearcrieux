@@ -6,15 +6,41 @@
 
 {% block content_details %}
     {{ form_start(form) }}
-    <div class="row">
+    <div class="row mb-4">
         <div class="col-6">
-            {{ form_row(form.startDate, {attr: {class: 'form-control col-6'}}) }}
+            {{ form_row(form.startDate) }}
         </div>
         <div class="col-6">
-            {{ form_row(form.endDate, {attr: {class: 'form-control'}}) }}
+            {{ form_row(form.endDate) }}
         </div>
     </div>
-    {{ form_row(form.trainingPlace, {attr: {class: 'form-control'}}) }}
+    {{ form_row(form.trainingPlace) }}
+
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th scope="col">{{ 'global.day'|trans }}</th>
+                <th scope="col">{{ 'global.startTime'|trans }}</th>
+                <th scope="col">{{ 'global.endTime'|trans }}</th>
+                <th scope="col">{{ 'global.licensedType'|trans }}</th>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trainingDayFormData in form.listTrainingDayFormData %}
+                <tr class="align-middle">
+                    <td>{{ form_row(trainingDayFormData.dayEnum) }}</td>
+                    <td>{{ form_row(trainingDayFormData.startTime) }}</td>
+                    <td>{{ form_row(trainingDayFormData.endTime) }}</td>
+                    <td>{{ form_row(trainingDayFormData.licensedTypeEnum) }}</td>
+                    <td class="text-center">
+                        <a href="" class="btn btn-sm btn-danger"><i class="fa-solid fa-xmark"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
     <div>
         <button type="submit" class="btn btn-success"><i class="fa-solid fa-check"></i> {{ 'button.save'|trans }}</button>
         <a href="{{ path('admin_periodTraining', {id: licensePeriod.id}) }}" class="btn btn-outline-secondary">{{ 'button.cancel'|trans }}</a>

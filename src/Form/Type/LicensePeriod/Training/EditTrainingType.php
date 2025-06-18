@@ -7,6 +7,7 @@ use App\Form\Datas\LicensePeriod\Training\EditTrainingFormData;
 use App\Repository\TrainingPlaceRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -46,6 +47,9 @@ class EditTrainingType extends AbstractType
             ])
             ->add('limitMinDate', HiddenType::class)
             ->add('limitMaxDate', HiddenType::class)
+            ->add('listTrainingDayFormData', CollectionType::class, [
+                'entry_type' => TrainingDayFormType::class,
+            ])
         ;
     }
 

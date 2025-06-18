@@ -42,6 +42,11 @@ class EditTrainingCommandHandler implements CommandHandlerInterface
             $trainingPeriod->setEndDate($data->endDate);
         }
         $trainingPeriod->setTrainingPlace($data->trainingPlace);
+
+        foreach ($data->listTrainingDayFormData as $trainingDayFormData) {
+            $this->commandBus->dispatch(new UpdateTrainingDayCommand($trainingDayFormData));
+        }
+
         $this->entityManager->flush();
     }
 }

@@ -2,3 +2,5 @@ constraint:
   emailAlreadyExist: Cette adresse email existe pour un autre utilisateur.
   invalidEmail: Le format de l'email est invalide.
   noNumberInString: Ce champ ne doit pas contenir de chiffre.
+  startTime: L'heure de début doit être supérieure à l'heure de fin.
+  endTime: L'heure de fin doit être inférieure à l'heure de début.

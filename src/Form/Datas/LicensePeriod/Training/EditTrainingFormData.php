@@ -22,4 +22,10 @@ class EditTrainingFormData
     public TrainingPlace $trainingPlace;
     public string $limitMinDate;
     public string $limitMaxDate;
+
+    /**
+     * @var array<int, TrainingDayFormData> $listTrainingDayFormData
+     */
+    #[Assert\Valid]
+    public array $listTrainingDayFormData;
 }
