@@ -16,7 +16,10 @@ class AddTrainingDayCommandHandler implements CommandHandlerInterface
     public function __invoke(AddTrainingDayCommand $command): void
     {
         if (null !== $command->trainingDayFormData->startTime
-            && null !== $command->trainingDayFormData->endTime) {
+            && null !== $command->trainingDayFormData->endTime
+            && null !== $command->trainingDayFormData->dayEnum
+            && null !== $command->trainingDayFormData->licensedTypeEnum
+        ) {
             $trainingDay = new TrainingDay(
                 $command->trainingDayFormData->dayEnum,
                 $command->trainingDayFormData->startTime,

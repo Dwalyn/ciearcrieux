@@ -18,7 +18,9 @@ class TrainingDayFormData
     #[Assert\GreaterThan(propertyPath: 'startTime', message: 'constraint.endTime')]
     public ?\DateTime $endTime;
 
-    public DayEnum $dayEnum;
+    #[Assert\NotNull]
+    public ?DayEnum $dayEnum;
 
-    public LicensedTypeEnum $licensedTypeEnum;
+    #[Assert\NotNull]
+    public ?LicensedTypeEnum $licensedTypeEnum;
 }

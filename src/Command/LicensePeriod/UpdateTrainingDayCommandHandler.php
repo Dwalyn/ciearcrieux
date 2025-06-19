@@ -17,7 +17,11 @@ class UpdateTrainingDayCommandHandler implements CommandHandlerInterface
     public function __invoke(UpdateTrainingDayCommand $command): void
     {
         $trainingDay = $this->trainingDayRepository->findOneBy(['id' => $command->trainingDayFormData->id]);
-        if (null !== $command->trainingDayFormData->startTime && null !== $command->trainingDayFormData->endTime) {
+        if (null !== $command->trainingDayFormData->startTime
+            && null !== $command->trainingDayFormData->endTime
+            && null !== $command->trainingDayFormData->dayEnum
+            && null !== $command->trainingDayFormData->licensedTypeEnum
+        ) {
             $trainingDay?->setStartTime($command->trainingDayFormData->startTime);
             $trainingDay?->setEndTime($command->trainingDayFormData->endTime);
             $trainingDay?->setDay($command->trainingDayFormData->dayEnum);

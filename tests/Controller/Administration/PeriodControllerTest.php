@@ -2,6 +2,8 @@
 
 namespace App\Tests\Controller\Administration;
 
+use App\Enum\DayEnum;
+use App\Enum\LicensedTypeEnum;
 use App\Enum\LicenseTypeEnum;
 use App\Enum\RentTypeEnum;
 use App\Tests\Enum\HttpStatusEnum;
@@ -177,7 +179,7 @@ class PeriodControllerTest extends WebTestCase
         $this->assertCount(1, $table);
 
         $line = $table->filter('tbody tr');
-        $this->savePage();
+
         $this->assertEquals(sprintf(
             '%s - %s',
             2023,
@@ -394,10 +396,13 @@ class PeriodControllerTest extends WebTestCase
         $values['edit_training']['startDate'] = $data['startDate'];
         $values['edit_training']['endDate'] = $data['endDate'];
         $values['edit_training']['trainingPlace'] = $data['trainingPlace'];
-        $crawler = $this->client->request($form->getMethod(), $form->getUri(), $values);
+        $values['edit_training']['listTrainingDayFormData'][0]['dayEnum'] = $data['dayEnum'];
+        $values['edit_training']['listTrainingDayFormData'][0]['startTime'] = $data['startTime'];
+        $values['edit_training']['listTrainingDayFormData'][0]['endTime'] = $data['endTime'];
+        $values['edit_training']['listTrainingDayFormData'][0]['licensedTypeEnum'] = $data['licensedTypeEnum'];
 
+        $crawler = $this->client->request($form->getMethod(), $form->getUri(), $values);
         $errors = $crawler->filter('.invalid-feedback');
-        $this->savePage();
         $this->assertCount($nbErrors, $errors);
         $this->assertStatusCode($statusCode);
 
@@ -414,8 +419,12 @@ class PeriodControllerTest extends WebTestCase
                 'startDate' => null,
                 'endDate' => null,
                 'trainingPlace' => 2,
+                'dayEnum' => null,
+                'startTime' => null,
+                'endTime' => null,
+                'licensedTypeEnum' => null,
             ],
-            'nbErrors' => 2,
+            'nbErrors' => 6,
             'statusCode' => HttpStatusEnum::OK->value, // no redirect if form is invalid
         ];
         yield 'lessThanLimitStartDate' => [
@@ -423,6 +432,10 @@ class PeriodControllerTest extends WebTestCase
                 'startDate' => '2023-08-31',
                 'endDate' => '2024-03-31',
                 'trainingPlace' => 2,
+                'dayEnum' => DayEnum::DAY_3->value,
+                'startTime' => '10:00',
+                'endTime' => '11:00',
+                'licensedTypeEnum' => LicensedTypeEnum::CONFIRMED->value,
             ],
             'nbErrors' => 1,
             'statusCode' => HttpStatusEnum::OK->value, // no redirect if form is invalid
@@ -432,6 +445,10 @@ class PeriodControllerTest extends WebTestCase
                 'startDate' => '2023-10-31',
                 'endDate' => '2024-09-01',
                 'trainingPlace' => 2,
+                'dayEnum' => DayEnum::DAY_3->value,
+                'startTime' => '10:00',
+                'endTime' => '11:00',
+                'licensedTypeEnum' => LicensedTypeEnum::CONFIRMED->value,
             ],
             'nbErrors' => 1,
             'statusCode' => HttpStatusEnum::OK->value, // no redirect if form is invalid
@@ -441,6 +458,10 @@ class PeriodControllerTest extends WebTestCase
                 'startDate' => '2023-11-03',
                 'endDate' => '2024-03-29',
                 'trainingPlace' => 2,
+                'dayEnum' => DayEnum::DAY_3->value,
+                'startTime' => '10:00',
+                'endTime' => '11:00',
+                'licensedTypeEnum' => LicensedTypeEnum::CONFIRMED->value,
             ],
             'nbErrors' => 0,
             'statusCode' => HttpStatusEnum::REDIRECT->value, // no redirect if form is invalid
@@ -451,11 +472,29 @@ class PeriodControllerTest extends WebTestCase
                 'startDate' => '2023-10-30',
                 'endDate' => '2024-04-02',
                 'trainingPlace' => 2,
+                'dayEnum' => DayEnum::DAY_3->value,
+                'startTime' => '10:00',
+                'endTime' => '11:00',
+                'licensedTypeEnum' => LicensedTypeEnum::CONFIRMED->value,
             ],
             'nbErrors' => 0,
             'statusCode' => HttpStatusEnum::REDIRECT->value, // no redirect if form is invalid
         ];
+        yield 'formStartTimeGreaterThanEndTimePeriod' => [
+            'data' => [
+                'startDate' => '2023-10-30',
+                'endDate' => '2024-04-02',
+                'trainingPlace' => 2,
+                'dayEnum' => DayEnum::DAY_3->value,
+                'startTime' => '12:00',
+                'endTime' => '11:00',
+                'licensedTypeEnum' => LicensedTypeEnum::CONFIRMED->value,
+            ],
+            'nbErrors' => 2,
+            'statusCode' => HttpStatusEnum::OK->value, // no redirect if form is invalid
+        ];
     }
+
     #[DataProvider('removeTrainingDayProvider')]
     public function testRemoveTrainingDay(array $data, string $message, int $statusCode)
     {
@@ -469,7 +508,6 @@ class PeriodControllerTest extends WebTestCase
 
         $alert = $crawler->filter('.alert');
         $this->assertEquals($this->getTranslation($message), $alert->text());
-
     }
 
     public static function removeTrainingDayProvider(): \Generator
@@ -486,6 +524,67 @@ class PeriodControllerTest extends WebTestCase
                 'id' => 23,
             ],
             'message' => 'alert.danger.impossibleRemoveTrainingDay',
+            'statusCode' => HttpStatusEnum::REDIRECT->value,
+        ];
+    }
+
+    #[DataProvider('addTrainingDayProvider')]
+    public function testAddRemoveTrainingDay(array $data, int $nbErrors, int $statusCode)
+    {
+        $this->login('admin@google.com');
+        $crawler = $this->client->request('GET', $this->generateUrl('admin_trainingDayAdd', [
+            'id' => 1,
+        ]));
+
+        $form = $crawler->filter('form')->form();
+        $values = $form->getPhpValues();
+        $values['edit_training_day_form']['dayEnum'] = $data['dayEnum'];
+        $values['edit_training_day_form']['startTime'] = $data['startTime'];
+        $values['edit_training_day_form']['endTime'] = $data['endTime'];
+        $values['edit_training_day_form']['licensedTypeEnum'] = $data['licensedTypeEnum'];
+        $crawler = $this->client->request($form->getMethod(), $form->getUri(), $values);
+
+        $errors = $crawler->filter('.invalid-feedback');
+        $this->assertCount($nbErrors, $errors);
+
+        $this->assertStatusCode($statusCode);
+
+        if (0 === $nbErrors) {
+            $crawler = $this->client->followRedirect();
+            $this->alertTest($crawler, 'success', $this->translator->trans('alert.success.addDay'));
+        }
+    }
+
+    public static function addTrainingDayProvider(): \Generator
+    {
+        yield 'formEmpty' => [
+            'data' => [
+                'dayEnum' => null,
+                'startTime' => null,
+                'endTime' => null,
+                'licensedTypeEnum' => null,
+            ],
+            'nbErrors' => 4,
+            'statusCode' => HttpStatusEnum::OK->value,
+        ];
+        yield 'formStartTimeGreaterThanEndTimePeriod' => [
+            'data' => [
+                'dayEnum' => DayEnum::DAY_1->value,
+                'startTime' => '12:00',
+                'endTime' => '11:00',
+                'licensedTypeEnum' => LicensedTypeEnum::CONFIRMED->value,
+            ],
+            'nbErrors' => 2,
+            'statusCode' => HttpStatusEnum::OK->value,
+        ];
+        yield 'formOk' => [
+            'data' => [
+                'dayEnum' => DayEnum::DAY_1->value,
+                'startTime' => '10:00',
+                'endTime' => '11:00',
+                'licensedTypeEnum' => LicensedTypeEnum::CONFIRMED->value,
+            ],
+            'nbErrors' => 0,
             'statusCode' => HttpStatusEnum::REDIRECT->value,
         ];
     }
