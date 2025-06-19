@@ -1,6 +1,6 @@
 {%- block form_row -%}
     {%- set widget_attr = {} -%}
-    {%- set row_attr = {class: 'mb-3'} -%}
+    {%- set row_attr = {class: ''} -%}
 
     {% if field_errors(form)|length %}
         {% set var_class = 'form-control is-invalid' %}

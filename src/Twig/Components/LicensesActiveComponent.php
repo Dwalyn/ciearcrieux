@@ -15,6 +15,6 @@ class LicensesActiveComponent extends LicensePeriodComponent
      */
     public function getLicencesInPeriod(): ?ArrayCollection
     {
-        return $this->query->handle(new ListLicenseActiveDtoQuery());
+        return $this->query->handle(new ListLicenseActiveDtoQuery($this->licensePeriod));
     }
 }

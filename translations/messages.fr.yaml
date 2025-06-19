@@ -1,10 +1,13 @@
 alert:
   danger:
-    unauthorizedEditLicensePeriod: La période %start%-%end% est terminée. Elle ne peut plus être modifiée.
+    unauthorizedEditLicensePeriod: La saison %start%-%end% est terminée. Elle ne peut plus être modifiée.
+    impossibleRemoveTrainingDay: Une période d'entrainement doit contenir au moins un jour.
   success:
     addMember: Le nouveau membre est ajouté.
+    removeTrainingDay: La jour d'entrainement est supprimé.
     updateLicencePrice: Le prix des licences sont modifiés.
     updateRentPrice: Le prix des locations sont modifiés.
+    updateTrainingPeriod: La période d'entrainement est modifiée.
   secondary:
     nodata: Aucun résultat ne correspond à votre recherche.
 
@@ -13,7 +16,7 @@ button:
   back: Retour
   cancel: Annuler
   edit: Modifier
-  nextPeriod: Créer la période suivante
+  nextPeriod: Créer la prochaine saison
   save: Enregistrer
   signin: Se connecter
 
@@ -24,7 +27,7 @@ components:
 
 enum:
   day:
-    DAY_0: Dimanche,
+    DAY_0: Dimanche
     DAY_1: Lundi
     DAY_2: Mardi
     DAY_3: Mercredi
@@ -53,11 +56,15 @@ enum:
     outdoor: Extérieur
 
 global:
+  day: Jour
   info:
     title: Compagnie d'arc de Rieux
     description: Site officiel de la compagnie d'arc de
+  licensedType: Licencié
   link:
-    details: Détails
+    details: Plus d'informations
+  startTime: Début
+  endTime: Fin
 
 h3:
   documents: Documents
@@ -68,30 +75,47 @@ h3:
 license:
   rent:
     free: OFFERT
-  noLicense: Aucune license trouvée pour cette période.
-  noRent: Aucune offre de location trouvée pour cette période.
+  noLicense: Aucune license trouvée pour cette saison.
+  noRent: Aucune offre de location trouvée pour cette saison.
   licensePrice:
     h1: Modification du tarif des licenses
   rentPrice:
     h1: Modification du tarif des locations
 
 menu:
-  admin:
-    title:
-      license_period: Saison sportive
-      members: Membres
   club: La compagnie
   findUs: Où nous trouver ?
   joinUs: Rejoignez nous
   login: S'identifier
   logout: Se déconnecter
   home: Accueil
-  period: Périodes
   members: Membres
   news: Actualités
+  period: Saison sportive
+  training: Entrainements
+
+modal:
+  title:
+    addTrainingDay: Ajouter un jour d'entrainement
 
 signin:
   password: Mot de passe
+
+tooltip:
+  price: Tarifs
+  training: Entrainements
+
+training:
+  noTraining: Aucun entrainement trouvé pour cette saison.
+  noTrainingDay: Aucun jour d'entrainement.
+  placeholder:
+    day: Sélectionner un jour
+    licensedType: Sélectionner un type de licencié
+
+trainingPlace:
+  startDate: Du
+  endDate: Au
+  place: Lieu
 
 user:
   birthday: Date de naissance

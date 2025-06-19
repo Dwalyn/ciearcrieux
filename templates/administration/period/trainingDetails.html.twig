@@ -1,0 +1,25 @@
+{% extends 'administration/period/base-details.html.twig' %}
+
+{% block content_details %}
+    {% for training in trainingsInLicense %}
+        <div class="mb-4">
+            <twig:TrainingPlaceComponent
+                id="{{ training }}"
+            >
+                <twig:block name="buttonEdit">
+                    {% if is_granted('edit', licensePeriod) %}
+                        <div>
+                            <a href="{{ path('admin_trainingEdit', {id: training}) }}" class="btn btn-primary"><i class="fa-solid fa-pen"></i>
+                                {{ 'button.edit'|trans }}
+                            </a>
+                        </div>
+                    {% endif %}
+                </twig:block>
+            </twig:TrainingPlaceComponent>
+        </div>
+    {% else %}
+        {{ component('Common:AlertComponent', {
+            messageKey: 'training.noTraining',
+        }) }}
+    {% endfor %}
+{% endblock %}

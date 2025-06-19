@@ -1,12 +1,4 @@
-{% extends 'base.html.twig' %}
-
-{% block title_page %}
-    {{ parent() }} - {{ 'license.licensePrice.h1'|trans }}
-{% endblock %}
-
-{% block h1 %}
-    {{ 'menu.period'|trans }} {{ licensePeriod.startDate|date('Y') }} - {{ licensePeriod.endDate|date('Y') }}
-{% endblock %}
+{% extends 'administration/period/base-period.html.twig' %}
 
 {% block content %}
 
