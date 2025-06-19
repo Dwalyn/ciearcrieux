@@ -3,8 +3,10 @@
 namespace App\Controller\Administration;
 
 use App\Command\CommandBusInterface;
+use App\Command\LicensePeriod\AddTrainingDayCommand;
 use App\Command\LicensePeriod\EditTrainingCommand;
 use App\Command\LicensePeriod\NewLicensePeriodCommand;
+use App\Command\LicensePeriod\RemoveTrainingDayCommand;
 use App\Command\LicensePeriod\UpdateLicensePriceCommand;
 use App\Command\LicensePeriod\UpdateRentPriceCommand;
 use App\Entity\LicensePeriod;
@@ -13,8 +15,10 @@ use App\Entity\TrainingPeriod;
 use App\Enum\RoleEnum;
 use App\Factory\LicensePeriod\Price\EditPriceFormDataFactory;
 use App\Factory\LicensePeriod\Training\EditTrainingFormDataFactory;
+use App\Form\Datas\LicensePeriod\Training\TrainingDayFormData;
 use App\Form\Type\LicensePeriod\Price\EditLicensePriceType;
 use App\Form\Type\LicensePeriod\Price\EditRentPriceType;
+use App\Form\Type\LicensePeriod\Training\EditTrainingDayFormType;
 use App\Form\Type\LicensePeriod\Training\EditTrainingType;
 use App\Repository\LicensePeriodRepository;
 use App\Repository\TrainingPeriodRepository;
@@ -156,6 +160,32 @@ class PeriodController extends AbstractController
 
         return $this->render('/administration/period/trainingEdit.html.twig', [
             'licensePeriod' => $trainingPeriod->getLicensePeriod(),
+            'trainingPeriodId' => $trainingPeriod->getId(),
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/periods/training/add-day/{id}', name: 'trainingDayAdd', requirements: ['id' => '\d+'])]
+    public function addTrainingDay(
+        TrainingPeriod $trainingPeriod,
+        Request $request,
+    ): Response {
+        $this->denyAccessUnlessGranted(RoleEnum::ROLE_ADMIN->value);
+
+        $addDayDataForm = new TrainingDayFormData();
+        $form = $this->createForm(EditTrainingDayFormType::class, $addDayDataForm);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success', $this->translator->trans('alert.success.addDay'));
+            $this->commandBus->dispatch(new AddTrainingDayCommand($form->getData(), $trainingPeriod));
+
+            return $this->redirectToRoute('admin_trainingEdit', ['id' => $trainingPeriod->getId()]);
+        }
+
+        return $this->render('/administration/period/addTrainingDay.html.twig', [
+            'licensePeriod' => $trainingPeriod->getLicensePeriod(),
+            'trainingPeriodId' => $trainingPeriod->getId(),
             'form' => $form->createView(),
         ]);
     }
@@ -167,7 +197,12 @@ class PeriodController extends AbstractController
         $this->denyAccessUnlessGranted(RoleEnum::ROLE_ADMIN->value);
 
         $trainingPeriod = $trainingDay->getTrainingPeriod();
-        $this->addFlash('success', $this->translator->trans('alert.success.removeTrainingDay'));
+        if (1 < $trainingPeriod->getTrainingDays()->count()) {
+            $this->commandBus->dispatch(new RemoveTrainingDayCommand($trainingDay));
+            $this->addFlash('success', $this->translator->trans('alert.success.removeTrainingDay'));
+        } else {
+            $this->addFlash('danger', $this->translator->trans('alert.danger.impossibleToRemove'));
+        }
 
         return $this->redirectToRoute('admin_trainingEdit', ['id' => $trainingPeriod->getId()]);
     }

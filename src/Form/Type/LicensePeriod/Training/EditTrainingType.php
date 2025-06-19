@@ -48,7 +48,7 @@ class EditTrainingType extends AbstractType
             ->add('limitMinDate', HiddenType::class)
             ->add('limitMaxDate', HiddenType::class)
             ->add('listTrainingDayFormData', CollectionType::class, [
-                'entry_type' => TrainingDayFormType::class,
+                'entry_type' => EditTrainingDayFormType::class,
             ])
         ;
     }

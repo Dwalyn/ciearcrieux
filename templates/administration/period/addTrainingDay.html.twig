@@ -1,0 +1,26 @@
+{% extends 'administration/period/base-details.html.twig' %}
+
+{% block backLink %}
+    "{{ path('admin_periodTraining', {id: licensePeriod.id}) }}"
+{% endblock %}
+
+{% block content_details %}
+    {{ form_start(form) }}
+    <div class="mb-2">
+        {{ form_row(form.dayEnum) }}
+    </div>
+    <div class="mb-2">
+        {{ form_row(form.startTime) }}
+    </div>
+    <div class="mb-2">
+        {{ form_row(form.endTime) }}
+    </div>
+    <div class="mb-2">
+        {{ form_row(form.licensedTypeEnum) }}
+    </div>
+    <div>
+        <button type="submit" class="btn btn-success"><i class="fa-solid fa-check"></i> {{ 'button.save'|trans }}</button>
+        <a href="{{ path('admin_trainingEdit', {id: trainingPeriodId }) }}" class="btn btn-outline-secondary">{{ 'button.cancel'|trans }}</a>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

@@ -14,9 +14,11 @@
             {{ form_row(form.endDate) }}
         </div>
     </div>
-    {{ form_row(form.trainingPlace) }}
+    <div class="mb-4">
+        {{ form_row(form.trainingPlace) }}
+    </div>
 
-    <table class="table mt-4">
+    <table class="table">
         <thead>
             <tr>
                 <th scope="col">{{ 'global.day'|trans }}</th>
@@ -43,10 +45,16 @@
         </tbody>
     </table>
 
+    <div class="mt-2 mb-4">
+        <a href="{{ path('admin_trainingDayAdd', {id: trainingPeriodId}) }}" class="btn btn-primary">
+            <i class="fa-regular fa-calendar-plus"></i> {{ 'button.add'|trans }}
+        </a>
+    </div>
+
     <div>
         <button type="submit" class="btn btn-success"><i class="fa-solid fa-check"></i> {{ 'button.save'|trans }}</button>
         <a href="{{ path('admin_periodTraining', {id: licensePeriod.id}) }}" class="btn btn-outline-secondary">{{ 'button.cancel'|trans }}</a>
     </div>
-    {{ form_rest(form) }}
     {{ form_end(form) }}
+
 {% endblock %}

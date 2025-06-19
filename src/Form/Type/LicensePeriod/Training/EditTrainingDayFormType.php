@@ -10,8 +10,9 @@ use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Translation\TranslatableMessage;
 
-class TrainingDayFormType extends AbstractType
+class EditTrainingDayFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -28,6 +29,7 @@ class TrainingDayFormType extends AbstractType
                 'choice_label' => function ($choice): string {
                     return $choice->getTranslationKey();
                 },
+                'placeholder' => new TranslatableMessage('training.placeholder.day'),
             ])
             ->add('licensedTypeEnum', EnumType::class, [
                 'class' => LicensedTypeEnum::class,
@@ -35,6 +37,7 @@ class TrainingDayFormType extends AbstractType
                 'choice_label' => function ($choice): string {
                     return $choice->getTranslationKey();
                 },
+                'placeholder' => new TranslatableMessage('training.placeholder.licensedType'),
             ])
         ;
     }
