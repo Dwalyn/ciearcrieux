@@ -11,8 +11,9 @@ use Symfony\Component\Routing\Requirement\EnumRequirement;
 class FindUsController extends AbstractController
 {
     #[Route('/find-us/{typePlace}', name: 'findUs', requirements: ['typePlace' => new EnumRequirement(TypePlaceEnum::class)])]
-    public function findUs(TypePlaceEnum $typePlace): Response
-    {
+    public function findUs(
+        TypePlaceEnum $typePlace,
+    ): Response {
         return $this->render('/findUs/page.html.twig', [
             'typePlace' => $typePlace,
         ]);

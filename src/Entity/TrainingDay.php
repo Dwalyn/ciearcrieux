@@ -16,7 +16,7 @@ class TrainingDay
     protected ?string $id = null;
 
     #[ORM\Column(type: Types::INTEGER, enumType: DayEnum::class)]
-    protected readonly DayEnum $day;
+    protected DayEnum $day;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     protected \DateTime $startTime;
@@ -25,7 +25,7 @@ class TrainingDay
     protected \DateTime $endTime;
 
     #[ORM\Column(type: Types::STRING, length: 9, enumType: LicensedTypeEnum::class)]
-    protected readonly LicensedTypeEnum $licensedType;
+    protected LicensedTypeEnum $licensedType;
 
     #[ORM\ManyToOne(targetEntity: TrainingPeriod::class, inversedBy: 'trainingDays')]
     protected TrainingPeriod $trainingPeriod;
@@ -49,9 +49,19 @@ class TrainingDay
         return $this->day;
     }
 
+    public function setDay(DayEnum $day): void
+    {
+        $this->day = $day;
+    }
+
     public function getStartTime(): \DateTime
     {
         return $this->startTime;
+    }
+
+    public function setStartTime(\DateTime $startTime): void
+    {
+        $this->startTime = $startTime;
     }
 
     public function getEndTime(): \DateTime
@@ -59,9 +69,19 @@ class TrainingDay
         return $this->endTime;
     }
 
+    public function setEndTime(\DateTime $endTime): void
+    {
+        $this->endTime = $endTime;
+    }
+
     public function getLicensedType(): LicensedTypeEnum
     {
         return $this->licensedType;
+    }
+
+    public function setLicensedType(LicensedTypeEnum $licensedType): void
+    {
+        $this->licensedType = $licensedType;
     }
 
     public function getTrainingPeriod(): TrainingPeriod

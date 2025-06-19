@@ -8,8 +8,14 @@
 {% endif %}
 
 <div class="card">
-    <div class="card-header">
-        <h4 class="card-title">{{ this.trainingPlaceDto.name }}</h4>
+    <div class="card-header d-flex flex-row">
+        <div class="flex-grow-1">
+            <h4 class="card-title">{{ this.trainingPlaceDto.name }}</h4>
+        </div>
+        <div>
+            {% block buttonEdit %}
+            {% endblock %}
+        </div>
     </div>
     <div class="row">
         <div class="{{ colText }}">
@@ -39,10 +45,17 @@
                         </ul>
                     {% endfor %}
                 </div>
+                {% if this.display == enum('App\\Enum\\TrainingPlaceDisplayEnum').BLOCK %}
+                    <div class="text-end">
+                        <a href="{{ path('findUs', {typePlace: typePlaceActive().value}) }}">{{ 'global.link.details'|trans }} <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                {% endif %}
             </div>
         </div>
-        <div class="{{ colMap }} mt-1 map">
-            {{ this.trainingPlaceDto.adressDto.googleMapUrl|raw }}
-        </div>
+        {% if this.display == enum('App\\Enum\\TrainingPlaceDisplayEnum').INLINE %}
+            <div class="{{ colMap }} mt-1 map">
+                {{ this.trainingPlaceDto.adressDto.googleMapUrl|raw }}
+            </div>
+        {% endif %}
     </div>
 </div>

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Factory\LicensePeriod;
+namespace App\Factory\LicensePeriod\Price;
 
 use App\Entity\LicensePeriod;
-use App\Form\Datas\LicensePeriod\EditPriceFormData;
-use App\Form\Datas\LicensePeriod\LicensePriceFormData;
-use App\Form\Datas\LicensePeriod\RentPriceFormData;
+use App\Form\Datas\LicensePeriod\Price\EditPriceFormData;
+use App\Form\Datas\LicensePeriod\Price\LicensePriceFormData;
+use App\Form\Datas\LicensePeriod\Price\RentPriceFormData;
 use App\Repository\LicenseRepository;
 use App\Repository\RentRepository;
 

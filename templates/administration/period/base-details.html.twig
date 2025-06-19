@@ -1,0 +1,16 @@
+{% extends 'administration/period/base-period.html.twig' %}
+
+{% block content %}
+    <div class="w-75">
+        <div class="d-flex justify-content-between align-middle bd-highlight mb-3">
+            <div>
+                <h4 class="bd-highlight"><span class="badge bg-{{ licensePeriod.status.badgeClass(licensePeriod.status) }}">{{ licensePeriod.status.translationKey|trans }}</span></h4>
+            </div>
+            <div class="mt-2">
+                <a href={% block backLink %}"{{ path('admin_periodList') }}"{% endblock %}> <i class="fa-solid fa-arrow-left"></i> {{ 'button.back'|trans }}</a>
+            </div>
+        </div>
+        {% block content_details %}
+        {% endblock %}
+    </div>
+{% endblock %}

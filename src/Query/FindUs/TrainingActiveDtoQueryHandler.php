@@ -21,7 +21,13 @@ class TrainingActiveDtoQueryHandler implements QueryHandlerInterface
 
     public function __invoke(TrainingActiveDtoQuery $query): ?TrainingPlaceDto
     {
-        $listTrainingPeriod = $this->trainingPeriodRepository->getTrainingPeriodActive($query->typePlaceEnum);
+        $listTrainingPeriod = [];
+        if (null !== $query->typePlaceEnum) {
+            $listTrainingPeriod = $this->trainingPeriodRepository->getTrainingPeriodActive($query->typePlaceEnum);
+        }
+        if (null !== $query->id) {
+            $listTrainingPeriod = $this->trainingPeriodRepository->getTrainingPeriodById($query->id);
+        }
 
         if (null !== $listTrainingPeriod) {
             $trainingPlaceDto = null;

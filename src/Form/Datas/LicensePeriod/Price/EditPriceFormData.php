@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Datas\LicensePeriod;
+namespace App\Form\Datas\LicensePeriod\Price;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

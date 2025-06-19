@@ -15,6 +15,6 @@ class RentsActiveComponent extends LicensesActiveComponent
      */
     public function getRentsInPeriod(): ?ArrayCollection
     {
-        return $this->query->handle(new ListRentActiveDtoQuery());
+        return $this->query->handle(new ListRentActiveDtoQuery($this->licensePeriod));
     }
 }
