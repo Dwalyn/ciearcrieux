@@ -14,6 +14,13 @@ trainingPeriod2:
 
 trainingPeriod3:
   startDate: '2024-04-01'
+  endDate: '2024-07-31'
+  trainingSeason: !php/enum App\Enum\TypePlaceEnum::OUTDOOR
+  trainingPlace: trainingPlace1
+  licensePeriod: licensePeriod_1
+
+trainingPeriod7:
+  startDate: '2024-08-01'
   endDate: '2024-08-31'
   trainingSeason: !php/enum App\Enum\TypePlaceEnum::OUTDOOR
   trainingPlace: trainingPlace1

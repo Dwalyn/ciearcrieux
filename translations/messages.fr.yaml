@@ -1,6 +1,7 @@
 alert:
   danger:
     unauthorizedEditLicensePeriod: La saison %start%-%end% est terminée. Elle ne peut plus être modifiée.
+    impossibleRemoveTrainingDay: Une période d'entrainement doit contenir au moins un jour.
   success:
     addMember: Le nouveau membre est ajouté.
     removeTrainingDay: La jour d'entrainement est supprimé.
@@ -93,6 +94,10 @@ menu:
   period: Saison sportive
   training: Entrainements
 
+modal:
+  title:
+    addTrainingDay: Ajouter un jour d'entrainement
+
 signin:
   password: Mot de passe
 
@@ -102,6 +107,10 @@ tooltip:
 
 training:
   noTraining: Aucun entrainement trouvé pour cette saison.
+  noTrainingDay: Aucun jour d'entrainement.
+  placeholder:
+    day: Sélectionner un jour
+    licensedType: Sélectionner un type de licencié
 
 trainingPlace:
   startDate: Du

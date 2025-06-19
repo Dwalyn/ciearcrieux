@@ -140,6 +140,22 @@ class PeriodControllerTest extends WebTestCase
                 ],
             ],
         ];
+        yield 'admin_trainingDayAdd' => [
+            'url' => 'admin_trainingDayAdd',
+            'param' => ['id' => 2],
+            'users' => [
+                [
+                    'login' => 'test@google.com',
+                    'status' => HttpStatusEnum::FORBIDDEN->value,
+                ], [
+                    'login' => 'admin@google.com',
+                    'status' => HttpStatusEnum::OK->value,
+                ], [
+                    'login' => null,
+                    'status' => HttpStatusEnum::REDIRECT->value,
+                ],
+            ],
+        ];
     }
 
     public function testPageList(): void
@@ -438,6 +454,39 @@ class PeriodControllerTest extends WebTestCase
             ],
             'nbErrors' => 0,
             'statusCode' => HttpStatusEnum::REDIRECT->value, // no redirect if form is invalid
+        ];
+    }
+    #[DataProvider('removeTrainingDayProvider')]
+    public function testRemoveTrainingDay(array $data, string $message, int $statusCode)
+    {
+        $this->login('admin@google.com');
+        $crawler = $this->client->request('GET', $this->generateUrl('admin_trainingDayRemove', [
+            'id' => $data['id'],
+        ]));
+
+        $this->assertStatusCode($statusCode);
+        $crawler = $this->client->followRedirect();
+
+        $alert = $crawler->filter('.alert');
+        $this->assertEquals($this->getTranslation($message), $alert->text());
+
+    }
+
+    public static function removeTrainingDayProvider(): \Generator
+    {
+        yield 'removeTrainingDay' => [
+            'data' => [
+                'id' => 22,
+            ],
+            'message' => 'alert.success.removeTrainingDay',
+            'statusCode' => HttpStatusEnum::REDIRECT->value,
+        ];
+        yield 'impossibleRemoveTrainingDay' => [
+            'data' => [
+                'id' => 23,
+            ],
+            'message' => 'alert.danger.impossibleRemoveTrainingDay',
+            'statusCode' => HttpStatusEnum::REDIRECT->value,
         ];
     }
 }

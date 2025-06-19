@@ -201,7 +201,7 @@ class PeriodController extends AbstractController
             $this->commandBus->dispatch(new RemoveTrainingDayCommand($trainingDay));
             $this->addFlash('success', $this->translator->trans('alert.success.removeTrainingDay'));
         } else {
-            $this->addFlash('danger', $this->translator->trans('alert.danger.impossibleToRemove'));
+            $this->addFlash('danger', $this->translator->trans('alert.danger.impossibleRemoveTrainingDay'));
         }
 
         return $this->redirectToRoute('admin_trainingEdit', ['id' => $trainingPeriod->getId()]);

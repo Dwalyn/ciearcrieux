@@ -141,3 +141,16 @@ trainingDay20:
   endTime: 11h30
   licensedType: !php/enum App\Enum\LicensedTypeEnum::CONFIRMED
   trainingPeriod: trainingPeriod6
+##################################################################
+trainingDay22:
+  day: !php/enum App\Enum\DayEnum::DAY_3
+  startTime: 09h30
+  endTime: 11h00
+  licensedType: !php/enum App\Enum\LicensedTypeEnum::BEGINNER
+  trainingPeriod: trainingPeriod7
+trainingDay23:
+  day: !php/enum App\Enum\DayEnum::DAY_3
+  startTime: 09h30
+  endTime: 11h30
+  licensedType: !php/enum App\Enum\LicensedTypeEnum::CONFIRMED
+  trainingPeriod: trainingPeriod7
