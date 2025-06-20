@@ -14,7 +14,7 @@ class Post
     #[ORM\Column(type: Types::BIGINT, options: ['unsigned' => true])]
     protected ?string $id = null;
 
-    #[ORM\Column(type: Types::STRING, length: 50)]
+    #[ORM\Column(type: Types::STRING, length: 100)]
     protected string $title;
 
     #[ORM\Column(type: Types::STRING, length: 50)]
@@ -45,5 +45,30 @@ class Post
         $this->postDate = $postDate;
         $this->description = $description;
         $this->createdAt = new \DateTime();
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function getPostDate(): \DateTime
+    {
+        return $this->postDate;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    public function getLocation(): string
+    {
+        return $this->location;
+    }
+
+    public function getPostTypeEnum(): PostTypeEnum
+    {
+        return $this->type;
     }
 }

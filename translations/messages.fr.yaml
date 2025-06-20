@@ -41,6 +41,10 @@ enum:
   licensedType:
     beginner: débutant
     confirmed: confirmé
+  post:
+    event: Evènement
+    news: Informations
+    tournament: Compétition
   rent:
     first: Première année
     other: Deuxième année et plus

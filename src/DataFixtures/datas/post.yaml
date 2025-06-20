@@ -1,20 +1,41 @@
 post_1:
-  title: "Championnat de l'Oise TAE"
+  title: "Championnat de l'oise TAE national / international 2025"
   location: 'Noyon'
   type: !php/enum App\Enum\PostTypeEnum::TOURNAMENT
-  postDate: '-3 days'
-  description: Description 1
+  postDate: '2025-06-08'
+  description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pretium justo in venenatis porttitor. In id vehicula nibh. Morbi tristique a enim quis pretium. Cras interdum vitae libero id facilisis. Donec non elit hendrerit, mollis lacus consequat, tempor velit. Aenean vitae aliquet risus. Curabitur eu eleifend urna. Nulla vitae felis venenatis, eleifend ante a, semper leo. Morbi sem justo, blandit eget rhoncus quis, facilisis eget mauris. Duis eu sem vulputate, cursus libero et, varius ex. Integer semper, magna in vulputate euismod, purus urna consectetur odio, in mollis lorem est aliquam lorem.
 
 post_2:
-  title: "TAE"
+  title: "TAE national / international"
   location: "Crepy en Vallois"
   type: !php/enum App\Enum\PostTypeEnum::TOURNAMENT
-  postDate: '-9 days'
-  description: Description 2
+  postDate: '2025-06-01'
+  description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pretium justo in venenatis porttitor. In id vehicula nibh. Morbi tristique a enim quis pretium. Cras interdum vitae libero id facilisis. Donec non elit hendrerit, mollis lacus consequat, tempor velit. Aenean vitae aliquet risus. Curabitur eu eleifend urna. Nulla vitae felis venenatis, eleifend ante a, semper leo. Morbi sem justo, blandit eget rhoncus quis, facilisis eget mauris. Duis eu sem vulputate, cursus libero et, varius ex. Integer semper, magna in vulputate euismod, purus urna consectetur odio, in mollis lorem est aliquam lorem.
 
 post_3:
-  title: "Bouquet provincial"
+  title: "Bouquet provincial 2025"
   location: "Soisson"
   type: !php/enum App\Enum\PostTypeEnum::EVENT
-  postDate: '-21 days'
-  description: Description 3
+  postDate: '2025-05-18'
+  description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pretium justo in venenatis porttitor. In id vehicula nibh. Morbi tristique a enim quis pretium. Cras interdum vitae libero id facilisis. Donec non elit hendrerit, mollis lacus consequat, tempor velit. Aenean vitae aliquet risus. Curabitur eu eleifend urna. Nulla vitae felis venenatis, eleifend ante a, semper leo. Morbi sem justo, blandit eget rhoncus quis, facilisis eget mauris. Duis eu sem vulputate, cursus libero et, varius ex. Integer semper, magna in vulputate euismod, purus urna consectetur odio, in mollis lorem est aliquam lorem.
+
+post_4:
+  title: "Finale du championnat d'hiver 2025"
+  location: "Chamant"
+  type: !php/enum App\Enum\PostTypeEnum::TOURNAMENT
+  postDate: '2025-05-11'
+  description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pretium justo in venenatis porttitor. In id vehicula nibh. Morbi tristique a enim quis pretium. Cras interdum vitae libero id facilisis. Donec non elit hendrerit, mollis lacus consequat, tempor velit. Aenean vitae aliquet risus. Curabitur eu eleifend urna. Nulla vitae felis venenatis, eleifend ante a, semper leo. Morbi sem justo, blandit eget rhoncus quis, facilisis eget mauris. Duis eu sem vulputate, cursus libero et, varius ex. Integer semper, magna in vulputate euismod, purus urna consectetur odio, in mollis lorem est aliquam lorem.
+
+post_5:
+  title: "Passage de flèches"
+  location: "Compagnie d'arc de Rieux"
+  type: !php/enum App\Enum\PostTypeEnum::EVENT
+  postDate: '2025-05-04'
+  description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pretium justo in venenatis porttitor. In id vehicula nibh. Morbi tristique a enim quis pretium. Cras interdum vitae libero id facilisis. Donec non elit hendrerit, mollis lacus consequat, tempor velit. Aenean vitae aliquet risus. Curabitur eu eleifend urna. Nulla vitae felis venenatis, eleifend ante a, semper leo. Morbi sem justo, blandit eget rhoncus quis, facilisis eget mauris. Duis eu sem vulputate, cursus libero et, varius ex. Integer semper, magna in vulputate euismod, purus urna consectetur odio, in mollis lorem est aliquam lorem.
+
+post_6:
+  title: "Quart de finale championnat d'hiver 2025"
+  location: "Nogent s/ Oise"
+  type: !php/enum App\Enum\PostTypeEnum::EVENT
+  postDate: '2025-04-27'
+  description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pretium justo in venenatis porttitor. In id vehicula nibh. Morbi tristique a enim quis pretium. Cras interdum vitae libero id facilisis. Donec non elit hendrerit, mollis lacus consequat, tempor velit. Aenean vitae aliquet risus. Curabitur eu eleifend urna. Nulla vitae felis venenatis, eleifend ante a, semper leo. Morbi sem justo, blandit eget rhoncus quis, facilisis eget mauris. Duis eu sem vulputate, cursus libero et, varius ex. Integer semper, magna in vulputate euismod, purus urna consectetur odio, in mollis lorem est aliquam lorem.

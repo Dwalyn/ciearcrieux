@@ -13,7 +13,7 @@ class PostFixtures extends AbstractFixture implements DependentFixtureInterface
             $data['title'],
             $data['location'],
             $data['type'],
-            (new \DateTime())->modify($data['postDate']),
+            new \DateTime($data['postDate']),
             $data['description']
         );
     }
