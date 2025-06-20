@@ -1,0 +1,20 @@
+post_1:
+  title: "Championnat de l'Oise TAE"
+  location: 'Noyon'
+  type: !php/enum App\Enum\PostTypeEnum::TOURNAMENT
+  postDate: '-3 days'
+  description: Description 1
+
+post_2:
+  title: "TAE"
+  location: "Crepy en Vallois"
+  type: !php/enum App\Enum\PostTypeEnum::TOURNAMENT
+  postDate: '-9 days'
+  description: Description 2
+
+post_3:
+  title: "Bouquet provincial"
+  location: "Soisson"
+  type: !php/enum App\Enum\PostTypeEnum::EVENT
+  postDate: '-21 days'
+  description: Description 3
