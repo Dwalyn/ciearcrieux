@@ -4,7 +4,10 @@
     <div class="row">
         <div class="col-8">
             {% for post in listPost %}
-                <twig:PostComponent post="{{ post }}"/>
+                <twig:PostComponent
+                        post="{{ post }}"
+                        hasTruncateDescription="true"
+                />
             {% endfor %}
         </div>
         <div class="col-4">
