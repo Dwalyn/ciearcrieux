@@ -1,0 +1,23 @@
+<div class="row g-0 border rounded overflow-hidden mb-4 h-md-250 position-relative">
+    <div class="col p-4 d-flex flex-column position-static">
+        <h3 class="">{{ post.title }}</h3>
+        <div class="mb-2">
+            <strong class="text-muted">{{ post.postDate|date('d/m/Y') }}</strong>
+            <strong class="badge bg-primary">{{ post.postTypeEnum.translationKey|trans }}</strong>
+        </div>
+        <div class="mb-2">
+            <strong class="text-muted">{{ post.location }}</strong>
+        </div>
+        <p class="card-text mb-auto">
+            {{ this.hasTruncateDescription }}
+            {% if this.hasTruncateDescription %}
+                {{ this.truncateDescription }}
+            {% else %}
+                {{ post.description }}
+            {% endif %}
+        </p>
+        <div class="text-end">
+            <a class="stretched-link" href="">{{ 'global.link.details'|trans }} <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+    </div>
+</div>
