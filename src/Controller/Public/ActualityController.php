@@ -2,6 +2,8 @@
 
 namespace App\Controller\Public;
 
+use App\Form\Datas\Actuality\PostFormData;
+use App\Form\Type\Actuality\PostFormType;
 use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,8 +17,14 @@ class ActualityController extends AbstractController
         PostRepository $postRepository,
         Request $request,
     ): Response {
+        $formData = new PostFormData();
+        $form = $this->createForm(PostFormType::class, $formData);
+
         return $this->render(
             '/actuality/page.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
         );
     }
 }

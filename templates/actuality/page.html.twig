@@ -7,5 +7,7 @@
 {% block h1 %} {{ 'menu.news'|trans }} {% endblock %}
 
 {% block content %}
-
+    {{ form_start(form) }}
+        {{ form_row(form.content) }}
+    {{ form_end(form) }}
 {% endblock %}
