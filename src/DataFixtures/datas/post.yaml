@@ -3,7 +3,7 @@ post_1:
   location: 'Noyon'
   type: !php/enum App\Enum\PostTypeEnum::TOURNAMENT
   postDate: '2025-06-08'
-  description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pretium justo in venenatis porttitor. In id vehicula nibh. Morbi tristique a enim quis pretium. Cras interdum vitae libero id facilisis. Donec non elit hendrerit, mollis lacus consequat, tempor velit. Aenean vitae aliquet risus. Curabitur eu eleifend urna. Nulla vitae felis venenatis, eleifend ante a, semper leo. Morbi sem justo, blandit eget rhoncus quis, facilisis eget mauris. Duis eu sem vulputate, cursus libero et, varius ex. Integer semper, magna in vulputate euismod, purus urna consectetur odio, in mollis lorem est aliquam lorem.
+  description: <p><strong>Ceci est un joli texte.</strong></p><p><br></p><p>J'espère ne pas trop faire de faute dans la démonstration.</p><p><br></p><ol><li data-list="ordered"><span class="ql-ui" contenteditable="false"></span>voils le point 1</li><li data-list="ordered"><span class="ql-ui" contenteditable="false"></span>et maitenant le suivant</li><li data-list="ordered"><span class="ql-ui" contenteditable="false"></span>et encore un c'est fou</li></ol><p><br></p><blockquote>et la je cite un morceau pour le plaisir.</blockquote
 
 post_2:
   title: "TAE national / international"

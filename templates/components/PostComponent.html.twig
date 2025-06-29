@@ -8,14 +8,13 @@
         <div class="mb-2">
             <strong class="text-muted">{{ post.location }}</strong>
         </div>
-        <p class="card-text mb-auto">
-            {{ this.hasTruncateDescription }}
+        <div class="card-text mb-auto">
             {% if this.hasTruncateDescription %}
                 {{ this.truncateDescription }}
             {% else %}
                 {{ post.description }}
             {% endif %}
-        </p>
+        </div>
         <div class="text-end">
             <a class="stretched-link" href="">{{ 'global.link.details'|trans }} <i class="fa-solid fa-arrow-right"></i></a>
         </div>

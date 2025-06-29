@@ -19,6 +19,12 @@ class ActualityController extends AbstractController
     ): Response {
         $formData = new PostFormData();
         $form = $this->createForm(PostFormType::class, $formData);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            dump($form->getData());
+            exit;
+        }
 
         return $this->render(
             '/actuality/page.html.twig',

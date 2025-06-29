@@ -8,7 +8,7 @@
 
 {% block content %}
     {{ form_start(form) }}
-    <div class="form-group">
+    <div class="form-group mb-2">
         <label for="quill-editor-container">Contenu</label>
         {# Le div qui sera transformé en éditeur Quill.
                Le 'data-quill-editor' pointe vers l'ID du champ caché. #}
@@ -17,6 +17,10 @@
         </div>
         {# Le champ caché qui recevra le contenu HTML de Quill #}
         {{ form_row(form.content) }}
+    </div>
+    <div>
+        <button type="submit" class="btn btn-success"><i class="fa-solid fa-check"></i> {{ 'button.save'|trans }}</button>
+        <a href="#" class="btn btn-outline-secondary">{{ 'button.cancel'|trans }}</a>
     </div>
     {{ form_end(form) }}
 {% endblock %}
