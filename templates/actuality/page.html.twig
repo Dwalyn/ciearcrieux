@@ -8,6 +8,15 @@
 
 {% block content %}
     {{ form_start(form) }}
+    <div class="form-group">
+        <label for="quill-editor-container">Contenu</label>
+        {# Le div qui sera transformé en éditeur Quill.
+               Le 'data-quill-editor' pointe vers l'ID du champ caché. #}
+        <div id="quill-editor-container" data-quill-editor="{{ form.content.vars.id }}" style="height: 300px; background-color: white;">
+            {# Le contenu initial du champ sera injecté ici par JS #}
+        </div>
+        {# Le champ caché qui recevra le contenu HTML de Quill #}
         {{ form_row(form.content) }}
+    </div>
     {{ form_end(form) }}
 {% endblock %}
