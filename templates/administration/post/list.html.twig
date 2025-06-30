@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title_page %}
+    {{ parent() }} - {{ 'menu.news'|trans }}
+{% endblock %}
+
+{% block h1 %} {{ 'menu.news'|trans }} {% endblock %}
+
+{% block content %}
+    <div class="w-75">
+        <div class="d-flex mb-4">
+            <div>
+                <a href="" type="button" class="btn btn-primary">
+                    <i class="fa-solid fa-plus"></i> {{ 'button.add'|trans }}
+                </a>
+            </div>
+        </div>
+        <div>
+            {% for post in listPost %}
+                <twig:PostComponent
+                        post="{{ post }}"
+                        hasTruncateDescription="true"
+                />
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -31,7 +31,7 @@ class MemberController extends AbstractController
         $form = $this->createForm(AddUserType::class, $dataForm);
         $form->handleRequest($request);
 
-        return $this->render('/administration/members/add.html.twig', [
+        return $this->render('/administration/members/list.html.twig', [
             'form' => $form,
         ]);
     }
