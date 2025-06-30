@@ -3,26 +3,44 @@
 namespace App\Controller\Administration;
 
 use App\Enum\RoleEnum;
-use App\Repository\PostRepository;
-use Doctrine\Common\Collections\Order;
+use App\Form\Datas\Actuality\PostFormData;
+use App\Form\Type\Actuality\PostFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/admin', name: 'admin_')]
 class ActualityController extends AbstractController
 {
-    #[Route('/posts', name: 'postsList')]
+    #[Route('/post', name: 'postsList')]
     public function list(
-        PostRepository $postRepository,
-    ): Response
-    {
+        Request $request,
+    ): Response {
         $this->denyAccessUnlessGranted(RoleEnum::ROLE_ADMIN->value);
 
-        $listPost = $postRepository->findBy([], ['postDate' => Order::Descending->value]);
+        return $this->render('/administration/post/list.html.twig', [
+            'page' => $request->query->getInt('page', 1),
+        ]);
+    }
 
-        return $this->render('/administration/post/list.html.twig',[
-            'listPost' => $listPost,
+    #[Route('/post/add', name: 'postAdd')]
+    public function add(
+        Request $request,
+    ): Response {
+        $this->denyAccessUnlessGranted(RoleEnum::ROLE_ADMIN->value);
+
+        $formData = new PostFormData();
+        $form = $this->createForm(PostFormType::class, $formData);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            dump($form->getData());
+            exit;
+        }
+
+        return $this->render('/administration/post/add.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }

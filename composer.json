@@ -11,7 +11,7 @@
         "doctrine/doctrine-bundle": "^2.15.0",
         "doctrine/doctrine-migrations-bundle": "^3.4.2",
         "doctrine/orm": "^3.4.3",
-        "knplabs/knp-paginator-bundle": "^6.8.1",
+        "knplabs/knp-paginator-bundle": "^6.8",
         "symfony/console": "7.2.*",
         "symfony/dotenv": "7.2.*",
         "symfony/flex": "^2.7.1",

@@ -10,18 +10,14 @@
     <div class="w-75">
         <div class="d-flex mb-4">
             <div>
-                <a href="" type="button" class="btn btn-primary">
+                <a href="{{ path('admin_postAdd') }}" type="button" class="btn btn-primary">
                     <i class="fa-solid fa-plus"></i> {{ 'button.add'|trans }}
                 </a>
             </div>
         </div>
-        <div>
-            {% for post in listPost %}
-                <twig:PostComponent
-                        post="{{ post }}"
-                        hasTruncateDescription="true"
-                />
-            {% endfor %}
-        </div>
+        <twig:Administration:Actuality:ListPostComponent
+                showPaginator="true"
+                page="{{ page }}"
+        />
     </div>
 {% endblock %}

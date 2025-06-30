@@ -3,12 +3,7 @@
 {% block content %}
     <div class="row">
         <div class="col-8">
-            {% for post in listPost %}
-                <twig:PostComponent
-                        post="{{ post }}"
-                        hasTruncateDescription="true"
-                />
-            {% endfor %}
+            <twig:Administration:Actuality:ListPostComponent/>
         </div>
         <div class="col-4">
             <twig:TrainingPlaceComponent
