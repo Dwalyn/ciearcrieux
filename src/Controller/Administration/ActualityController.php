@@ -2,6 +2,8 @@
 
 namespace App\Controller\Administration;
 
+use App\Command\CommandBusInterface;
+use App\Command\Post\NewPostCommand;
 use App\Enum\RoleEnum;
 use App\Form\Datas\Actuality\PostFormData;
 use App\Form\Type\Actuality\PostFormType;
@@ -9,10 +11,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/admin', name: 'admin_')]
 class ActualityController extends AbstractController
 {
+    public function __construct(
+        private TranslatorInterface $translator,
+    ) {
+    }
+
     #[Route('/post', name: 'postsList')]
     public function list(
         Request $request,
@@ -27,6 +35,7 @@ class ActualityController extends AbstractController
     #[Route('/post/add', name: 'postAdd')]
     public function add(
         Request $request,
+        CommandBusInterface $command,
     ): Response {
         $this->denyAccessUnlessGranted(RoleEnum::ROLE_ADMIN->value);
 
@@ -35,8 +44,10 @@ class ActualityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($form->getData());
-            exit;
+            $command->dispatch(new NewPostCommand($form->getData()));
+            $this->addFlash('success', $this->translator->trans('alert.success.newPost'));
+
+            return $this->redirectToRoute('admin_postsList');
         }
 
         return $this->render('/administration/post/add.html.twig', [

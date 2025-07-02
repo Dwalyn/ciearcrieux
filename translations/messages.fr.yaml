@@ -4,6 +4,7 @@ alert:
     impossibleRemoveTrainingDay: Une période d'entrainement doit contenir au moins un jour.
   success:
     addMember: Le nouveau membre est ajouté.
+    newPost: La nouvelle actualité est ajoutée.
     removeTrainingDay: La jour d'entrainement est supprimé.
     updateLicencePrice: Le prix des licences sont modifiés.
     updateRentPrice: Le prix des locations sont modifiés.
@@ -101,6 +102,11 @@ menu:
 modal:
   title:
     addTrainingDay: Ajouter un jour d'entrainement
+
+post:
+  placeholder:
+      postTypeEum: Sélectionnez un type d'actualité
+      postTitle: Titre de l'actualité
 
 signin:
   password: Mot de passe

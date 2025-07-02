@@ -7,15 +7,25 @@
 {% block h1 %} {{ 'menu.news'|trans }} {% endblock %}
 
 {% block content %}
-    {{ form_start(form) }}
-    <div class="form-group mb-2">
-        <label for="quill-editor-container">Contenu</label>
-        <div id="quill-editor-container" data-quill-editor="{{ form.content.vars.id }}" style="height: 300px; background-color: white;"></div>
-        {{ form_row(form.content) }}
+    <div class="w-75">
+        {{ form_start(form) }}
+        <div class="mb-4">
+            {{ form_row(form.postTitle) }}
+        </div>
+        <div class="mb-4">
+            {{ form_row(form.postDate) }}
+        </div>
+        <div class="mb-4">
+            {{ form_row(form.postTypeEnum) }}
+        </div>
+        <div class="form-group mb-2">
+            <div id="quill-editor-container" data-quill-editor="{{ form.content.vars.id }}" style="height: 300px; background-color: white;"></div>
+            {{ form_row(form.content) }}
+        </div>
+        <div>
+            <button type="submit" class="btn btn-success"><i class="fa-solid fa-check"></i> {{ 'button.save'|trans }}</button>
+            <a href="{{ path('admin_postsList') }}" class="btn btn-outline-secondary">{{ 'button.cancel'|trans }}</a>
+        </div>
+        {{ form_end(form) }}
     </div>
-    <div>
-        <button type="submit" class="btn btn-success"><i class="fa-solid fa-check"></i> {{ 'button.save'|trans }}</button>
-        <a href="{{ path('admin_postsList') }}" class="btn btn-outline-secondary">{{ 'button.cancel'|trans }}</a>
-    </div>
-    {{ form_end(form) }}
 {% endblock %}
