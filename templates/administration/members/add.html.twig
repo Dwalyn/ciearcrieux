@@ -7,10 +7,8 @@
 {% block h1 %} {{ 'menu.members'|trans }} {% endblock %}
 
 {% block content %}
-    <div class="card w-75">
-        <div class="card-body">
-            <h3 class="card-title">{{ 'h3.new_member'|trans }}</h3>
-            {{ component('Administration:User:UserAdd') }}
-        </div>
+    <div class="w-75">
+        <h3 class="card-title mb-4">{{ 'h3.new_member'|trans }}</h3>
+        {{ component('Administration:User:UserAdd') }}
     </div>
 {% endblock %}
