@@ -21,6 +21,10 @@ class NewPostCommandHandler implements CommandHandlerInterface
          */
         $title = $command->postFormData->postTitle;
         /**
+         * @var string $location
+         */
+        $location = $command->postFormData->location;
+        /**
          * @var PostTypeEnum $type
          */
         $type = $command->postFormData->postTypeEnum;
@@ -31,8 +35,10 @@ class NewPostCommandHandler implements CommandHandlerInterface
         /**
          * @var string $content
          */
-        $content = $command->postFormData->content;
-        $post = new Post($title, 'test', $type, $date, $content);
+        $content = str_replace('<p><br></p>', '<br/><br/>', $command->postFormData->content);
+        $content = str_replace('<p>', '<br/>', $content);
+        $content = str_replace('</p>', '', $content);
+        $post = new Post($title, $location, $type, $date, $content);
         $this->entityManager->persist($post);
         $this->entityManager->flush();
     }

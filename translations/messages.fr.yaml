@@ -105,6 +105,7 @@ modal:
 
 post:
   placeholder:
+      location: Saisissez le lieu de l'actualité
       postTypeEum: Sélectionnez un type d'actualité
       postTitle: Titre de l'actualité
 

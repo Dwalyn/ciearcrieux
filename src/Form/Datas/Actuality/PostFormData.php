@@ -11,6 +11,9 @@ class PostFormData
     public string $postTitle;
 
     #[Assert\NotNull()]
+    public string $location;
+
+    #[Assert\NotNull()]
     public ?string $content;
 
     #[Assert\NotNull()]

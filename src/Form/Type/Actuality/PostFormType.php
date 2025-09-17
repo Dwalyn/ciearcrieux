@@ -44,6 +44,13 @@ class PostFormType extends AbstractType
                 ],
                 'required' => false,
             ])
+            ->add('location', TextType::class, [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => new TranslatableMessage('post.placeholder.location'),
+                ],
+                'required' => false,
+            ])
         ;
     }
 

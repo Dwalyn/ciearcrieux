@@ -26,6 +26,6 @@ class PostComponent
 
     public function getTruncateDescription(): string
     {
-        return sprintf('%s ...', substr($this->post->getDescription(), 0, 300));
+        return sprintf('%s ...', substr($this->post->getDescription(), 0, 150));
     }
 }
