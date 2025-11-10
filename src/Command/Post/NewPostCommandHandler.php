@@ -35,9 +35,8 @@ class NewPostCommandHandler implements CommandHandlerInterface
         /**
          * @var string $content
          */
-        $content = str_replace('<p><br></p>', '<br/><br/>', $command->postFormData->content);
-        $content = str_replace('<p>', '<br/>', $content);
-        $content = str_replace('</p>', '', $content);
+        $content = $command->postFormData->content;
+        $content = str_replace('<p><br></p>', '', $content);
         $post = new Post($title, $location, $type, $date, $content);
         $this->entityManager->persist($post);
         $this->entityManager->flush();
