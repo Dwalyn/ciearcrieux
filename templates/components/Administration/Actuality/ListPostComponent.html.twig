@@ -1,16 +1,6 @@
 <div>
     {% for post in this.listPost %}
-        <twig:PostComponent
-                post="{{ post }}"
-                hasTruncateDescription="true"
-        >
-            <twig:block name="link">
-                <div class="text-end">
-                    <a class="stretched-link" href="{{ path('actuality_show', {id: post.id}) }}">{{ 'global.link.details'|trans }} <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-            </twig:block>
-        </twig:PostComponent>
-
+        <twig:PostComponent post="{{ post }}"/>
     {% endfor %}
 </div>
 {% if this.showPaginator %}

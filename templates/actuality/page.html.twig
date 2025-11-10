@@ -7,8 +7,10 @@
 {% block h1 %} {{ 'menu.news'|trans }} {% endblock %}
 
 {% block content %}
-    <twig:Administration:Actuality:ListPostComponent
-            showPaginator="true"
-            page="{{ page }}"
-    />
+    <div class="w-75">
+        <twig:Administration:Actuality:ListPostComponent
+                showPaginator="true"
+                page="{{ page }}"
+        />
+    </div>
 {% endblock %}
