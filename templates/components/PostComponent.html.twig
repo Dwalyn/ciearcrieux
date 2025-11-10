@@ -14,10 +14,7 @@
                 {{ post.description|raw }}
             {% endif %}
         </div>
-        {% if this.hasTruncateDescription %}
-            <div class="text-end">
-                <a class="stretched-link" href="{{ path('actuality_show', {id: post.id}) }}">{{ 'global.link.details'|trans }} <i class="fa-solid fa-arrow-right"></i></a>
-            </div>
-        {% endif %}
+        {% block link %}
+        {% endblock %}
     </div>
 </div>

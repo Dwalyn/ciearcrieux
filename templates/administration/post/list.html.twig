@@ -18,6 +18,12 @@
         <twig:Administration:Actuality:ListPostComponent
                 showPaginator="true"
                 page="{{ page }}"
-        />
+        >
+            <twig:block name="link">
+                <div class="text-end">
+                    <a class="stretched-link" href="{{ path('actuality_show', {id: post.id}) }}">{{ 'global.link.details'|trans }} <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </twig:block>
+        </twig:Administration:Actuality:ListPostComponent>
     </div>
 {% endblock %}
