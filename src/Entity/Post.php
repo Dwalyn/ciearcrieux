@@ -47,6 +47,11 @@ class Post
         $this->createdAt = new \DateTime();
     }
 
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+
     public function getTitle(): string
     {
         return $this->title;

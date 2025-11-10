@@ -11,11 +11,13 @@
             {% if this.hasTruncateDescription %}
                 {{ this.truncateDescription|raw }}
             {% else %}
-                {{ post.description }}
+                {{ post.description|raw }}
             {% endif %}
         </div>
-        <div class="text-end">
-            <a class="stretched-link" href="">{{ 'global.link.details'|trans }} <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
+        {% if this.hasTruncateDescription %}
+            <div class="text-end">
+                <a class="stretched-link" href="{{ path('actuality_show', {id: post.id}) }}">{{ 'global.link.details'|trans }} <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+        {% endif %}
     </div>
 </div>
