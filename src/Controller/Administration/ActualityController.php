@@ -4,6 +4,7 @@ namespace App\Controller\Administration;
 
 use App\Command\CommandBusInterface;
 use App\Command\Post\NewPostCommand;
+use App\Entity\Post;
 use App\Enum\RoleEnum;
 use App\Form\Datas\Actuality\PostFormData;
 use App\Form\Type\Actuality\PostFormType;
@@ -17,7 +18,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ActualityController extends AbstractController
 {
     public function __construct(
-        private TranslatorInterface $translator,
+        private readonly CommandBusInterface $command,
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -35,17 +37,31 @@ class ActualityController extends AbstractController
     #[Route('/post/add', name: 'postAdd')]
     public function add(
         Request $request,
-        CommandBusInterface $command,
     ): Response {
+        return $this->renderPostFormData($request);
+    }
+
+    #[Route('/post/edit/{id}', name: 'postEdit')]
+    public function edit(
+        Request $request,
+        Post $post,
+    ): Response {
+        return $this->renderPostFormData($request, $post);
+    }
+
+    private function renderPostFormData(Request $request, ?Post $post = null): Response
+    {
         $this->denyAccessUnlessGranted(RoleEnum::ROLE_ADMIN->value);
 
-        $formData = new PostFormData();
+        $formData = new PostFormData($post);
         $form = $this->createForm(PostFormType::class, $formData);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $command->dispatch(new NewPostCommand($form->getData()));
-            $this->addFlash('success', $this->translator->trans('alert.success.newPost'));
+            if (null !== $post) {
+                $this->command->dispatch(new NewPostCommand($form->getData()));
+                $this->addFlash('success', $this->translator->trans('alert.success.newPost'));
+            }
 
             return $this->redirectToRoute('admin_postsList');
         }

@@ -36,7 +36,7 @@ class ListPostComponent
             return $this->paginator->paginate(
                 $this->postRepository->findBy([], ['postDate' => Order::Descending->value]),
                 $this->page,
-                10 /* limit per page */
+                5 /* limit per page */
             );
         }
 
