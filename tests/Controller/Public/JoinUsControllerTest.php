@@ -53,8 +53,8 @@ class JoinUsControllerTest extends WebTestCase
         $h3 = $crawler->filter('h3');
         $this->assertCount(3, $h3);
         $this->assertEquals($this->getTranslation('h3.license'), $h3->first()->text());
-        $this->assertEquals($this->getTranslation('h3.documents'), $h3->eq(1)->text());
-        $this->assertEquals($this->getTranslation('h3.rent'), $h3->last()->text());
+        $this->assertEquals($this->getTranslation('h3.rent'), $h3->eq(1)->text());
+        $this->assertEquals($this->getTranslation('h3.documents'), $h3->last()->text());
 
         // Test license
         $licenses = $crawler->filter('.license');

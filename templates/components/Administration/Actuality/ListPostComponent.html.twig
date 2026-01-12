@@ -1,0 +1,10 @@
+<div>
+    {% for post in this.listPost %}
+        <twig:PostComponent post="{{ post }}"/>
+    {% endfor %}
+</div>
+{% if this.showPaginator %}
+    <div class="d-flex justify-content-center">
+        {{ knp_pagination_render(this.listPost) }}
+    </div>
+{% endif %}

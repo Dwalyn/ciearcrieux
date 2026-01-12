@@ -21,6 +21,7 @@ class CheckLicensePeriodCommandHandler implements CommandHandlerInterface
          * @var LicensePeriod $lastLicensePeriod
          */
         $lastLicensePeriod = $this->licensePeriodRepository->getLastPeriod();
+
         if ($lastLicensePeriod->getEndDate()->format('Ymd') < (new \DateTime())->format('Ymd')) {
             $this->commandBus->dispatch(new NewLicensePeriodCommand());
         }

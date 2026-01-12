@@ -28,6 +28,7 @@ class TrainingPlaceComponent
     {
         if (null === $this->id) {
             $this->commandBus->dispatch(new CheckLicensePeriodCommand());
+            $this->typePlaceEnum = TypePlaceEnum::INDOOR;
 
             return $this->query->handle(new TrainingActiveDtoQuery(typePlaceEnum: $this->typePlaceEnum));
         }
